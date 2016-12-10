@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - Application context definition for EIS web version (ZK framework) -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+
+	<security:http auto-config="false" create-session="always"
+		access-denied-page="/accessDenied.xhtml" entry-point-ref="LoginUrlAuthenticationEntryPoint">
+		<security:intercept-url pattern="/secure/**"
+			access="ROLE_USER, ROLE_URLACCESS" />
+			
+		<security:logout logout-success-url="/login.zul" />
+		<security:custom-filter position="FORM_LOGIN_FILTER"
+			ref="customAuthenticationFilter" />
+			
+		<security:custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencySessionFilter" />
+  	<security:session-management session-authentication-strategy-ref="sas"/>
+  </security:http>
+
+	<bean id="concurrencySessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+  	<property name="sessionRegistry" ref="sessionRegistry" />
+  	<property name="expiredUrl" value="/login.zul?login_error=session expired" />
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+	</security:authentication-manager>
+	<!-- <security:http auto-config="false" use-expressions="true" entry-point-ref="LoginUrlAuthenticationEntryPoint"> 
+		<security:custom-filter position="FORM_LOGIN_FILTER" ref="MyFilter" /> </security:http> -->
+
+	<bean id="LoginUrlAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/login.zul" />
+	</bean>
+
+	<bean id="customAuthenticationFilter" class="pl.econsulting.eis.web.security.UserAuthenticationFilter">
+		<property name="authenticationManager" ref="eisAuthenticationManager" />
+
+		<property name="sessionAuthenticationStrategy" ref="sas" />
+
+		<property name="allowSessionCreation" value="true" />
+		<property name="authenticationFailureHandler" ref="failureHandler" />
+		<property name="authenticationSuccessHandler" ref="successHandler" />
+	</bean>
+	<bean id="successHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/secure/main.zul" /> 
+		
+	</bean>
+	<bean id="failureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login.zul?login_error=t" />
+	</bean>
+
+
+	<bean id="eisAuthenticationManager" class="pl.econsulting.eis.web.security.CustomAuthunticationManager" scope="singleton" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	</bean>
+
+	<bean name="authenticationManagerBean"
+		class="pl.econsulting.eis.web.security.AuthenticationManagerBean"
+		scope="singleton">
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+
+	<bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+		<property name="maximumSessions" value="-1" />
+	</bean>
+
+	<bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+	
+
+
+
+		<!-- 
+	<bean name="mainServerBean" class="pl.econsulting.eis.web.security.MainServerBean" scope="singleton">
+		<constructor-arg><value>${catalina.base}/conf/EIS/</value></constructor-arg>
+		<constructor-arg><value>${webapp.root}/WEB-INF/server/</value></constructor-arg>
+
+		<constructor-arg><value>I:/home/witolddrozdzynski/java/projects/EIS/</value></constructor-arg>
+		<constructor-arg><value>conf/serverConfiguration.xml</value></constructor-arg>
+	</bean>
+	-->
+	
+
+	
+	<bean name="appManager" class="pl.econsulting.eis.web.security.AppManagerBean" scope="singleton">
+		<property  name="connectorFactory" ref="connectorFactory" />
+	</bean>
+
+
+
+
+</beans>

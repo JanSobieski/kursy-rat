@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<library-property>
+		<name>org.zkoss.theme.preferred</name>
+		<value>sapphire</value> <!-- or silvertail, atlantic -->
+	</library-property>
+
+	<language-config>
+		<addon-uri>/WEB-INF/lang-addon.xml
+		</addon-uri>
+	</language-config>
+	
+ <library-property>
+	 <name>org.zkoss.zk.ui.composer.autowire.xel</name>
+	 <value>true</value>
+ </library-property>
+ 
+	<client-config>
+	    <debug-js>false</debug-js>
+	</client-config> 
+
+</zk>
