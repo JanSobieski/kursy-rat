@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<h:head>
+	<title>EIS Security Login </title>
+	<link rel="stylesheet" type="text/css"
+		href="./xmlhttp/css/rime/rime.css" />
+</h:head>
+<h:body>
+
+	<h:form id="form">
+		<h:panelGrid id="grid" columns="1">
+			<ice:outputText style="font-weight:bold; text-decoration: blink;" visible="#{loginBean.showSessionExpired}" value="Sesja wygasła"></ice:outputText>
+			<h:panelGrid id="grid2" visible="#{loginBean.showSessionExpired}" rows="2" >
+			</h:panelGrid>
+			<h:outputText id="output1" value="Wylogowanie zakończone pomyślnie." />
+		</h:panelGrid>
+		<h:panelGrid id="grid3" columns="1">
+		 <ice:outputLink id="BLOutLnk" value="#{mainBean.webAppRoot}">
+		 <ice:outputText style="text-decoration: underline;" value="Powrót do strony logowania"/></ice:outputLink>
+		 <!-- 
+		<h:commandLink value="Powrót do strony logowania" action="login.xhtml" />
+		 -->
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>
+
+

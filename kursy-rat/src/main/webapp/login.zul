@@ -1,0 +1,61 @@
+<?page id="Login" title="LOGIN"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window title="Kursy LOGIN" border="normal" width="280px">
+    <!-- this form-login-page form is also used as the
+         form-error-page to ask for a login again. -->
+    <html style="color:red" if="${not empty param.login_error}">
+      <![CDATA[
+        Logowanie nie powiodło się.<br/><br/>
+        Przyczyna: ${SPRING_SECURITY_LAST_EXCEPTION.message}
+       ]]>
+    </html>
+<style>
+        .z-green {
+            font-weight: bold;
+            color: green;
+        }
+        .z-red {
+            font-weight: bold;
+            color: red;
+        }
+        .profit_Forecast {
+            font-size: 20px;           
+        }
+    </style>
+    <groupbox>
+    	<image src="/resources/img/eisberg-small.png" width="230px"
+    		height="160px" />
+    	<h:form id="f" name="f" action="j_spring_security_check"
+    		method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
+    		<grid width="230px">
+    			<rows>
+    				<row>
+    					Użytkownik:
+    					<textbox id="u" width="100px" name="j_username" />
+    				</row>
+    				<row>
+    					Hasło:
+    					<textbox id="p" width="100px" type="password"
+    						name="j_password" />
+    				</row>
+    				<row>
+    					<hbox>
+    						<h:input type="submit" value="Logowanie" />
+    					</hbox>
+    					${appManager.version}
+    				</row>
+    			</rows>
+    		</grid>
+    		<grid width="230px">
+    			<rows>
+    				<row>
+    				</row>
+    			</rows>
+    		</grid>
+    		
+    	</h:form>
+    </groupbox>
+    
+</window>
