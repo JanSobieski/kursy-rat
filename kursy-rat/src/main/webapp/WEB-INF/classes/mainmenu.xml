@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:XMLRootMenu xmlns:ns2="http://www.daibutsu.de/zk/menu">
+
+	<!-- ######################################################### -->
+	<!-- #################### possible Tags ###################### -->
+	<!-- ######################################################### -->
+	<!-- menu:           a parent menu that have child nodes.      -->
+	<!-- menuItem:       the menu item.                            -->
+	<!-- zulNavigation:  the path and name of the zul-file.        -->
+	<!-- iconName:       the path and name to an icon.             -->
+	<!-- rightName:      if it's declared, than the rightname must -->
+	<!--                 be the same as in the securityContext for -->
+	<!--                 creating this menuitem.                   -->
+	<!-- open:           (true/false opens a menu at creation time -->
+	<!-- ######################################################### -->
+
+	<!-- DON'T CHANGE THE ID FOR the Dashboard menu entry -->
+	<!-- it's used in the mainMenuCtrl.java  -->
+	<!-- 
+	<menuItem id="menu_Item_Tasks" zulNavigation=""
+		iconName="/images/icons/console_view.gif" />
+	-->
+
+	<!-- Administration MenuTree -->
+	<menu id="menu_Category_Administration" rightName="">
+		<menuItem id="menu_Item_ChangePass" createTab="false"
+			zulNavigation="/secure/admin/changePassPanel.zul" rightName="" />
+		<menuItem id="menu_Item_AdminPanel" 
+			zulNavigation="/secure/admin/adminPanel.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_Users" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/admin/userList.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_Groups" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/admin/groupList.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_DictionaryList" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/admin/dictionaryListEdit.zul" rightName="show_MenuDictionary" />
+	</menu>
+	<menu id="menu_Category_Recruitment" rightName="show_MenuRecruitment">
+		<menuItem id="menu_Item_PersonEditSimple" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/recruitment/personEditSimple.zul" rightName="show_MenuRecruitment" />
+		<menuItem id="menu_Item_PersonEdit" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/recruitment/personEdit.zul" rightName="show_MenuRecruitment" />
+		<menuItem id="menu_Item_PersonSearch" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/recruitment/personList.zul" rightName="show_MenuRecruitment" />
+	</menu>
+	<menu id="menu_Category_Sales" rightName="show_MenuContracts">
+		<menuItem id="menu_Item_ProjectEdit" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/recruitment/projectEdit.zul" rightName="show_MenuContracts" />
+		<menuItem id="menu_Item_ProjectSearch" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/recruitment/projectList.zul" rightName="show_MenuContracts" />
+	</menu>
+	<menu id="menu_Category_Reports">
+		<menuItem id="menu_Item_RepAddedPersons" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/reports/addedCVs.zul" />
+		<menuItem id="menu_Item_EffectivenessStatistics" iconName="/images/icons/user_group_16x16.png"
+			zulNavigation="/secure/reports/effectivnessStatistics.zul" />
+	</menu>
+
+
+
+</ns2:XMLRootMenu>
