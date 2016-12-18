@@ -44,5 +44,9 @@ public class Context {
 		return client_id;
 	}
 
+	public User getUserByClient(long clientId) {
+		return _client2user.get(clientId);
+	}
+
 
 }

@@ -20,6 +20,7 @@ import org.zkoss.zul.Window;
 
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.service.interf.DataServiceInt;
+import pl.wd.kursy.web.security.Context;
 
 /**
  * Workspace for the user. One workspace per userSession. <br>
@@ -215,17 +216,8 @@ public class UserWorkspace implements Serializable, DisposableBean {
 		_user = user;
 	}
 	
-	public void load_clients_user() {
-		try {
-//			ConnectorInt connector = AppManagerBean.get_appManagerBean().create_connector();
-//			Request request = create_request();
-//			request.set_processor( Request.REQUEST_GET_CURRENT_USER );
-//			Transport response = connector.sendRequest(request);
-//			_user.init_from_xml(response.get_content());
-		} catch (Exception e) {
-			_client_id = 0;
-			logger.error( e );
-		}
+	public void loadUser() {
+		_user  = Context.getInstance().getUserByClient(_client_id);
 	}
 
 	public boolean check_authorisation_read( String authorisation ) throws Exception {
