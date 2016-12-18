@@ -6,9 +6,9 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
           http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+          http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<security:http auto-config="false" create-session="always"
 		access-denied-page="/accessDenied.xhtml" entry-point-ref="LoginUrlAuthenticationEntryPoint">
@@ -85,11 +85,11 @@
 	<bean id="dataServiceProviderImplMain" class="pl.wd.kursy.service.DataService" scope="singleton">
 	</bean>
 
-		<!-- 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="packagesToScan" value="pl.wd.kursy.data" />
 	    <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
 	</bean>
+		<!-- 
 		 -->
 	
 	<bean name="appManager" class="pl.wd.kursy.web.security.AppManagerBean" scope="singleton">
