@@ -18,6 +18,7 @@ public class User extends BasicType implements Serializable {
 	
 	private String _login;
 	private String _pass;
+	private boolean _admin;
 	
 	public User() {
 	}
@@ -25,6 +26,13 @@ public class User extends BasicType implements Serializable {
 	public User(String login, String pass ) {
 		_login = login;
 		_pass = pass;
+	}
+	
+	public User( User user ) {
+		super( user.get_id() );
+		
+		_login = user.getLogin();
+		_admin = user.isAdmin();
 	}
 
 	@Id
@@ -53,6 +61,14 @@ public class User extends BasicType implements Serializable {
 
 	public void setPass(String pass) {
 		_pass = pass;
+	}
+
+	public boolean isAdmin() {
+		return _admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		_admin = admin;
 	}
 	
 
