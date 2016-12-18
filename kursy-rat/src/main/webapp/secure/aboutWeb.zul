@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+	<window id="windowAboutEisWeb" border="none" width="500px" mode="modal" height="385px">
+
+		<zscript language="Java"><![CDATA[
+	{
+		lf = "\n";
+		s = "";
+		s = s + "Kursy ratownicze " + lf;
+
+		t = "";
+		t = t + "" + lf;
+
+	}
+]]></zscript>
+
+		<borderlayout>
+			<center border="none" flex="true" style="padding:0px;">
+				<div>
+
+					<separator orient="horizontal"></separator>
+
+					<separator bar="true" orient="horizontal" />
+					<h:br />
+
+					<div align="center">
+						<label value="${s}" multiline="true" />
+					</div>
+
+					<separator bar="true" orient="horizontal" />
+          <div align="center" style="padding: 0px; border: 'none';">
+    	     <image src="/resources/img/eisberg-small.png" width="230px" height="160px" />
+					</div>					
+
+        					<separator bar="true" orient="horizontal" />
+
+					<!-- framework/used libs icons -->
+					<div align="center">
+						<label value="${t}" multiline="true" />
+						<hbox align="start">
+							<image src="/resources/img/framework_icons/zkpowered_40x40.png" tooltiptext="zk framework" />
+							<image src="/resources/img/framework_icons/spring_source_119x34.gif"
+								tooltiptext="spring framework" />
+							<image src="/resources/img/framework_icons/hibernate_34x34.gif"
+								tooltiptext="hibernate (object relational mapper)" />
+						</hbox>
+						<separator orient="horizontal" />
+						<hbox align="start">
+							<image src="/resources/img/framework_icons/postgresql_98x34.gif" tooltiptext="PostgreSQL" />
+						</hbox>
+						<separator orient="horizontal" />
+
+					</div>
+
+				</div>
+			</center>
+
+			<south border="none" height="35px">
+				<div>
+
+					<separator bar="true" orient="horizontal" />
+
+					<div id="divNo" align="left" style="padding: 2px; ">
+						<button id="btnOKAbout" label="OK" onClick="windowAboutEisWeb.onClose()" />
+					</div>
+				</div>
+			</south>
+
+
+		</borderlayout>
+
+
+	</window>
+</zk>

@@ -1,0 +1,127 @@
+<?page id="mainPage" title="EIS" contentType="text/html;charset=UTF-8" cacheable="false" 
+	language="xul/html" zscriptLanguage="Java"?>
+<!-- 	
+	<?meta content="text/html; charset=UTF-8" 	pageEncoding="UTF-8"?>
+-->
+
+<?script type="text/javascript" src="/resources/js/jquery.min.js"?>
+<?script type="text/javascript" src="/resources/js/jquery.jqplot.min.js"?>
+<?script type="text/javascript" src="/resources/js/plugins/jqplot.categoryAxisRenderer.min.js"?>
+<?script type="text/javascript" src="/resources/js/plugins/jqplot.canvasAxisTickRenderer.min.js"?>
+<?script type="text/javascript" src="/resources/js/plugins/jqplot.canvasTextRenderer.min.js"?>
+
+<?link rel="stylesheet" type="text/css" href="/resources/js/jquery.jqplot.css" ?>
+
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+	<script type="text/javascript">
+		
+		<![CDATA[ function scrollTextbox(txtBox) { var txtEle =
+		document.getElementById(txtBox); txtEle.scrollTop =
+		txtEle.scrollHeight; } ]]>
+		
+			</script>
+
+	<window id="outerIndexWindow" apply="pl.wd.kursy.web.ui.index.IndexCtrl" 
+		border="none" width="100%" height="100%">
+
+
+		<!-- HIDDEN fields for storing the current desktop height and width -->
+		<intbox id="currentDesktopHeight" visible="false" />
+		<intbox id="currentDesktopWidth" visible="false" />
+		<!-- HIDDEN field for storing the initial menu type -->
+		<checkbox id="CBtreeMenu" checked="true" visible="false" />
+
+		<borderlayout id="borderlayoutMain" height="100%">
+			<north id="borderlayoutMainNorth" border="none"
+				height="40px" splittable="false">
+				<borderlayout height="40px">
+					<center>
+						<div id="divDropDownMenu">
+							<menubar id="mainMenuBar" height="25px"></menubar>
+						</div>
+					</center>
+					<west>
+						<div id="divNo2" align="left"
+							style="padding: 1px; width:34px; height:34px;">
+							<image src="/resources/img/eisberg.jpg"
+								style="width:34px; height:34px;" />
+						</div>
+					</west>
+					<east>
+						<div id="div1" height="40px"
+							style="background-color:silver; background-repeat: repeat-x; border: 'none';">
+							<hbox pack="end">
+								<space width="5px" />
+								<toolbarbutton id="btnAbout"
+									style="white-space:nowrap;" label="${c:l('common.About')}">
+								</toolbarbutton>
+								<space width="5px" />
+								<toolbarbutton id="btnLogout"
+									label="${c:l('btnLogout.label')}">
+								</toolbarbutton>
+								<space width="8px" />
+							</hbox>
+						</div>
+					</east>
+				</borderlayout>
+
+			</north>
+
+
+			<!-- MAIN MENU AREA -->
+			<west id="west" border="none" margins="0,0,0,0" size="260px"
+				collapsible="true" style="background-color: #D6DCDE; padding: 5px"
+				flex="true" minsize="100" splittable="true" autoscroll="false">
+				<div id="divWest">WEST</div>
+			</west>
+
+			<!-- MODULE CONTENT AREA -->
+			<center id="center" border="none" flex="true"
+				autoscroll="true" style="background-color: #D6DCDE; padding: 5px">
+				<div id="divCenter" height="90%">
+
+					<panel border="normal" height="100%">
+						<caption
+							style="color: #000000; font-weight: bold;"
+							label="${c:l('workplace')}">
+ 						<label value="" width="200px" />
+
+								<toolbar align="end"
+									style="float:right; border-style: none;padding: 0px;">
+									<toolbarbutton id="btnCloseAllTabs"
+										style="padding: 0px" height="22px"
+										image="/resources/img/icons/close-all-tabs.png"
+										tooltiptext="${c:l('btnCloseAllTabs.tooltiptext')}" />
+								</toolbar>
+						</caption>
+						<panelchildren>
+							<tabbox id="tabBoxIndexCenter" width="100%"
+								style="padding: 0px" height="100%">
+								<tabs id="tabsIndexCenter"></tabs>
+								<tabpanels
+									id="tabpanelsBoxIndexCenter">
+								</tabpanels>
+							</tabbox>
+
+						</panelchildren>
+					</panel>
+
+				</div>
+			</center>
+
+		</borderlayout>
+
+
+	</window>
+</zk>
+
+
