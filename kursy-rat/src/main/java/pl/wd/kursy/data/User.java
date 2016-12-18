@@ -29,28 +29,29 @@ public class User extends BasicType implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "hibernate-increment")
-	@Column(name = "id")
-	public int get_id() {
+	@Column(name = "usr_id")
+	public int getId() {
 		return _id;
 	}
 
-	public void set_id( int id ) {
+	public void setId( int id ) {
 		_id = id;
 	}
 
-	public String get_login() {
+	public String getLogin() {
 		return _login;
 	}
 
-	public void set_login(String login) {
+	public void setLogin(String login) {
 		_login = login;
 	}
 
-	public String get_pass() {
+	@Column(name = "password", nullable = false)
+	public String getPass() {
 		return _pass;
 	}
 
-	public void set_pass(String pass) {
+	public void setPass(String pass) {
 		_pass = pass;
 	}
 	
