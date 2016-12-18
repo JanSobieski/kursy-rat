@@ -15,6 +15,17 @@ import org.hibernate.annotations.GenericGenerator;
 @GenericGenerator(name = "hibernate-increment", strategy = "increment")
 public class User extends BasicType implements Serializable {
 	private static final long serialVersionUID = 7910961986707942681L;
+	
+	private String _login;
+	private String _pass;
+	
+	public User() {
+	}
+	
+	public User(String login, String pass ) {
+		_login = login;
+		_pass = pass;
+	}
 
 	@Id
 	@GeneratedValue(generator = "hibernate-increment")
@@ -25,6 +36,22 @@ public class User extends BasicType implements Serializable {
 
 	public void set_id( int id ) {
 		_id = id;
+	}
+
+	public String get_login() {
+		return _login;
+	}
+
+	public void set_login(String login) {
+		_login = login;
+	}
+
+	public String get_pass() {
+		return _pass;
+	}
+
+	public void set_pass(String pass) {
+		_pass = pass;
 	}
 	
 
