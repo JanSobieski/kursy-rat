@@ -20,11 +20,11 @@
 	<!-- ====================================================== -->
 
 
-	<bean id="dataServiceProviderImpl" class="pl.econsulting.eis.web.service.DataService" scope="session">
+	<bean id="dataServiceProviderImpl" class="pl.wd.kursy.service.DataService" scope="session">
 	</bean>
 
 	
-	<bean id="userWorkspace" class="pl.econsulting.eis.web.UserWorkspace" scope="session">
+	<bean id="userWorkspace" class="pl.wd.kursy.web.UserWorkspace" scope="session">
 			<property name="dataServiceProvider" ref="dataServiceProviderImpl" />
 	</bean>
 

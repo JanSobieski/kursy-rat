@@ -38,8 +38,8 @@
 		<property name="loginFormUrl" value="/login.zul" />
 	</bean>
 
-	<bean id="customAuthenticationFilter" class="pl.econsulting.eis.web.security.UserAuthenticationFilter">
-		<property name="authenticationManager" ref="eisAuthenticationManager" />
+	<bean id="customAuthenticationFilter" class="pl.wd.kursy.web.security.UserAuthenticationFilter">
+		<property name="authenticationManager" ref="kAuthenticationManager" />
 
 		<property name="sessionAuthenticationStrategy" ref="sas" />
 
@@ -58,14 +58,14 @@
 	</bean>
 
 
-	<bean id="eisAuthenticationManager" class="pl.econsulting.eis.web.security.CustomAuthunticationManager" scope="singleton" />
+	<bean id="kAuthenticationManager" class="pl.wd.kursy.web.security.CustomAuthenticationManager" scope="singleton" />
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	</bean>
 
 	<bean name="authenticationManagerBean"
-		class="pl.econsulting.eis.web.security.AuthenticationManagerBean"
+		class="pl.wd.kursy.web.security.AuthenticationManagerBean"
 		scope="singleton">
 		<constructor-arg name="sessionRegistry" ref="sessionRegistry" />
 		<property name="authenticationManager" ref="authenticationManager" />
@@ -80,24 +80,21 @@
 
 	<bean id="sessionRegistry"
 		class="org.springframework.security.core.session.SessionRegistryImpl" />
-	
+		
 
-
-
-		<!-- 
-	<bean name="mainServerBean" class="pl.econsulting.eis.web.security.MainServerBean" scope="singleton">
-		<constructor-arg><value>${catalina.base}/conf/EIS/</value></constructor-arg>
-		<constructor-arg><value>${webapp.root}/WEB-INF/server/</value></constructor-arg>
-
-		<constructor-arg><value>I:/home/witolddrozdzynski/java/projects/EIS/</value></constructor-arg>
-		<constructor-arg><value>conf/serverConfiguration.xml</value></constructor-arg>
+	<bean id="dataServiceProviderImplMain" class="pl.wd.kursy.service.DataService" scope="singleton">
 	</bean>
-	-->
-	
 
 	
-	<bean name="appManager" class="pl.econsulting.eis.web.security.AppManagerBean" scope="singleton">
-		<property  name="connectorFactory" ref="connectorFactory" />
+	<bean name="appManager" class="pl.wd.kursy.web.security.AppManagerBean" scope="singleton">
+		<property  name="mainAdmin" value="madmin" />
+		
+		<property  name="mainAdminPass" value="m8NFSdVl2VBbKH3gzSCsd74dPyw=" />
+		<!-- 
+		<property  name="mainAdminPass" value="" />
+		 -->
+
+		<property  name="dataServiceProvider" ref="dataServiceProviderImplMain" />
 	</bean>
 
 
