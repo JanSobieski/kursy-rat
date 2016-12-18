@@ -19,23 +19,21 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
 	public Authentication authenticate( Authentication authentication ) throws AuthenticationException {
 
-		// if(StringUtils.isBlank((String) authentication.getPrincipal()) ||
-		// StringUtils.isBlank((String) authentication.getCredentials())){
-		// throw new BadCredentialsException("Invalid username/password");
-		// }
+//		if (StringUtils.isBlank((String) authentication.getPrincipal())
+//				|| StringUtils.isBlank((String) authentication.getCredentials())) {
+//			throw new BadCredentialsException("Invalid username/password");
+//		}
 
 		String username = authentication.getName();
 		String pass = authentication.getCredentials().toString();
 
 		GrantedAuthority[] grantedAuthorities = null;
 
-		String cl_id = null;
-		try {
-			cl_id = "100";
-		} catch (Exception e) {
-			throw new RuntimeException("Blad: ", e );
-		}
-
+		String cl_id = AppManagerBean.getAppManagerBean().getDataServiceProvider().userLogin(username, pass);
+//		} catch (Exception e) {
+//			throw new RuntimeException("Blad: ", e );
+//		}
+//
 		User user_auth = new User(username, pass, true, true, true, true, makeGrantedAuthorities( cl_id ));
 
 		return new UsernamePasswordAuthenticationToken(user_auth, authentication.getCredentials(), makeGrantedAuthorities( cl_id ));
