@@ -24,15 +24,11 @@
 	<!-- Administration MenuTree -->
 	<menu id="menu_Category_Administration" rightName="">
 		<menuItem id="menu_Item_ChangePass" createTab="false"
-			zulNavigation="/secure/admin/changePassPanel.zul" rightName="" />
+			zulNavigation="/secure/admin/changePassPanel.zul" rightName="commonUser" />
 		<menuItem id="menu_Item_AdminPanel" 
 			zulNavigation="/secure/admin/adminPanel.zul" rightName="show_MenuAdministration" />
 		<menuItem id="menu_Item_Users" iconName="/images/icons/user_group_16x16.png"
 			zulNavigation="/secure/admin/userList.zul" rightName="show_MenuAdministration" />
-		<menuItem id="menu_Item_Groups" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/admin/groupList.zul" rightName="show_MenuAdministration" />
-		<menuItem id="menu_Item_DictionaryList" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/admin/dictionaryListEdit.zul" rightName="show_MenuDictionary" />
 	</menu>
 	<menu id="menu_Category_Recruitment" rightName="show_MenuRecruitment">
 		<menuItem id="menu_Item_PersonEditSimple" iconName="/images/icons/user_group_16x16.png"

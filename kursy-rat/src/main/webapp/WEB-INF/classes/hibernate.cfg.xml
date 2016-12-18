@@ -60,9 +60,15 @@
         <property name="format_sql">true</property>
         <!-- 
         <property name="hbm2ddl.auto">validate</property>
+        
+        
+        
          -->
-         
+
         <mapping class="pl.wd.kursy.data.User" />
+         
+         
+         
         
         
         
