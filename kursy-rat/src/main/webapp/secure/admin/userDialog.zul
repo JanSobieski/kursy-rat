@@ -9,7 +9,7 @@
 
 	<window id="userDialogWindow"
 		title="${c:l('userDialogWindow.title')}" border="none"
-		apply="pl.econsulting.eis.web.ui.admin.UserDialogCtrl" 
+		apply="pl.wd.kursy.web.ui.admin.UserDialogCtrl" 
 		closable="true" sizable="true" width="1000px" height="600px" sclass="pageWindowTitle">
 
 		<borderlayout id="borderlayoutUser">
