@@ -89,18 +89,17 @@
 		<property name="packagesToScan" value="pl.wd.kursy.data" />
 	    <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
 	</bean>
-		<!-- 
-		 -->
 	
 	<bean name="appManager" class="pl.wd.kursy.web.security.AppManagerBean" scope="singleton">
 		<property  name="mainAdmin" value="madmin" />
-		
 		<property  name="mainAdminPass" value="m8NFSdVl2VBbKH3gzSCsd74dPyw=" />
 		<!-- 
 		<property  name="mainAdminPass" value="" />
 		 -->
 
 		<property  name="dataServiceProvider" ref="dataServiceProviderImplMain" />
+		<property  name="sessionFactory" ref="sessionFactory" />
+		
 	</bean>
 
 

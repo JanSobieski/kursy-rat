@@ -63,9 +63,9 @@
         
         
         
+        <mapping class="pl.wd.kursy.data.User" />
          -->
 
-        <mapping class="pl.wd.kursy.data.User" />
          
          
          
