@@ -148,11 +148,6 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 		try {
 			// fill the components with the data
 			doWriteBeanToComponents(user);
-			/*
-			 * 
-			 * // stores the inital data for comparing if they are changed // during
-			 * user action.
-			 */
 			doStoreInitValues();
 			usrLogin.setFocus(true);
 
@@ -169,17 +164,15 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * @param anUser
 	 */
 	public void doWriteBeanToComponents( User user ) {
-		usrLogin.setValue(user.getName());
-		usrDescr.setValue("");
-//		if ( user.getPersonName().length() > 0 ) {
-//			usrPerson.setValue(user.getPersonName()+ " (id: "+user.getPersonId()+")");
-//		}
-//		usrActive.setChecked(user.getActive());
+		usrLogin.setValue(user.getLogin());
+		usrDescr.setValue(user.getDescription());
+		usrAdmin.setChecked(user.isAdmin());
 	}
 	
 	public void doWriteComponentsToBean(User user) throws Exception {
 		user.setLogin(usrLogin.getValue());
-		//user.setActive( usrActive.isChecked() );
+		user.setDescription(usrDescr.getValue());
+		user.setAdmin( usrAdmin.isChecked() );
 		if ( usrPassword.getValue().length() > 0 ) {
 			try {
 				user.setPass(Util.encode_password(usrPassword.getValue()));
@@ -200,8 +193,6 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * @throws Exception
 	 */
 	public void onClose$userDialogWindow( Event event ) throws Exception {
-		// logger.debug(event.toString());
-
 		doClose(event);
 	}
 
@@ -350,13 +341,9 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 			}
 			
 			_model.saveOrUpdate(_user);
-			if ( newUser ) {
-				//usrPerson.setValue( _user.getPersonName() );
-			}
 			doReadOnly();
 			doStoreInitValues();
 			
-			// synchronize the listBox
 			ListModelList<User> lml = (ListModelList<User>)(ListModelList<?>) _listBoxUser.getListModel();
 
 			// Check if the object is new or updated
@@ -436,18 +423,6 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	}
 
 	/**
-	 * Disables the Validation by setting empty constraints.
-	 */
-	private void doRemoveValidation() {
-		/*
-		 * setValidationOn(false);
-		 * 
-		 * usrLoginname.setConstraint(""); usrLastname.setConstraint("");
-		 */
-
-	}
-
-	/**
 	 * Set the components for edit mode. <br>
 	 */
 	private void doEdit() {
@@ -458,6 +433,8 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 
 		usrLogin.setReadonly(false);
 		usrLogin.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
+		usrDescr.setReadonly(false);
+		usrDescr.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
 		usrPassword.setReadonly(false);
 		usrPassword.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
 		usrAdmin.setDisabled(false);
@@ -467,7 +444,6 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 		btnSave.invalidate();
 
 
-		// btnCtrl.setBtnStatus_Edit();
 		usrLogin.focus();
 
 		// remember the old vars
@@ -500,13 +476,9 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * Clears the components values. <br>
 	 */
 	public void doClear() {
-
-		// temporarely disable the validation to allow the field's clearing
-		doRemoveValidation();
-
 		usrLogin.setValue("");
 		usrDescr.setValue("");
-		usrAdmin.setChecked(true);
+		usrAdmin.setChecked(false);
 	}
 
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++//

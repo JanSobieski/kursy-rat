@@ -17,28 +17,28 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.web.UserWorkspace;
-import pl.wd.kursy.web.data.comp.UserWebComparator;
-import pl.wd.kursy.web.data.filter.UserWebFilter;
+import pl.wd.kursy.web.data.filter.StudentFilter;
+import pl.wd.kursy.web.ui.admin.model.StudentListViewModel;
 import pl.wd.kursy.web.ui.admin.model.UserListViewModel;
-import pl.wd.kursy.web.ui.admin.renderer.UserListModelItemRenderer;
+import pl.wd.kursy.web.ui.admin.renderer.StudentListModelItemRenderer;
 import pl.wd.kursy.web.ui.util.BaseListCtrl;
 
 
 
 /**
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>
- * This is the controller class for the /secure/admin/userList.zul
- * file.<br>
+ * This is the controller class for the /secure/admin/studentList.zul
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>
  */
-public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
+public class StudentListCtrl extends BaseListCtrl<Student> implements Serializable {
+	private static final long serialVersionUID = 5409033372789296247L;
 
-	private static final long serialVersionUID = 2038742641853727975L;
-	private static final Logger logger = Logger.getLogger(UserListCtrl.class);
+	private static final Logger logger = Logger.getLogger(StudentListCtrl.class);
 	
-	private UserListViewModel<User> _model;
+	private StudentListViewModel<Student> _model;
 
 	/*
 	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -47,26 +47,26 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	 * 'extends GFCBaseCtrl' GenericForwardComposer.
 	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 */
-	protected Window userListWindow; // autowired
-	protected Listbox listBoxUsers; // aurowired
+	protected Window studentListWindow; // autowired
+	protected Listbox listBoxStudents; // aurowired
 
 	// filter components
 	
-	protected Textbox tbUserID; // aurowired
-	protected Textbox tbUserLogin; // aurowired
-	//protected Textbox tbPersonName; // autowired
+	protected Textbox tbStudentID; // aurowired
+	protected Textbox tbFirstName; // aurowired
+	protected Textbox tbLastName; // aurowired
 	
 	protected Button btnNew; // autowired
 
 
-	// listbox userList
-	protected Listheader listheader_UserList_usrLoginname; // autowired
-	protected Listheader listheader_UserList_usrPerson; // autowired
+	// listbox listBoxStudents
+	protected Listheader listheader_StudentList_FirstName; // autowired
+	protected Listheader listheader_StudentList_LastName; // autowired
 
 	/**
 	 * default constructor.<br>
 	 */
-	public UserListCtrl() {
+	public StudentListCtrl() {
 		super();
 	}
 
@@ -77,18 +77,16 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	    super.doAfterCompose(comp); //wire variables and event listners
 
 			/* set comps visible dependent of the users rights */
-			_model = new UserListViewModel<User>(getUserWorkspace());
+			_model = new StudentListViewModel<Student>(getUserWorkspace());
 
-			listheader_UserList_usrLoginname.setSortAscending(new UserWebComparator(true, UserWebComparator.TYPE_LOGIN));
-			listheader_UserList_usrLoginname.setSortDescending(new UserWebComparator(false, UserWebComparator.TYPE_LOGIN));
-			listheader_UserList_usrLoginname.setSortDirection("ascending");
-//			listheader_UserList_usrPerson.setSortAscending(new UserWebComparator(true, UserWebComparator.TYPE_PERSON));
-//			listheader_UserList_usrPerson.setSortDescending(new UserWebComparator(false, UserWebComparator.TYPE_PERSON));
+//			listheader_UserList_usrLoginname.setSortAscending(new UserWebComparator(true, UserWebComparator.TYPE_LOGIN));
+//			listheader_UserList_usrLoginname.setSortDescending(new UserWebComparator(false, UserWebComparator.TYPE_LOGIN));
+//			listheader_UserList_usrLoginname.setSortDirection("ascending");
 
 			doCheckRights();
-			_model.showData(listBoxUsers, null);
+			_model.showData(listBoxStudents, null);
 			
-			listBoxUsers.setItemRenderer(new UserListModelItemRenderer());
+			listBoxStudents.setItemRenderer(new StudentListModelItemRenderer());
 		} catch (Exception e) {
 			logger.error(e);
 			Messagebox.show(e.toString());
@@ -115,11 +113,11 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	 */
 	public void onUserListItemDoubleClicked(Event event) throws Exception {
 		// get the selected object
-		Listitem item = listBoxUsers.getSelectedItem();
+		Listitem item = listBoxStudents.getSelectedItem();
 
 		if (item != null) {
-			User anUser = (User) item.getAttribute("data");
-			showDetailView(anUser);
+			Student student = (Student) item.getAttribute("student");
+			showDetailView(student);
 		}
 	}
 
@@ -129,9 +127,8 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	 * @param event
 	 */
 	public void onClick$btnNew( Event event ) throws Exception {
-		User user = new User();
-		//user.setActive(true);
-		showDetailView(user);
+		Student student = new Student();
+		showDetailView(student);
 	}
 	
 
@@ -142,14 +139,14 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	 * @param anUser
 	 * @throws Exception
 	 */
-	private void showDetailView(User anUser) throws Exception {
+	private void showDetailView(Student student) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("user", anUser);
-		map.put("listBoxUsers", listBoxUsers);
+		map.put("student", student);
+		map.put("listBoxStudents", listBoxStudents);
 
 		// call the zul-file with the parameters packed in a map
 		try {
-			Executions.createComponents("/secure/admin/userDialog.zul", null, map);
+			Executions.createComponents("/secure/admin/studentDialog.zul", null, map);
 		} catch (final Exception e) {
 			logger.error("onOpenWindow:: error opening window / " + e.getMessage());
 
@@ -172,8 +169,8 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	 */
 	public void onClick$btnRefresh(Event event) throws InterruptedException {
 
-		Events.postEvent("onCreate", userListWindow, event);
-		userListWindow.invalidate();
+		Events.postEvent("onCreate", studentListWindow, event);
+		studentListWindow.invalidate();
 	}
 
 	/*
@@ -182,18 +179,18 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	public void onClick$button_UserList_SearchLoginname(Event event) throws Exception {
 
 		// if not empty
-		if (!tbUserLogin.getValue().isEmpty()) {
-
-			_model.showData(listBoxUsers, null);
-		}
+//		if (!tbUserLogin.getValue().isEmpty()) {
+//			_model.showData(listBoxUsers, null);
+//		}
 	}
 	
 	private void filterData() {
-		UserWebFilter filter = new UserWebFilter();
-		filter.setId(tbUserID.getValue());
-		filter.setName(tbUserLogin.getValue());
-		//filter.setPersonName(tbPersonName.getValue());
-		_model.showData(listBoxUsers, filter);
+		StudentFilter filter = new StudentFilter();
+		filter.setSId(tbStudentID.getValue());
+		filter.setFirstName(tbFirstName.getValue() );
+		filter.setLastName(tbLastName.getValue() );
+
+		_model.showData(listBoxStudents, filter);
 	}
 	
 	public void onChange$tbUserID(Event event) throws Exception {
@@ -212,7 +209,7 @@ public class UserListCtrl extends BaseListCtrl<User> implements Serializable {
 	// ++++++++++++++++++ getter / setter +++++++++++++++++++//
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
-	public UserListViewModel getModel() {
+	public StudentListViewModel getModel() {
 		return _model;
 	}
 	

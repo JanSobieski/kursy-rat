@@ -8,9 +8,10 @@ import org.zkoss.zul.Listbox;
 
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.web.UserWorkspace;
+import pl.wd.kursy.web.data.filter.StudentFilter;
 import pl.wd.kursy.web.data.filter.UserWebFilter;
 
-public class UserListViewModel<E> extends ListModelList<Object> {
+public class StudentListViewModel<E> extends ListModelList<Object> {
 	/**
 	 * 
 	 */
@@ -18,7 +19,7 @@ public class UserListViewModel<E> extends ListModelList<Object> {
 	private final UserWorkspace _workspace;
 	private User selected;
 
-	public UserListViewModel(UserWorkspace workspace) {
+	public StudentListViewModel(UserWorkspace workspace) {
 		_workspace = workspace;
 	}
 
@@ -64,15 +65,15 @@ public class UserListViewModel<E> extends ListModelList<Object> {
 		return selected;
 	}
 
-	public void showData(Listbox userList, UserWebFilter filter) {
-		try {
-			List<User> users = getUserList(filter);
-			clear();
-			addAll(users);
-			userList.setModel(this);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+	public void showData(Listbox studentList, StudentFilter filter) {
+//		try {
+//			List<User> users = getUserList(filter);
+//			clear();
+//			addAll(users);
+//			userList.setModel(this);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
 
 	}
 
