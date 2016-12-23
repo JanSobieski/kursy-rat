@@ -109,16 +109,17 @@ public class UserWorkspace implements Serializable, DisposableBean {
 	 * @return String set of GrantedAuthorities (rightNames)
 	 */
 	private Set<String> getGrantedAuthoritySet() {
-
-		if (this.grantedAuthoritySet == null) {
-
-			final Collection<GrantedAuthority> list = getAuthentication().getAuthorities();
-			this.grantedAuthoritySet = new HashSet<String>(list.size());
-
-			for (final GrantedAuthority grantedAuthority : list) {
-				this.grantedAuthoritySet.add(grantedAuthority.getAuthority());
-			}
-		}
+		//TODO nie uzywane
+		
+//		if (this.grantedAuthoritySet == null) {
+//
+//			final Collection<GrantedAuthority> list = getAuthentication().getAuthorities();
+//			this.grantedAuthoritySet = new HashSet<String>(list.size());
+//
+//			for (final GrantedAuthority grantedAuthority : list) {
+//				this.grantedAuthoritySet.add(grantedAuthority.getAuthority());
+//			}
+//		}
 		return this.grantedAuthoritySet;
 	}
 
@@ -221,7 +222,7 @@ public class UserWorkspace implements Serializable, DisposableBean {
 	}
 
 	public boolean check_authorisation_read( String authorisation ) throws Exception {
-		return getDataServiceProvider().check_authorisation_read( getUserId(), authorisation );
+		return getDataServiceProvider().check_authorisation_read( _user, authorisation );
 	}
 
 	public DataServiceInt getDataServiceProvider() {

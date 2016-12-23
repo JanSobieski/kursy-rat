@@ -8,8 +8,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 	
-	<window id="userListWindow" sclass="cardSys" border="none"
-		apply="pl.wd.kursy.web.ui.admin.UserListCtrl" height="100%">
+	<window id="studentListWindow" sclass="cardSys" border="none"
+		apply="pl.wd.kursy.web.ui.admin.StudentListCtrl" height="100%">
 		<style src="/resources/widgets/grid/style.css" />
 		<borderlayout id="borderLayout_branchList" height="100%">
 			<north border="none" margins="0,0,0,0">
@@ -29,7 +29,7 @@
 			</north>
 			<center border="normal">
 
-				<listbox id="listBoxUsers"
+				<listbox id="listBoxStudents"
 					style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
 					width="100%" height="100%"
 					tooltiptext="${c:l('listbox.tooltiptext')}" multiple="false">
@@ -37,34 +37,31 @@
 						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbUserID" instant="true" width="40px" />
+							<textbox id="tbStudentID" instant="true" width="40px" />
 						</auxheader>
 						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbUserLogin" instant="true" width="100px" />
+							<textbox id="tbFirstName" instant="true" width="100px" />
 						</auxheader>
 						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbPersonName" instant="true" width="100px" />
+							<textbox id="tbLastName" instant="true" width="100px" />
 						</auxheader>
 					</auxhead>
 
 					<listhead sizable="true" id="listHeader">
-						<mylistheader id="listheader_UserList_usrID"
+						<mylistheader id="listheader_StudentList_ID"
 							sort="auto(ID)" width="10%" label="${c:l('common.ID')}">
 						</mylistheader>
 						<mylistheader
-							id="listheader_UserList_usrLoginname" sort="auto(name)"
-							width="20%" label="${c:l('common.Loginname')}">
+							id="listheader_StudentList_FirstName" sort="auto(name)"
+							width="20%" label="Imię">
 						</mylistheader>
-						<mylistheader id="listheader_UserList_usrPerson"
+						<mylistheader id="listheader_StudentList_LastName"
 							sort="auto(personName)" width="25%"
-							label="Opis" />
-						<mylistheader id="listheader_UserList_usrActive"
-							sort="auto(active)" width="10%"
-							label="Admin" />
+							label="Nazwisko" />
 					</listhead>
 				</listbox>
 

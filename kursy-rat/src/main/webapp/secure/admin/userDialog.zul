@@ -88,19 +88,12 @@
 															<row>
 																<hbox>
 																	<label
-																		value="${c:l('label_UserDialog_usrPerson.value')}" />
+																		value="Opis" />
 																	<label
 																		value="*" style="color:red;font-size:10px" />
 																</hbox>
-																<hbox
-																	width="90%">
-																	<textbox
-																		id="usrPerson" maxlength="50" hflex="1" />
-																	<button
-																		id="btnSelectPerson" style="padding: 0px;" width="24px"
-																		height="26px" image="/resources/img/icons/person_search.png"
-																		tooltiptext="${c:l('selectPerson.tooltiptext')}" />
-																</hbox>
+																<textbox
+																	id="usrDescr" hflex="1" />
 
 
 															</row>
@@ -118,14 +111,14 @@
 															<row>
 																<hbox>
 																	<label
-																		value="${c:l('label_UserDialog_usrActive.value')}" />
+																		value="Administrator" />
 																	<label
 																		value="*" style="color:red;font-size:10px" />
 																</hbox>
 																<hbox
 																	align="left">
 																	<checkbox
-																		id="usrActive" />
+																		id="usrAdmin" />
 																</hbox>
 															</row>
 														</rows>
@@ -138,80 +131,8 @@
 							</cell>
 						</hbox>
 					</north>
-					<center border="none">
-						<borderlayout>
-							<west size="40%" flex="true"
-								splittable="true" collapsible="false">
-									<groupbox mold="3d"
-										closable="false">
-										<caption
-											label="${c:l('panel_UserDialog_Groups.title')}" />
-										<hlayout height="100%"
-											style="padding:3px">
-											<listbox id="listBoxGroups"
-												hflex="1" vflex="true" multiple="true">
-												<listhead>
-													<listheader
-														label="${c:l('panel_UserDialog_AvailableGroups.title')}"
-														width="100%">
-													</listheader>
-												</listhead>
-											</listbox>
-
-											<vbox spacing="10px"
-												width="24px">
-												<button
-													id="chooseAllBtn" style="padding:0"
-													image="/resources/img/icons/rightrightarrow_g.png" />
-												<button id="chooseBtn"
-													style="padding:0"
-													image="/resources/img/icons/rightarrow_g.png" />
-												<button id="removeBtn"
-													style="padding:0"
-													image="/resources/img/icons/leftarrow_g.png" />
-												<button
-													id="removeAllBtn" style="padding:0"
-													image="/resources/img/icons/leftleftarrow_g.png" />
-											</vbox>
-											<listbox
-												id="listBoxAssignedGroups" hflex="1" vflex="true"
-												multiple="true">
-												<listhead>
-													<listheader
-														label="${c:l('panel_UserDialog_GrantedGroups.title')}"
-														width="100%">
-													</listheader>
-												</listhead>
-											</listbox>
-										</hlayout>
-									</groupbox>
-							</west>
-							<center border="none" flex="true">
-								<groupbox mold="3d" closable="false">
-									<caption
-										label="${c:l('panel_UserDialog_GrantedRights.title')}" />
-									<hlayout height="100%"
-										style="padding:3px">
-										<listbox id="listBoxUserRights"
-											hflex="1" vflex="true" multiple="true">
-											<listhead sizable="true">
-												<listheader
-													label="${c:l('common.Rigth')}" width="40%">
-												</listheader>
-												<listheader
-													label="${c:l('common.Description')}" width="60%">
-												</listheader>
-											</listhead>
-										</listbox>
-									</hlayout>
-								</groupbox>
-
-							</center>
-						</borderlayout>
-					</center>
 				</borderlayout>
 			</center>
 		</borderlayout>
 	</window>
 </zk>
-

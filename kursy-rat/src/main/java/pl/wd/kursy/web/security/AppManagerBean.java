@@ -1,5 +1,8 @@
 package pl.wd.kursy.web.security;
 
+import org.hibernate.internal.SessionFactoryImpl;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import pl.wd.kursy.misc.Util;
 import pl.wd.kursy.service.interf.DataServiceInt;
 
@@ -9,6 +12,7 @@ public class AppManagerBean {
 	private String _mainAdmin;
 	private String _mainAdminPass;
 	private DataServiceInt _dataServiceProvider;
+	private SessionFactoryImpl _sessionFactory;
 
 	public AppManagerBean() {
 		setAppManagerBean(this);
@@ -52,6 +56,14 @@ public class AppManagerBean {
 		} catch (Exception e) {
 			return "error: " + e.toString();
 		}
+	}
+
+	public SessionFactoryImpl getSessionFactory() {
+		return _sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactoryImpl sessionFactory) {
+		_sessionFactory = sessionFactory;
 	}
 	
 
