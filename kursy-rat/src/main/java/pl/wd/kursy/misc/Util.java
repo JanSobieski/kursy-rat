@@ -28,8 +28,8 @@ import org.w3c.dom.Document;
 public class Util {
 	public static final String TRUE = "true";
 
-	public final static String VARSION_PATH = "/pl/econsulting/eis/resource/version.txt";
-	public final static String XSL_PATH = "/pl/econsulting/eis/resource/xsl/";
+	public final static String VARSION_PATH = "/pl/wd/kursy/resource/version.txt";
+	public final static String XSL_PATH = "/pl/wd/kursy/resource/xsl/";
 	public final static String ENCODING_UTF8 = "utf-8";
 	public final static String DEC_FORMAT_CURRENCY = "0.00";
 	public final static String VALUES_SEPARATOR = ",";

@@ -7,11 +7,11 @@ public class StudentFilter extends Student {
 
 	private String _sId;
 
-	public String get_sId() {
+	public String getSid() {
 		return _sId;
 	}
 
-	public void setSId(String sId) {
+	public void setSid(String sId) {
 		_sId = sId;
 	}
 
