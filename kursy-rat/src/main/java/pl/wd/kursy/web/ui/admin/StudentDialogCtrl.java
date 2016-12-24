@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.wd.web.util.Constants;
 import org.wd.web.util.MessageUtils;
 import org.wd.web.util.MultiLineMessageBox;
 import org.zkoss.util.resource.Labels;
@@ -12,49 +11,39 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import pl.wd.kursy.data.User;
+import pl.wd.kursy.data.Student;
 import pl.wd.kursy.exception.BusinessLogicException;
-import pl.wd.kursy.misc.Util;
 import pl.wd.kursy.web.ui.WebConstants;
-import pl.wd.kursy.web.ui.admin.model.UserDialogViewModel;
+import pl.wd.kursy.web.ui.admin.model.StudentDialogViewModel;
 import pl.wd.kursy.web.ui.util.BaseCtrl;
 
-public class UserDialogCtrl extends BaseCtrl implements Serializable {
+public class StudentDialogCtrl extends BaseCtrl implements Serializable {
+	private static final long serialVersionUID = -7287101962808717615L;
 
-	private static final long serialVersionUID = -5769173296358420487L;
-	private transient static final Logger logger = Logger.getLogger(UserDialogCtrl.class);
-	/*
-	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * All the components that are defined here and have a corresponding component
-	 * with the same 'id' in the zul-file are getting autowired by our 'extends
-	 * GFCBaseCtrl' GenericForwardComposer.
-	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 */
+	private transient static final Logger logger = Logger.getLogger(StudentDialogCtrl.class);
 
-	private UserDialogViewModel _model;
+	private StudentDialogViewModel _model;
+	
+	final static String STUDENT = "student";
 
-	private transient String oldVar_usrLogin;
-	private transient boolean oldVar_usrActive;
-	private transient String oldVar_usrPerson;
+	private transient String _oldVar_firstName;
+	private transient String _oldVar_lastName;
 
 	// overhanded vars per params
-	private transient Listbox _listBoxUser; // overhanded
-	private transient User _user; // overhanded
+	private transient Listbox _listBoxStudent; // overhanded
+	private transient Student _student; // overhanded
 
-	protected Window userDialogWindow; // autowired
+	protected Window studentDialogWindow; // autowired
 
 	// panel account details
-	protected Textbox usrLogin; // autowired
-	protected Textbox usrDescr; // autowired
-	protected Textbox usrPassword; // autowired
-	protected Checkbox usrAdmin; // autowired
+	protected Textbox tbFirstName; // autowired
+	protected Textbox tbLastName; // autowired
 
 	// Button controller for the CRUD buttons
 	protected Button btnNew; // autowired
@@ -64,7 +53,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	protected Button btnCancel;// autowired
 	protected Button btnClose; // autowired
 
-	public UserDialogCtrl() {
+	public StudentDialogCtrl() {
 		super();
 	}
 	
@@ -73,26 +62,26 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	    super.doAfterCompose(comp); //wire variables and event listners
 
 			try {
-				_model = new UserDialogViewModel(_userWorkspace);
+				_model = new StudentDialogViewModel(_userWorkspace);
 
 				// get the params map that are overhanded by creation.
 				//Map<String, Object> args = getCreationArgsMap(event);
 		    @SuppressWarnings("unchecked")
 				Map<String, Object> args = (Map<String, Object>)Executions.getCurrent().getArg();
 
-				if ( args.containsKey("user") ) {
-					setUser((User) args.get("user"));
+				if ( args.containsKey(STUDENT) ) {
+					setStudent((Student) args.get(STUDENT));
 				} else {
-					setUser(new User());
+					setStudent(new Student());
 				}
 
 				// we get the listBox Object for the users list. So we have access
 				// to it and can synchronize the shown data when we do insert, edit or
 				// delete users here.
-				if ( args.containsKey("listBoxUsers") ) {
-					_listBoxUser = (Listbox) args.get("listBoxUsers");
+				if ( args.containsKey(StudentListCtrl.LIST_BOX_STUDENTS) ) {
+					_listBoxStudent = (Listbox) args.get(StudentListCtrl.LIST_BOX_STUDENTS);
 				} else {
-					_listBoxUser = null;
+					_listBoxStudent = null;
 				}
 			} catch (Throwable e) {
 				logger.error("Error", e);
@@ -100,7 +89,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 				getUserWorkspace().getDataServiceProvider().closeDbSession();
 			}
 
-			doShowDialog(getUser());
+			doShowDialog(getStudent());
 		} catch (Exception e) {
 			logger.error(e);
 			Messagebox.show(e.toString());
@@ -127,8 +116,8 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * @param user
 	 * @throws InterruptedException
 	 */
-	public void doShowDialog( User user ) throws InterruptedException {
-		if ( user == null ) {
+	public void doShowDialog( Student student ) throws InterruptedException {
+		if ( student == null ) {
 			/** !!! DO NOT BREAK THE TIERS !!! */
 			// We don't create a new DomainObject() in the frontend.
 			// We GET it from the backend.
@@ -137,7 +126,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 
 		// set Readonly mode accordingly if the object is new or not.
 
-		if ( user.get_id() == 0 ) {
+		if ( student.get_id() == 0 ) {
 			doEdit();
 		} else {
 			// btnCtrl.setInitEdit();
@@ -146,11 +135,11 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 
 		try {
 			// fill the components with the data
-			doWriteBeanToComponents(user);
+			doWriteBeanToComponents(student);
 			doStoreInitValues();
-			usrLogin.setFocus(true);
+			tbFirstName.setFocus(true);
 
-			userDialogWindow.doModal(); // open the dialog in modal mode
+			studentDialogWindow.doModal(); // open the dialog in modal mode
 		} catch (final Exception e) {
 			logger.error("Error", e);
 			Messagebox.show(e.toString());
@@ -159,26 +148,15 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 
 	/**
 	 * Writes the bean data to the components.<br>
-	 * 
-	 * @param anUser
 	 */
-	public void doWriteBeanToComponents( User user ) {
-		usrLogin.setValue(user.getLogin());
-		usrDescr.setValue(user.getDescription());
-		usrAdmin.setChecked(user.isAdmin());
+	public void doWriteBeanToComponents( Student student ) {
+		tbFirstName.setValue(student.getFirstName());
+		tbLastName.setValue(student.getLastName());
 	}
 	
-	public void doWriteComponentsToBean(User user) throws Exception {
-		user.setLogin(usrLogin.getValue());
-		user.setDescription(usrDescr.getValue());
-		user.setAdmin( usrAdmin.isChecked() );
-		if ( usrPassword.getValue().length() > 0 ) {
-			try {
-				user.setPass(Util.encode_password(usrPassword.getValue()));
-			} catch (Exception e) {
-				logger.error("Error", e);
-			}
-		}
+	public void doWriteComponentsToBean(Student student) throws Exception {
+		student.setFirstName(tbFirstName.getValue());
+		student.setLastName(tbLastName.getValue());
 	}
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -226,7 +204,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * @param event
 	 */
 	public void onClick$btnNew( Event event ) {
-		_user = new User();
+		_student = new Student();
 		doClear();
 		doEdit(); // edit mode
 	}
@@ -301,7 +279,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	
 	private void closeWindow() {
 		//unlockRecord(Constants.TABLE_USERS, _user.get_id());
-		userDialogWindow.onClose();
+		studentDialogWindow.onClose();
 	}
 
 	/**
@@ -322,35 +300,33 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 		boolean newUser = false;
 
 		// fill the object with the components data
-		doWriteComponentsToBean(_user);
+		doWriteComponentsToBean(_student);
 
 		/* if a language is selected get the object from the listbox */
 
 		// save it to database
 		try {
-			if ( _user.getLogin().length() == 0 ) {
-				MessageUtils.showErrorMessage("Prosze podac login");
+			if ( _student.getFirstName().length() == 0 ) {
+				MessageUtils.showErrorMessage("Prosze podac Imię");
 				return false;
 			}
-			if ( _user.get_id() == 0 ) {
-				if ( _user.getPass().length() == 0 ) {
-					MessageUtils.showErrorMessage("Prosze podac haslo");
-					return false;
-				}
+			if ( _student.getLastName().length() == 0 ) {
+				MessageUtils.showErrorMessage("Prosze podac Nazwisko");
+				return false;
 			}
 			
-			_model.saveOrUpdate(_user);
+			_model.saveOrUpdate(_student);
 			doReadOnly();
 			doStoreInitValues();
 			
-			ListModelList<User> lml = (ListModelList<User>)(ListModelList<?>) _listBoxUser.getListModel();
+			ListModelList<Student> lml = (ListModelList<Student>)(ListModelList<?>) _listBoxStudent.getListModel();
 
 			// Check if the object is new or updated
 			// -1 means that the obj is not in the list, so it's new.
-			if (lml.indexOf(_user) == -1) {
-				lml.add(_user);
+			if (lml.indexOf(_student) == -1) {
+				lml.add(_student);
 			} else {
-				lml.set(lml.indexOf(_user), _user);
+				lml.set(lml.indexOf(_student), _student);
 			}
 			return true;
 		} catch (BusinessLogicException e) {
@@ -374,9 +350,8 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * Stores the init values in mem vars. <br>
 	 */
 	private void doStoreInitValues() {
-		oldVar_usrLogin = usrLogin.getValue();
-		oldVar_usrPerson = usrDescr.getValue();
-		oldVar_usrActive = usrAdmin.isChecked();
+		_oldVar_firstName = tbFirstName.getValue();
+		_oldVar_lastName = tbLastName.getValue();
 
 	}
 
@@ -384,9 +359,8 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * Resets the init values from mem vars. <br>
 	 */
 	private void doResetInitValues() {
-		usrLogin.setValue(oldVar_usrLogin);
-		usrDescr.setValue(oldVar_usrPerson);
-		usrAdmin.setChecked(oldVar_usrActive);
+		tbFirstName.setValue(_oldVar_firstName);
+		tbLastName.setValue(_oldVar_lastName);
 
 	}
 
@@ -399,10 +373,10 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	private boolean isDataChanged() {
 		boolean changed = false;
 
-		if ( oldVar_usrLogin != usrLogin.getValue() ) {
+		if ( _oldVar_firstName != tbFirstName.getValue() ) {
 			return true;
 		}
-		if ( oldVar_usrActive != usrAdmin.isChecked() ) {
+		if ( _oldVar_lastName != tbLastName.getValue()  ) {
 			return true;
 		}
 
@@ -430,14 +404,10 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 //		}
 
 
-		usrLogin.setReadonly(false);
-		usrLogin.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
-		usrDescr.setReadonly(false);
-		usrDescr.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
-		usrPassword.setReadonly(false);
-		usrPassword.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
-		usrAdmin.setDisabled(false);
-		usrAdmin.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
+		tbFirstName.setReadonly(false);
+		tbFirstName.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
+		tbLastName.setReadonly(false);
+		tbLastName.setSclass(WebConstants.SCLASS_READ_ONLY_FALSE);
 		
 		btnSave.setDisabled(false);
 		btnSave.invalidate();
@@ -445,7 +415,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 		btnEdit.invalidate();
 
 
-		usrLogin.focus();
+		tbLastName.focus();
 
 		// remember the old vars
 		doStoreInitValues();
@@ -461,14 +431,10 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 		btnSave.setDisabled(true);
 		btnSave.invalidate();
 		
-		usrLogin.setReadonly(true);
-		usrLogin.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
-		usrDescr.setReadonly(true);
-		usrDescr.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
-		usrPassword.setReadonly(true);
-		usrPassword.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
-		usrAdmin.setDisabled(true);
-		usrAdmin.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
+		tbFirstName.setReadonly(true);
+		tbFirstName.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
+		tbLastName.setReadonly(true);
+		tbLastName.setSclass(WebConstants.SCLASS_READ_ONLY_TRUE);
 
 		_readOnly = true;
 	}
@@ -477,21 +443,20 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 	 * Clears the components values. <br>
 	 */
 	public void doClear() {
-		usrLogin.setValue("");
-		usrDescr.setValue("");
-		usrAdmin.setChecked(false);
+		tbFirstName.setValue("");
+		tbLastName.setValue("");
 	}
 
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 	// ++++++++++++++++++ getter / setter +++++++++++++++++++//
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
-	public User getUser() {
-		return _user;
+	public Student getStudent() {
+		return _student;
 	}
 
-	public void setUser( User user ) {
-		_user = user;
+	public void setStudent( Student student ) {
+		_student = student;
 	}
 
 }

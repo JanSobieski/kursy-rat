@@ -38,6 +38,9 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 
 	private static final Logger logger = Logger.getLogger(StudentListCtrl.class);
 	
+	final static String LIST_BOX_STUDENTS = "listBoxStudent";
+
+	
 	private StudentListViewModel<Student> _model;
 
 	/*
@@ -99,8 +102,6 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	private void doCheckRights() {
 
 		final UserWorkspace workspace = getUserWorkspace();
-
-		//userListWindow.setVisible(workspace.isAllowed("userListWindow"));
 	}
 
 	/**
@@ -142,7 +143,7 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	private void showDetailView(Student student) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("student", student);
-		map.put("listBoxStudents", listBoxStudents);
+		map.put(LIST_BOX_STUDENTS, listBoxStudents);
 
 		// call the zul-file with the parameters packed in a map
 		try {
@@ -186,7 +187,7 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	
 	private void filterData() {
 		StudentFilter filter = new StudentFilter();
-		filter.setSId(tbStudentID.getValue());
+		filter.setSid(tbStudentID.getValue());
 		filter.setFirstName(tbFirstName.getValue() );
 		filter.setLastName(tbLastName.getValue() );
 
