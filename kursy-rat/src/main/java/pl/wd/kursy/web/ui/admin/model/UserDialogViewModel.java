@@ -1,5 +1,6 @@
 package pl.wd.kursy.web.ui.admin.model;
 
+import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.web.UserWorkspace;
 
@@ -14,4 +15,5 @@ public class UserDialogViewModel {
 		_workspace.getDataServiceProvider().saveOrUpdate(user);
 		_workspace.getDataServiceProvider().closeDbSession();
 	}
+
 }
