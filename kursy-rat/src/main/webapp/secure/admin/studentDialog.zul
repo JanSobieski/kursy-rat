@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+	<window id="studentDialogWindow"
+		title="${c:l('userDialogWindow.title')}" border="none"
+		apply="pl.wd.kursy.web.ui.admin.StudentDialogCtrl" 
+		closable="true" sizable="true" width="1000px" height="600px" sclass="pageWindowTitle">
+
+		<borderlayout id="borderlayoutUser">
+
+			<north border="none" margins="0,0,0,0">
+
+				<div sclass="z-toolbar" style="padding:0">
+					<hbox pack="stretch" sclass="hboxRemoveWhiteStrips"
+						width="100%">
+						<!-- CRUD BUTTONS -->
+						<toolbar align="end"
+							style="float:left; border-style: none; padding-left: 10px;">
+							<toolbarbutton id="btnNew"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/new.png"
+										tooltiptext="${c:l('btnNew.tooltiptext')}" />
+							<toolbarbutton id="btnEdit"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/edit.png"
+										tooltiptext="${c:l('btnEdit.tooltiptext')}" />
+							<toolbarbutton id="btnSave" disabled="true"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/save.png"
+										tooltiptext="${c:l('btnSave.tooltiptext')}" />
+							<toolbarbutton id="btnCancel"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/cancel.png"
+										tooltiptext="${c:l('btnCancel.tooltiptext')}" />
+							<toolbarbutton id="btnClose"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/exit.png"
+										tooltiptext="${c:l('btnClose.tooltiptext')}" />
+						</toolbar>
+					</hbox>
+				</div>
+
+			</north>
+
+			<center border="none" margins="0,0,0,0">
+				<borderlayout vflex="true" hflex="1">
+					<north border="none">
+
+						<hbox align="stretch" pack="stretch"
+							sclass="FDCenterNoBorder" width="100%">
+							<!-- Left CONTENT AREA -->
+							<!-- simulates a columnLayout -->
+							<cell width="60%">
+								<vbox align="stretch" pack="stretch"
+									width="100%">
+									<div>
+										<panel border="none">
+											<panelchildren>
+												<groupbox mold="3d"
+													closable="false">
+													<caption
+														label="${c:l('panel_UserDialog_AccountDetails.title')}" />
+													<grid
+														sclass="GridPlain">
+														<columns>
+															<column
+																align="right" width="150px" />
+															<column
+																width="100%" />
+														</columns>
+														<rows>
+															<row>
+																<hbox>
+																	<label
+																		value="Imię" />
+																	<label
+																		value="*" style="color:red;font-size:10px" />
+																</hbox>
+																<textbox
+																	id="tbFirstName" maxlength="50" hflex="1" />
+															</row>
+															<row>
+																<hbox>
+																	<label
+																		value="Nazwisko" />
+																	<label
+																		value="*" style="color:red;font-size:10px" />
+																</hbox>
+																<textbox
+																	id="tbLastName" hflex="1" />
+
+
+															</row>
+														</rows>
+													</grid>
+												</groupbox>
+											</panelchildren>
+										</panel>
+									</div>
+								</vbox>
+							</cell>
+						</hbox>
+					</north>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>
