@@ -37,7 +37,7 @@
 						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbStudentID" instant="true" width="40px" />
+							<textbox id="tbStudentID" instant="true" width="20px" />
 						</auxheader>
 						<auxheader colspan="1">
 							<image
