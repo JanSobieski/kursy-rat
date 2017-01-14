@@ -1,4 +1,4 @@
-package pl.wd.kursy.web.ui.admin;
+package pl.wd.kursy.web.ui.admin; 
 
 import java.io.Serializable;
 import java.util.Map;

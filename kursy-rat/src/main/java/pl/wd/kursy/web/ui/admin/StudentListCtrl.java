@@ -112,12 +112,12 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	 * @param event
 	 * @throws Exception
 	 */
-	public void onUserListItemDoubleClicked(Event event) throws Exception {
+	public void onStudentListItemDoubleClicked(Event event) throws Exception {
 		// get the selected object
 		Listitem item = listBoxStudents.getSelectedItem();
 
 		if (item != null) {
-			Student student = (Student) item.getAttribute("student");
+			Student student = (Student) item.getAttribute("data");
 			showDetailView(student);
 		}
 	}

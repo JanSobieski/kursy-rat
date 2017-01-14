@@ -2,7 +2,9 @@
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
-<window title="Kursy LOGIN" border="normal" width="280px">
+<window id="loginWindow" title="Kursy LOGIN" position="left" border="normal"
+	apply="pl.wd.kursy.web.ui.admin.LoginCtrl"  
+	width="420px">
     <!-- this form-login-page form is also used as the
          form-error-page to ask for a login again. -->
     <html style="color:red" if="${not empty param.login_error}">
@@ -25,24 +27,30 @@
         }
     </style>
     <groupbox>
-    	<image src="/resources/img/mboska-kp.jpg" width="230px"
+    	<image src="/resources/img/mboska-kp.jpg" width="350px"
     		height="160px" />
     	<h:form id="f" name="f" action="j_spring_security_check"
     		method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
-    		<grid width="230px">
-    			<rows>
+    		<grid width="350px">
+    			<rows hflex="1">
     				<row>
     					Użytkownik:
-    					<textbox id="u" width="100px" name="j_username" />
+					<textbox id="tbUser"  instant="true" width="100%" />
     				</row>
     				<row>
     					Hasło:
-    					<textbox id="p" width="100px" type="password"
-    						name="j_password" />
+					<textbox id="tbPass"  type = "password" instant="true" width="100%" />
     				</row>
     				<row>
-    					<hbox>
-    						<h:input type="submit" value="Logowanie" />
+    					Kurs:
+						<combobox
+							id="cmbCourse" readonly="true" hflex="1">
+						</combobox>
+    				</row>
+    				<row hflex="1">
+    					<hbox hflex="1">
+						<button
+							id="btnLogin" label="Logowanie" />
     					</hbox>
     					${appManager.version}
     				</row>

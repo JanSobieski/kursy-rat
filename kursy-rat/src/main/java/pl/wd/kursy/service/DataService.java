@@ -7,9 +7,11 @@ import org.apache.log4j.Logger;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.zkoss.util.resource.Labels;
 
+import pl.wd.kursy.dao.CourseDao;
 import pl.wd.kursy.dao.Database;
 import pl.wd.kursy.dao.StudentDao;
 import pl.wd.kursy.dao.UserDao;
+import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.constants.Rights;
@@ -159,7 +161,13 @@ public class DataService implements DataServiceInt, Serializable {
 		StudentDao studentDao = new StudentDao(_db);
 		
 		studentDao.updateStudent(student);
+	}
+
+	@Override
+	public List<Course> getCourses() throws Exception {
+		CourseDao courseDao = new CourseDao(_db);
 		
+		return courseDao.getCourses();
 	}
 
 }
