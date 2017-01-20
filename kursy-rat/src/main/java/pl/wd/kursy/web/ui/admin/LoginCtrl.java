@@ -15,6 +15,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import pl.wd.kursy.data.Course;
+import pl.wd.kursy.web.security.UserAuthenticationFilter;
 import pl.wd.kursy.web.ui.util.BaseCtrl;
 import pl.wd.kursy.web.ui.util.WebUtil;
 
@@ -54,9 +55,17 @@ public class LoginCtrl extends BaseCtrl implements Serializable {
 	}
 
 	public void onClick$btnLogin(Event event) throws InterruptedException {
+		int courseId = 0;
+		Course course = (Course) WebUtil.getCmbValue(cmbCourse);
+		if (course != null) {
+			courseId = course.get_id();
+		}
+		
 		try {
 			Executions.sendRedirect(
-					"j_spring_security_check?j_username=" + tbUser.getText() + " &j_password=" + tbPass.getText());
+					"j_spring_security_check?" + UserAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY + "=" 
+					+ tbUser.getText() + "&" + UserAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY + "=" + tbPass.getText() + "&" 
+					+ UserAuthenticationFilter.SPRING_SECURITY_FORM_COURSE_ID + "=" + courseId );
 		} catch (final Exception e) {
 		}
 	}

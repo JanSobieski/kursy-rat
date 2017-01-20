@@ -25,10 +25,12 @@
 	<menu id="menu_Category_Administration" rightName="">
 		<menuItem id="menu_Item_ChangePass" createTab="false"
 			zulNavigation="/secure/admin/changePassPanel.zul" rightName="commonUser" />
-		<menuItem id="menu_Item_AdminPanel" 
-			zulNavigation="/secure/admin/adminPanel.zul" rightName="show_MenuAdministration" />
 		<menuItem id="menu_Item_Users" iconName="/images/icons/user_group_16x16.png"
 			zulNavigation="/secure/admin/userList.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_Courses" 
+			zulNavigation="/secure/admin/courseList.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_Students" 
+			zulNavigation="/secure/admin/studentList.zul" rightName="" />
 	</menu>
 	<menu id="menu_Category_Recruitment" rightName="show_MenuRecruitment">
 		<menuItem id="menu_Item_PersonEditSimple" iconName="/images/icons/user_group_16x16.png"

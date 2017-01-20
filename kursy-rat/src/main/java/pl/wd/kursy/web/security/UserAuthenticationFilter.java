@@ -23,9 +23,9 @@ public class UserAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
 	public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "j_username";
 	public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "j_password";
+	public static final String SPRING_SECURITY_FORM_COURSE_ID = "courseId";
 	public static final String SPRING_SECURITY_LAST_USERNAME_KEY = "SPRING_SECURITY_LAST_USERNAME";
 	public static final String CLIENT_ID = "CL_ID";
-	public static final String CL_ID = "CLID:";
 
 	private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
 	private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
@@ -54,6 +54,7 @@ public class UserAuthenticationFilter extends AbstractAuthenticationProcessingFi
 			logger.error( "Blad:", err );
 		}
 		username = username.trim();
+		String courseId = obtainCourseId(request);
 
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken( username, password );
 
@@ -68,8 +69,8 @@ public class UserAuthenticationFilter extends AbstractAuthenticationProcessingFi
 		java.util.Collection<? extends GrantedAuthority> auth = (java.util.Collection<? extends GrantedAuthority>)newAuth.getAuthorities();
 		for( Iterator iterator = auth.iterator(); iterator.hasNext(); ) {
 			GrantedAuthority grantedAuthority = (GrantedAuthority) iterator.next();
-			if ( grantedAuthority.getAuthority().startsWith( CL_ID) ) {
-				String cl_id = grantedAuthority.getAuthority().substring( CL_ID.length() );
+			if ( grantedAuthority.getAuthority().startsWith( CustomAuthenticationManager.CL_ID) ) {
+				String cl_id = grantedAuthority.getAuthority().substring( CustomAuthenticationManager.CL_ID.length() );
 //				long client_id = Long.parseLong(cl_id);
 				if (session != null || getAllowSessionCreation()) {
 //					LoginBean login_bean = (LoginBean)request.getSession().getAttribute(LoginBean.LOGIN_BEAN_ATTR );
@@ -79,6 +80,8 @@ public class UserAuthenticationFilter extends AbstractAuthenticationProcessingFi
 //					}
 //					else {
 						request.getSession().setAttribute(CLIENT_ID, cl_id);
+						request.getSession().setAttribute(SPRING_SECURITY_FORM_COURSE_ID, courseId);
+						
 //					}
 				}
 				break;
@@ -125,6 +128,10 @@ public class UserAuthenticationFilter extends AbstractAuthenticationProcessingFi
 		return request.getParameter(usernameParameter);
 	}
 
+	protected String obtainCourseId(HttpServletRequest request) {
+		return request.getParameter(SPRING_SECURITY_FORM_COURSE_ID);
+	}
+	
 	/**
 	 * Provided so that subclasses may configure what is put into the
 	 * authentication request's details property.

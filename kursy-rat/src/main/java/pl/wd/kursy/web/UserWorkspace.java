@@ -36,6 +36,7 @@ import pl.wd.kursy.web.security.Context;
 @SessionScoped @Named("userWorkspace")
 public class UserWorkspace implements Serializable, DisposableBean {
 	private long _client_id;
+	private long _courseId;
 	private User _user = new User();
 	
 	private DataServiceInt _dataServiceProvider;
@@ -231,6 +232,14 @@ public class UserWorkspace implements Serializable, DisposableBean {
 
 	public void setDataServiceProvider( DataServiceInt dataServiceProvider ) {
 		_dataServiceProvider = dataServiceProvider;
+	}
+
+	public long getCourseId() {
+		return _courseId;
+	}
+
+	public void setCourseId(long courseId) {
+		_courseId = courseId;
 	}
 	
 }

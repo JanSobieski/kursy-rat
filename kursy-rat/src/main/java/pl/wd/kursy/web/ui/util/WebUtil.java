@@ -231,5 +231,9 @@ public class WebUtil {
 		return ret;
 	}
 	
+	static public String normValue( String value ) {
+		return (value == null) ? "" : value;
+	}
+	
 
 }

@@ -7,4 +7,6 @@ public class Rights {
 
 	
 	public final static String AUTH_COMMON_USER= "commonUser";
+	public final static String SHOW_MENU_ADMINISTRATION = "show_MenuAdministration";
+	
 }

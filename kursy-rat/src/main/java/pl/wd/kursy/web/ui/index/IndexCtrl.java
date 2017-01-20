@@ -81,6 +81,8 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 			if ( ses != null ) {
 				String cl_id = (String)ses.getAttribute(UserAuthenticationFilter.CLIENT_ID);
 				_userWorkspace.setClientId( Long.parseLong(cl_id) );
+				String courseId = (String)ses.getAttribute(UserAuthenticationFilter.SPRING_SECURITY_FORM_COURSE_ID);
+				_userWorkspace.setCourseId( Integer.parseInt(courseId) );
 				_userWorkspace.loadUser();
 			}
 

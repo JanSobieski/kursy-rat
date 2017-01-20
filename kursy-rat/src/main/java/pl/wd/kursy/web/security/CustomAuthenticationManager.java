@@ -16,6 +16,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 	static Logger logger = Logger.getLogger("pl.econsulting.eis.web.security.CustomAuthunticationManager");
 
 	public static final String CL_ID = "CLID:";
+	public static final String COURSE_ID = "COURSE_ID:";
 
 	public Authentication authenticate( Authentication authentication ) throws AuthenticationException {
 
@@ -43,6 +44,8 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 		List<GrantedAuthorityImpl> auth = new ArrayList<GrantedAuthorityImpl>();
 		auth.add(new GrantedAuthorityImpl("ROLE_URLACCESS"));
 		auth.add(new GrantedAuthorityImpl( CL_ID + client_id ));
+		//auth.add(new GrantedAuthorityImpl( COURSE_ID + client_id ));
+		
 
 		return auth;
 	}
