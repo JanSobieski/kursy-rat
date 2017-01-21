@@ -78,6 +78,11 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	public void doAfterCompose(Window comp) {
 		try {
 	    super.doAfterCompose(comp); //wire variables and event listners
+	    
+	    if ( getUserWorkspace().getCourseId() == 0 ) {
+	    	CourseChoiceCtrl.showDialog();
+	    	studentListWindow.onClose();
+	    }
 
 			/* set comps visible dependent of the users rights */
 			_model = new StudentListViewModel<Student>(getUserWorkspace());
@@ -129,6 +134,7 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 	 */
 	public void onClick$btnNew( Event event ) throws Exception {
 		Student student = new Student();
+		student.setCourseId(getUserWorkspace().getCourseId());
 		showDetailView(student);
 	}
 	

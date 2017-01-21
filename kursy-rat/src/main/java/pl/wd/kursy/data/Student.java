@@ -20,6 +20,7 @@ public class Student extends BasicType implements Serializable {
 
 	private String _firstName;
 	private String _lastName;
+	private int _courseId;
 	
 	public Student() {
 	}
@@ -55,6 +56,15 @@ public class Student extends BasicType implements Serializable {
 
 	public void setLastName(String lastName) {
 		_lastName = lastName;
+	}
+
+	@Column(name = "crs_id")
+	public int getCourseId() {
+		return _courseId;
+	}
+
+	public void setCourseId(int courseId) {
+		_courseId = courseId;
 	}
 
 

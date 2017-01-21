@@ -8,8 +8,8 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
 
-	<window id="changePassWindow" border="none"
-		apply="pl.wd.kursy.web.ui.admin.ChangePassCtrl" width="800px"
+	<window id="courseChoiceWindow" border="none"
+		apply="pl.wd.kursy.web.ui.admin.CourseChoiceCtrl" width="800px"
 		height="300px" sizable="true" sclass="pageWindowTitle">
 
 
@@ -43,13 +43,10 @@
 
 				<vbox id="vbCol1" align="stretch" hflex="1"
 					vflex="min">
-					<label value="Stare hasło" />
-					<textbox id="tbOldPass"  type = "password" instant="true" width="100%" />
-					<label value="Nowe hasło" />
-					<textbox id="tbNewPass"  type = "password" instant="true" width="100%" />
-					<label value="Nowe hasło (powtórzenie)" />
-					<textbox id="tbNewPass2"  type = "password" instant="true"
-						width="100%" />
+					<label value="Kurs" />
+					<combobox
+						id="cmbCourse" readonly="true" hflex="1">
+					</combobox>
 				</vbox>
 
 			</center>
@@ -58,5 +55,3 @@
 
 
 </zk>
-
-

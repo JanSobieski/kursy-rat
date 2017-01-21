@@ -29,7 +29,7 @@ public class StudentListViewModel<E> extends ListModelList<Object> {
 		List<Student> students = new ArrayList<>();
 		List<Student> studentsDB = null;
 		try {
-			studentsDB = _workspace.getDataServiceProvider().getStudents();
+			studentsDB = _workspace.getDataServiceProvider().getStudents(_workspace.getCourseId());
 		} finally {
 			_workspace.getDataServiceProvider().closeDbSession();
 		}

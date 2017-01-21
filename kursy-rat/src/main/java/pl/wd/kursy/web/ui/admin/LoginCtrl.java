@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.wd.web.util.MessageUtils;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Combobox;
@@ -15,6 +16,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import pl.wd.kursy.data.Course;
+import pl.wd.kursy.data.User;
 import pl.wd.kursy.web.security.UserAuthenticationFilter;
 import pl.wd.kursy.web.ui.util.BaseCtrl;
 import pl.wd.kursy.web.ui.util.WebUtil;
@@ -54,11 +56,20 @@ public class LoginCtrl extends BaseCtrl implements Serializable {
 		loginWindow.doModal(); // open the dialog in modal mode
 	}
 
-	public void onClick$btnLogin(Event event) throws InterruptedException {
+	public void onClick$btnLogin(Event event) throws Exception {
 		int courseId = 0;
 		Course course = (Course) WebUtil.getCmbValue(cmbCourse);
 		if (course != null) {
 			courseId = course.get_id();
+		}
+		if ( courseId == 0 ) {
+			User user = new User();
+			user.setLogin( tbUser.getText() );
+			List<User> users = getUserWorkspace().getDataServiceProvider().getUsers(user);
+			if ( ( !users.isEmpty() ) && ( !users.get(0).isAdmin() ) ) {
+				MessageUtils.showErrorMessage("Prosze wybrać kurs");
+				return;
+			}
 		}
 		
 		try {

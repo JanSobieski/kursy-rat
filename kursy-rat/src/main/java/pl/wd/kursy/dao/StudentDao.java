@@ -16,9 +16,13 @@ public class StudentDao {
 		_db = db;
 	}
 	
-	public List<Student> getStudents() throws Exception {
+	public List<Student> getStudents( int courseId) throws Exception {
 		Session session = _db.getSession();
-		Query<Student> query = session.createQuery("from Student as students");
+		String hql = "from Student as student";
+		String condCl = "(student.courseId=" + courseId + ")";
+		hql += " where " + condCl;
+		Query<Student> query = session.createQuery( hql );
+		
 		List<Student> students = query.list();
 		
 		return students;

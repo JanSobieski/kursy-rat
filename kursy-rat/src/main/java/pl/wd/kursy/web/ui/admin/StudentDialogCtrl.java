@@ -119,9 +119,6 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 	public void doShowDialog( Student student ) throws InterruptedException {
 		if ( student == null ) {
 			/** !!! DO NOT BREAK THE TIERS !!! */
-			// We don't create a new DomainObject() in the frontend.
-			// We GET it from the backend.
-			// user = getUserService().getNewUser();
 		}
 
 		// set Readonly mode accordingly if the object is new or not.
@@ -205,6 +202,7 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 	 */
 	public void onClick$btnNew( Event event ) {
 		_student = new Student();
+		_student.setCourseId(getUserWorkspace().getCourseId());
 		doClear();
 		doEdit(); // edit mode
 	}
