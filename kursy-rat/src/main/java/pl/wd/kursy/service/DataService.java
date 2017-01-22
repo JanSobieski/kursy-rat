@@ -111,6 +111,15 @@ public class DataService implements DataServiceInt, Serializable {
 	}
 	
 	@Override
+	public List<User> getUsers(User user) throws Exception {
+		UserDao userDao = new UserDao(_db);
+		List<User> users = userDao.getUsers(user);
+		//Collections.sort(users, User.get_last_name_comparator());
+
+		return users;
+	}
+	
+	@Override
 	public List<User> getUsers() throws Exception {
 		UserDao userDao = new UserDao(_db);
 		List<User> users = userDao.getUsers();
@@ -149,11 +158,11 @@ public class DataService implements DataServiceInt, Serializable {
 	}
 	
 	@Override
-	public List<Student> getStudents() throws Exception {
+	public List<Student> getStudents(int courseId) throws Exception {
 		StudentDao studentDao = new StudentDao(_db);
 		//Collections.sort(users, User.get_last_name_comparator());
 		
-		return studentDao.getStudents();
+		return studentDao.getStudents(courseId);
 	}
 	
 	@Override

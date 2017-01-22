@@ -191,6 +191,9 @@ public class WebUtil {
 	}
 	 
 	static public void closeTab(String id) {
+		if ( id == null ) {
+			return;
+		}
 		final Borderlayout bl = (Borderlayout) Path.getComponent("/outerIndexWindow/borderlayoutMain");
 		/* get an instance of the searched CENTER layout area */
 		final Center center = bl.getCenter();

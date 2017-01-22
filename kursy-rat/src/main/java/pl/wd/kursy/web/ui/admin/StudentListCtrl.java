@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.wd.web.util.MessageUtils;
 import org.wd.web.util.MultiLineMessageBox;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Executions;
@@ -18,13 +19,13 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import pl.wd.kursy.data.Student;
-import pl.wd.kursy.data.User;
 import pl.wd.kursy.web.UserWorkspace;
 import pl.wd.kursy.web.data.filter.StudentFilter;
 import pl.wd.kursy.web.ui.admin.model.StudentListViewModel;
-import pl.wd.kursy.web.ui.admin.model.UserListViewModel;
 import pl.wd.kursy.web.ui.admin.renderer.StudentListModelItemRenderer;
+import pl.wd.kursy.web.ui.interf.ChoiceDialogInt;
 import pl.wd.kursy.web.ui.util.BaseListCtrl;
+import pl.wd.kursy.web.ui.util.WebUtil;
 
 
 
@@ -79,10 +80,13 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 		try {
 	    super.doAfterCompose(comp); //wire variables and event listners
 	    
-	    if ( getUserWorkspace().getCourseId() == 0 ) {
-	    	CourseChoiceCtrl.showDialog();
-	    	studentListWindow.onClose();
-	    }
+	    ChoiceDialogInt choiceDialogInt = new ChoiceDialogInt() {
+			@Override
+			public void onOkClose() {
+				filterData();
+			}
+	    };
+	    CourseChoiceCtrl.checkCourse( getUserWorkspace(), WebUtil.getTabId(studentListWindow),  choiceDialogInt );
 
 			/* set comps visible dependent of the users rights */
 			_model = new StudentListViewModel<Student>(getUserWorkspace());

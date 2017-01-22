@@ -8,48 +8,28 @@
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 
 
-	<window id="courseChoiceWindow" border="none"
-		apply="pl.wd.kursy.web.ui.admin.CourseChoiceCtrl" width="800px"
-		height="300px" sizable="true" sclass="pageWindowTitle">
+	<window id="courseChoiceWindow" border="none" title="Wybór kursu"
+		apply="pl.wd.kursy.web.ui.admin.CourseChoiceCtrl" width="600px"
+		height="250px" sizable="true" sclass="pageWindowTitle">
 
 
 		<borderlayout vflex="true" width="100%">
 
-			<north border="none" vflex="min" margins="0,0,0,0">
-
-				<div sclass="z-toolbar" style="padding:0">
-					<hbox pack="stretch" sclass="hboxRemoveWhiteStrips"
-						width="100%">
-						<!-- CRUD BUTTONS -->
-						<toolbar align="end"
-							style="float:left; border-style: none; padding-left: 10px;">
-							<toolbarbutton id="btnSave" 
-								style="padding: 0px" width="32px" height="32px"
-								image="/resources/img/icons/save.png"
-								tooltiptext="${c:l('btnSave.tooltiptext')}" />
-							<toolbarbutton id="btnClose"
-								style="padding: 0px" width="32px" height="32px"
-								image="/resources/img/icons/exit.png"
-								tooltiptext="${c:l('btnClose.tooltiptext')}" />
-								
-						</toolbar>
-					</hbox>
-				</div>
-
-			</north>
-
-
-			<center margins="0,0,0,0" vflex="1" hflex="1">
-
+			<center margins="0,0,0,0" vflex="1" hflex="1"
+				border="none">
 				<vbox id="vbCol1" align="stretch" hflex="1"
 					vflex="min">
 					<label value="Kurs" />
-					<combobox
-						id="cmbCourse" readonly="true" hflex="1">
+					<combobox id="cmbCourse" readonly="true"
+						hflex="1">
 					</combobox>
 				</vbox>
-
 			</center>
+			<south border="none">
+				<hbox hflex="1" pack="center">
+					<button id="btnOk" label="Ok" />
+				</hbox>
+			</south>
 		</borderlayout>
 	</window>
 

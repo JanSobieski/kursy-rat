@@ -15,9 +15,11 @@ public interface DataServiceInt {
 	
 	public void changePass( User user, String oldPass, String newPass ) throws Exception, BusinessLogicException;
 	public List<User> getUsers() throws Exception;
+	public List<User> getUsers(User user) throws Exception;
+	
 	public void saveOrUpdate(User user) throws Exception;
 	
-	public List<Student> getStudents() throws Exception;
+	public List<Student> getStudents(int courseId) throws Exception;
 	public void saveOrUpdate(Student student) throws Exception;
 	
 	public List<Course> getCourses() throws Exception;
