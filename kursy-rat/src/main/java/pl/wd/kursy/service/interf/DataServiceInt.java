@@ -23,6 +23,9 @@ public interface DataServiceInt {
 	public void saveOrUpdate(Student student) throws Exception;
 	
 	public List<Course> getCourses() throws Exception;
+	public Course getCourse( int courseId ) throws Exception;
+	public void saveOrUpdate(Course course) throws Exception;
+	
 
 
 }

@@ -56,7 +56,19 @@ public class LoginCtrl extends BaseCtrl implements Serializable {
 		loginWindow.doModal(); // open the dialog in modal mode
 	}
 
+	public void onOK$tbUser() throws Exception {
+		login();
+	}
+	
+	public void onOK$tbPass() throws Exception {
+		login();
+	}
+	
 	public void onClick$btnLogin(Event event) throws Exception {
+		login();
+	}
+
+	public void login() throws Exception {
 		int courseId = 0;
 		Course course = (Course) WebUtil.getCmbValue(cmbCourse);
 		if (course != null) {

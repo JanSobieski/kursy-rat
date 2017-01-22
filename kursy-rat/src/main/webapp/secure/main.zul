@@ -93,6 +93,7 @@
 						<caption
 							style="color: #000000; font-weight: bold;"
 							label="${c:l('workplace')}">
+ 						<label id="lbCourseName" width="200px" />
  						<label value="" width="200px" />
 
 								<toolbar align="end"

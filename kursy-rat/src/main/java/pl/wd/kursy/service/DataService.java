@@ -179,4 +179,16 @@ public class DataService implements DataServiceInt, Serializable {
 		return courseDao.getCourses();
 	}
 
+	@Override
+	public void saveOrUpdate(Course course) throws Exception {
+		CourseDao courseDao = new CourseDao(_db);
+		courseDao.update(course);
+	}
+	
+	public Course getCourse( int courseId ) throws Exception {
+		CourseDao courseDao = new CourseDao(_db);
+		
+		return courseDao.getCourse( courseId );
+	}
+	
 }

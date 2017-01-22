@@ -32,6 +32,7 @@ import org.zkoss.zul.Timer;
 import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
 
+import pl.wd.kursy.data.Course;
 import pl.wd.kursy.web.UserWorkspace;
 import pl.wd.kursy.web.security.UserAuthenticationFilter;
 import pl.wd.kursy.web.ui.menu.MainMenuCtrl;
@@ -55,6 +56,7 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 	protected Intbox currentDesktopWidth; // autowired
 	protected Checkbox CBtreeMenu; // autowired
 	protected Tabs tabsIndexCenter; // autowired
+	protected Label lbCourseName;
 	 
 	protected Timer timer;
 
@@ -82,8 +84,11 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 				String cl_id = (String)ses.getAttribute(UserAuthenticationFilter.CLIENT_ID);
 				_userWorkspace.setClientId( Long.parseLong(cl_id) );
 				String courseId = (String)ses.getAttribute(UserAuthenticationFilter.SPRING_SECURITY_FORM_COURSE_ID);
-				_userWorkspace.setCourseId( Integer.parseInt(courseId) );
+				int cId = Integer.parseInt(courseId);
+				_userWorkspace.setCourseId( cId );
 				_userWorkspace.loadUser();
+				setCourseName( cId );
+				
 			}
 
 			createMainTreeMenu();
@@ -91,6 +96,22 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 			logger.error(e);
 			Messagebox.show(e.toString());
 		}
+		finally {
+			try {
+				_userWorkspace.getDataServiceProvider().closeDbSession();
+			} catch (Exception e2) {
+				logger.error(e2);
+				Messagebox.show(e2.toString());
+			}
+		}
+	}
+	
+	public void setCourseName( int courseId ) throws Exception {
+		Course course = _userWorkspace.getDataServiceProvider().getCourse(courseId);
+		if ( course != null ) {
+			lbCourseName.setValue(course.getName());
+		}
+		
 	}
 
 	/**
