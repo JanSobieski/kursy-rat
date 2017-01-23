@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
+<?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+	<window id="userListWindow" sclass="cardSys" border="none"
+		apply="pl.wd.kursy.web.ui.admin.ExerciseAndSkillDialogCtrl"
+		height="100%">
+
+		<borderlayout id="borderlayoutUser">
+
+			<north border="none" margins="0,0,0,0">
+
+				<div sclass="z-toolbar" style="padding:0">
+					<hbox pack="stretch" sclass="hboxRemoveWhiteStrips"
+						width="100%">
+						<!-- CRUD BUTTONS -->
+						<toolbar align="end"
+							style="float:left; border-style: none; padding-left: 10px;">
+							<toolbarbutton id="btnNew"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/new.png"
+								tooltiptext="${c:l('btnNew.tooltiptext')}" />
+							<toolbarbutton id="btnEdit"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/edit.png"
+								tooltiptext="${c:l('btnEdit.tooltiptext')}" />
+							<toolbarbutton id="btnSave" disabled="true"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/save.png"
+								tooltiptext="${c:l('btnSave.tooltiptext')}" />
+							<toolbarbutton id="btnCancel"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/cancel.png"
+								tooltiptext="${c:l('btnCancel.tooltiptext')}" />
+							<toolbarbutton id="btnClose"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/exit.png"
+								tooltiptext="${c:l('btnClose.tooltiptext')}" />
+						</toolbar>
+					</hbox>
+				</div>
+
+			</north>
+			<center border="none" margins="0,0,0,0">
+				<borderlayout width="100%" height="100%">
+					<west size="30%" border="none" splittable="true"
+						collapsible="false" vflex="true">
+						<borderlayout width="100%" height="100%">
+							<north size="70%" border="none"
+								splittable="true" collapsible="false">
+								<borderlayout hflex="min" width="100%"
+									height="100%">
+									<north border="none">
+										<label value="Ćwiczenia"
+											style="padding-top: 5px;" />
+									</north>
+									<center border="none" vflex="true"
+										hflex="1" autoscroll="true">
+										<extendedTree id="trExercise"
+											multiple="true" checkmark="true" autopaging="true">
+										</extendedTree>
+
+									</center>
+								</borderlayout>
+
+
+							</north>
+							<south border="none"></south>
+						</borderlayout>
+					</west>
+					<center border="none"></center>
+				</borderlayout>
+
+			</center>
+
+
+		</borderlayout>
+	</window>
+</zk>
