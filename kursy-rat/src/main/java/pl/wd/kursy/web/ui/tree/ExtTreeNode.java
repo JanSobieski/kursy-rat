@@ -7,7 +7,7 @@ import org.zkoss.zul.DefaultTreeNode;
 public class ExtTreeNode<T> extends DefaultTreeNode<T> {
 	private static final long serialVersionUID = 6519027740714668005L;
 	// Node Control the default open
-	private boolean open = false;
+	private boolean open = true;
 
 	public ExtTreeNode( T data, LinkedList<DefaultTreeNode<T>> children, boolean open ) {
 		super(data, children);

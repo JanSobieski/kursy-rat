@@ -3,6 +3,8 @@ package pl.wd.kursy.service.interf;
 import java.util.List;
 
 import pl.wd.kursy.data.Course;
+import pl.wd.kursy.data.Exercise;
+import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.exception.BusinessLogicException;
@@ -26,6 +28,9 @@ public interface DataServiceInt {
 	public Course getCourse( int courseId ) throws Exception;
 	public void saveOrUpdate(Course course) throws Exception;
 	
+	public List<Exercise> getExercises() throws Exception;
+
+	public List<Skill> getSkills() throws Exception;
 
 
 }

@@ -26,7 +26,7 @@ public class CourseListViewModel<E> extends ListModelList<Object> {
 		_workspace = workspace;
 	}
 
-	public List<Course> getStudentList(StudentFilter filter) throws Exception {
+	public List<Course> getCourseList(StudentFilter filter) throws Exception {
 		List<Course> students = new ArrayList<>();
 		List<Course> coursesDB = null;
 		try {
@@ -63,7 +63,7 @@ public class CourseListViewModel<E> extends ListModelList<Object> {
 
 	public void showData(Listbox courseList, StudentFilter filter) {
 		try {
-			List<Course> courses = getStudentList(filter);
+			List<Course> courses = getCourseList(filter);
 			clear();
 			addAll(courses);
 			courseList.setModel(this);

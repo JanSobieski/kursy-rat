@@ -9,9 +9,13 @@ import org.zkoss.util.resource.Labels;
 
 import pl.wd.kursy.dao.CourseDao;
 import pl.wd.kursy.dao.Database;
+import pl.wd.kursy.dao.ExerciseDao;
+import pl.wd.kursy.dao.SkillsDao;
 import pl.wd.kursy.dao.StudentDao;
 import pl.wd.kursy.dao.UserDao;
 import pl.wd.kursy.data.Course;
+import pl.wd.kursy.data.Exercise;
+import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.constants.Rights;
@@ -185,10 +189,27 @@ public class DataService implements DataServiceInt, Serializable {
 		courseDao.update(course);
 	}
 	
+	@Override
 	public Course getCourse( int courseId ) throws Exception {
 		CourseDao courseDao = new CourseDao(_db);
 		
 		return courseDao.getCourse( courseId );
 	}
+	
+	@Override
+	public List<Exercise> getExercises() throws Exception {
+		ExerciseDao exerciseDao = new ExerciseDao(_db);
+		
+		return exerciseDao.getExercises();
+	}
+	
+	@Override
+	public List<Skill> getSkills() throws Exception {
+		SkillsDao skillDao = new SkillsDao(_db);
+		
+		return skillDao.getSkills();
+	}
+
+
 	
 }
