@@ -9,7 +9,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 	
-	<window id="userListWindow" sclass="cardSys" border="none"
+	<window id="skillListWindow" sclass="cardSys" border="none"
 		apply="pl.wd.kursy.web.ui.admin.ExerciseAndSkillDialogCtrl" height="100%">
 
 		<borderlayout id="borderlayoutUser" >
@@ -62,8 +62,7 @@
 												<center border="none"
 													vflex="true" hflex="1" autoscroll="true">
 													<extendedTree
-														id="trExercise" multiple="false" checkmark="true"
-														autopaging="true">
+														id="trExercise" checkmark="true" autopaging="true">
 													</extendedTree>
 
 												</center>
@@ -106,18 +105,17 @@
 										</div>
 
 									</north>
-									<center border="none" margins="0,0,0,0">
-										<hlayout height="100%"
-											style="padding:3px">
+									<center border="none" autoscroll="true" margins="0,0,0,0">
+										<hlayout height="100%" style="overflow-y:auto; padding:3px" >
 
 										<vbox spacing="10px"
 											width="24px">
-											<button id="chooseBtn"
-												style="padding:0"
-												image="/resources/img/icons/rightarrow_g.png" />
-											<button id="removeBtn"
+											<button id="addBtn"
 												style="padding:0"
 												image="/resources/img/icons/leftarrow_g.png" />
+											<button id="removeBtn"
+												style="padding:0"
+												image="/resources/img/icons/rightarrow_g.png" />
 										</vbox>
 										
 										<listbox id="listBoxSkills"
@@ -144,6 +142,10 @@
 												<mylistheader
 													id="listheader_SkillList_Name" sort="auto(name)"
 													width="20%" label="Nazwa">
+												</mylistheader>
+												<mylistheader
+													id="listheader_SkillList_Edit"
+													width="20%" label="Edycja">
 												</mylistheader>
 											</listhead>
 										</listbox>
