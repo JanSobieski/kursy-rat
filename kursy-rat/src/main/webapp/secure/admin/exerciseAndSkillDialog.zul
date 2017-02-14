@@ -52,7 +52,7 @@
 					<west size="30%" border="none"
 						splittable="true" collapsible="false" vflex="true">
 						<borderlayout width="100%" height="100%">
-							<north size="70%" border="none"
+							<north size="55%" border="none"
 								splittable="true" collapsible="false">
 											<borderlayout  hflex="min" width="100%" height="100%">
 												<north border="none">
@@ -77,7 +77,24 @@
 											value="Szczegóły" style="padding-top: 5px;" />
 									</north>
 									<center border="none">
+										<borderlayout   width="100%" height="100%">
+											<north border="none">
+												<checkbox id="cbObligatory" label="Wszystkie umiejętności obowiązkowe"  />
+											</north>
+											<center>
+												<borderlayout   width="100%" height="100%">
+													<north border="none">
+														<label
+															value="Opis" style="padding-top: 5px;" />
+													</north>
+													<center border="none">
 
+														<textbox rows="10" hflex="1" vflex="1"/>
+													</center>
+												</borderlayout>
+											</center>
+
+										</borderlayout>
 									</center>
 								</borderlayout>
 
