@@ -23,6 +23,28 @@ public class ExerciseDao {
 		
 		return courses;
 	}
+	
+	public void saveExercises(List<Exercise> exercises ) throws Exception {
+		Session session = _db.getSession();
+		Transaction tx = session.beginTransaction();
+		for (Exercise exercise : exercises) {
+			if ( exercise.getId() < 0 ) {
+				exercise.setId(0);
+				session.save(exercise);
+			}
+			else {
+				session.update(exercise);
+			}
+		}
+
+		try {
+			tx.commit();
+		} catch (Exception err) {
+			tx.rollback();
+			throw err;
+		}
+	}
+
 
 	
 }

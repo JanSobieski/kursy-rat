@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.event.ListDataEvent;
 
 import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Skill;
@@ -20,6 +21,7 @@ public class SkillListViewModel<E> extends ListModelList<Object> {
 
 
 	private final UserWorkspace _workspace;
+	private int freeId = -1;
 	
 
 	public SkillListViewModel(UserWorkspace workspace) {
@@ -63,7 +65,17 @@ public class SkillListViewModel<E> extends ListModelList<Object> {
 			logger.error("Error", e);
 			Messagebox.show(e.toString());
 		}
-
+	}
+	
+	public void newSkill() {
+		Skill skill = new Skill();
+		skill.setEditable(true);
+		skill.setId(freeId);
+		freeId--;
+		add(skill);
 	}
 
+	public void repaintRow(int row) {
+		fireEvent(ListDataEvent.CONTENTS_CHANGED, row, row);
+	}
 }

@@ -22,7 +22,7 @@ public class Course extends BasicType implements Serializable {
 	}
 	
 	public Course( Course course ) {
-		super( course.get_id() );
+		super( course.getId() );
 	}
 
 	@Id

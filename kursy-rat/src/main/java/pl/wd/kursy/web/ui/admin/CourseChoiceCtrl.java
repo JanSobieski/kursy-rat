@@ -98,7 +98,7 @@ public class CourseChoiceCtrl extends BaseCtrl implements Serializable {
 		int courseId = 0;
 		Course course = (Course) WebUtil.getCmbValue(cmbCourse);
 		if (course != null) {
-			courseId = course.get_id();
+			courseId = course.getId();
 		}
 		if ( courseId == 0 ) {
 			MessageUtils.showErrorMessage("Prosze wybrać kurs");

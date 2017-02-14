@@ -20,7 +20,7 @@ public class UserListModelItemRenderer implements ListitemRenderer<User>, Serial
 		final User user = (User) data;
 		
 		Listcell lc;
-		lc = new Listcell(Integer.toString(user.get_id()));
+		lc = new Listcell(Integer.toString(user.getId()));
 		lc.setStyle("text-align:right");
 		lc.setParent(item);
 		lc = new Listcell(user.getLogin());

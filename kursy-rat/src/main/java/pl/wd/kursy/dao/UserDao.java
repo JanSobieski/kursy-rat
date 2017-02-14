@@ -38,7 +38,7 @@ public class UserDao {
 	public void updateUser( User user ) throws Exception {
 		Session session = _db.getSession(true);
 		Transaction tx = session.beginTransaction();
-		if ( user.get_id() > 0 ) {
+		if ( user.getId() > 0 ) {
 			session.update(user);
 		}
 		else {

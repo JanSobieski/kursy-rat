@@ -118,7 +118,7 @@ public class CourseDialogCtrl extends BaseCtrl implements Serializable {
 
 		// set Readonly mode accordingly if the object is new or not.
 
-		if ( course.get_id() == 0 ) {
+		if ( course.getId() == 0 ) {
 			doEdit();
 		} else {
 			// btnCtrl.setInitEdit();

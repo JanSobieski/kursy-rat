@@ -137,7 +137,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 
 		// set Readonly mode accordingly if the object is new or not.
 
-		if ( user.get_id() == 0 ) {
+		if ( user.getId() == 0 ) {
 			doEdit();
 		} else {
 			// btnCtrl.setInitEdit();
@@ -332,7 +332,7 @@ public class UserDialogCtrl extends BaseCtrl implements Serializable {
 				MessageUtils.showErrorMessage("Prosze podac login");
 				return false;
 			}
-			if ( _user.get_id() == 0 ) {
+			if ( _user.getId() == 0 ) {
 				if ( _user.getPass().length() == 0 ) {
 					MessageUtils.showErrorMessage("Prosze podac haslo");
 					return false;

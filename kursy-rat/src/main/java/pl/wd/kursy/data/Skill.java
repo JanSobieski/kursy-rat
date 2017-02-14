@@ -31,7 +31,7 @@ public class Skill extends BasicType implements Serializable {
 	public void setId( int id ) {
 		_id = id;
 	}
-
+	
 	public String getName() {
 		return WebUtil.normValue(_name);
 	}

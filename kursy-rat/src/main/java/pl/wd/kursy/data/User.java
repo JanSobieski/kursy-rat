@@ -30,7 +30,7 @@ public class User extends BasicType implements Serializable {
 	}
 	
 	public User( User user ) {
-		super( user.get_id() );
+		super( user.getId() );
 		
 		_login = user.getLogin();
 		_admin = user.isAdmin();

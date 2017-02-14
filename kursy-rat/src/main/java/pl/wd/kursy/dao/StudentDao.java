@@ -31,7 +31,7 @@ public class StudentDao {
 	public void updateStudent( Student student ) throws Exception {
 		Session session = _db.getSession(true);
 		Transaction tx = session.beginTransaction();
-		if ( student.get_id() > 0 ) {
+		if ( student.getId() > 0 ) {
 			session.update(student);
 		}
 		else {

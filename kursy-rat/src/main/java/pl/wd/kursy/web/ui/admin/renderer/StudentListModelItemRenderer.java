@@ -18,7 +18,7 @@ public class StudentListModelItemRenderer implements ListitemRenderer<Student>, 
 	@Override
 	public void render( Listitem item, Student student, int index ) throws Exception {
 		Listcell lc;
-		lc = new Listcell(Integer.toString(student.get_id()));
+		lc = new Listcell(Integer.toString(student.getId()));
 		lc.setStyle("text-align:right");
 		lc.setParent(item);
 		lc = new Listcell(student.getFirstName());

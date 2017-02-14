@@ -18,11 +18,11 @@ public class BasicType implements Serializable,Cloneable {
 		_id = id;
 	}
 
-	public int get_id() {
+	public int getId() {
 		return _id;
 	}
 
-	public void set_id( int id ) {
+	public void setId( int id ) {
 		_id = id;
 	}
 	
@@ -52,7 +52,7 @@ public class BasicType implements Serializable,Cloneable {
 			return false;
 		}
 		if ( obj instanceof BasicType ) {
-			if ( _id == ((BasicType) obj).get_id() ) {
+			if ( _id == ((BasicType) obj).getId() ) {
 				if ( _id == 0 ) {
 					return super.equals( obj );
 				}
@@ -76,6 +76,14 @@ public class BasicType implements Serializable,Cloneable {
 		if ( selected instanceof Boolean ) {
 			_selected = ((Boolean)selected).booleanValue();
 		}
+	}
+
+	public boolean isEditable() {
+		return _editable;
+	}
+
+	public void setEditable(boolean editable) {
+		_editable = editable;
 	}
 	
 }

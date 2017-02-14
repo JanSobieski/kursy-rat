@@ -207,7 +207,7 @@ public class UserWorkspace implements Serializable, DisposableBean {
 	}
 
 	public int getUserId() {
-		return _user.get_id();
+		return _user.getId();
 	}
 
 	public User getUser() {

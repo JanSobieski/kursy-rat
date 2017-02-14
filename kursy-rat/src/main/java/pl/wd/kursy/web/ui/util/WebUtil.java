@@ -36,7 +36,7 @@ public class WebUtil {
 		for (int i = 0; i < cmb.getModel().getSize(); i++) {
 			BasicType item = (BasicType) cmb.getModel().getElementAt(i);
 			item.set_selected(false);
-			if (item.get_id() == id2Select) {
+			if (item.getId() == id2Select) {
 				item.set_selected(true);
 				if ( cmb.getItemCount() > 0  ) {
 					cmb.setSelectedIndex(i);
@@ -49,7 +49,7 @@ public class WebUtil {
 		if (toSelect == null) {
 			return;
 		}
-		selectCombo(cmb, toSelect.get_id());
+		selectCombo(cmb, toSelect.getId());
 	}
 
 	
@@ -179,7 +179,7 @@ public class WebUtil {
 	static private void unselectRows( Grid parentGrid, BasicType selValue ) {
 		for( Component row : parentGrid.getRows().getChildren() ) {
 			BasicType value = ((Row)row).getValue();
-			if ( ( value != null ) && (value.get_id() != selValue.get_id() ) ) {
+			if ( ( value != null ) && (value.getId() != selValue.getId() ) ) {
 				value.set_selected(false);
 				Component comp = row.getChildren().get(0);
 				if ( comp instanceof Checkbox ) {

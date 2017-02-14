@@ -39,7 +39,7 @@ public class ChoicePopupListViewModel<E> extends ListModelList<BasicType> {
 		for( Iterator<BasicType> iterator = iterator(); iterator.hasNext(); ) {
 			BasicType item = iterator.next();
 			if ( item.is_selected() ) {
-				ids.add(item.get_id());
+				ids.add(item.getId());
 			}
 		}
 		
@@ -57,7 +57,7 @@ public class ChoicePopupListViewModel<E> extends ListModelList<BasicType> {
 	public void setSelectedIds(Set<Integer> ids ) {
 		for( Iterator<BasicType> iterator = iterator(); iterator.hasNext(); ) {
 			BasicType item = iterator.next();
-			if ( ids.contains(item.get_id())) {
+			if ( ids.contains(item.getId())) {
 				item.set_selected(true);
 			}
 			else {

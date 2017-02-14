@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.MessageDigest;
+import java.text.Collator;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -36,6 +37,9 @@ public class Util {
 	public final static boolean IGNORE_NULL = true;
 
 	private static DecimalFormat _decimal_formatter;
+	
+	private static final Collator _collator = Collator.getInstance(new Locale( "pl", "pl" ));
+	
 
 	public final static String[][] national_chars2ascii = { 
 		{ "ąàáâãäåæāă", "a" }, { "ćçĉċč", "c" }, { "ęèéêëěēĕė", "e" }, { "ĝğġģ", "g" }, { "ĥħ", "h" }, { "ĩīĭįìíîï", "i" }, { "ĵ", "j" }, { "ķ", "k" },      
@@ -348,6 +352,10 @@ public class Util {
 		}
 		
 		return extension;
+	}
+
+	public static Collator getCollator() {
+		return _collator;
 	}
 	
 

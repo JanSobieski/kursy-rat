@@ -38,7 +38,7 @@ public class ChoiceListbox extends Listbox {
 		List<BasicType> selItems = getSelItems();
 		List<Integer> selIDs = new ArrayList<Integer>(); 
 		for (BasicType item : selItems) {
-			selIDs.add( item.get_id() );
+			selIDs.add( item.getId() );
 		}
 
 		return selIDs;
@@ -47,7 +47,7 @@ public class ChoiceListbox extends Listbox {
 	public <T extends BasicType> void setSelectedElements( Set<T> selected ) {
 		Set<Integer> hsSelIds = new HashSet<Integer>();
 		for( BasicType item : selected ) {
-			hsSelIds.add( item.get_id() );
+			hsSelIds.add( item.getId() );
 		}
 		setSelectedIds( hsSelIds );
 	}
@@ -61,7 +61,7 @@ public class ChoiceListbox extends Listbox {
 		ListModelList<BasicType>  modelCL = (ListModelList<BasicType>)(ListModelList<?>)this.getModel();
 		for (int i = 0; i < modelCL.size(); i++) {
 			BasicType item = modelCL.get(i); 
-			if ( hsSelIds.contains( item.get_id() ) ) {
+			if ( hsSelIds.contains( item.getId() ) ) {
 				item.set_selected( true );
 				if ( getItemCount() > 0 ) {
 					selItems.add(getItemAtIndex(i));

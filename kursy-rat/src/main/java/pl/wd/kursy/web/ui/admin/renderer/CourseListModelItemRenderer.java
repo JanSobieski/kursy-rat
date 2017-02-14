@@ -18,7 +18,7 @@ public class CourseListModelItemRenderer implements ListitemRenderer<Course>, Se
 	@Override
 	public void render( Listitem item, Course course, int index ) throws Exception {
 		Listcell lc;
-		lc = new Listcell(Integer.toString(course.get_id()));
+		lc = new Listcell(Integer.toString(course.getId()));
 		lc.setStyle("text-align:right");
 		lc.setParent(item);
 		lc = new Listcell(course.getName());

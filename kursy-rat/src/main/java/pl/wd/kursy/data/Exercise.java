@@ -32,7 +32,7 @@ public class Exercise extends BasicType implements Serializable {
 	}
 	
 	public Exercise( Exercise exercise ) {
-		super( exercise.get_id() );
+		super( exercise.getId() );
 	}
 
 	@Id

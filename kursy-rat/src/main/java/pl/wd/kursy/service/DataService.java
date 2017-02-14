@@ -1,6 +1,7 @@
 package pl.wd.kursy.service;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,6 +19,8 @@ import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.User;
+import pl.wd.kursy.data.comp.ExerciseComparator;
+import pl.wd.kursy.data.comp.SkillComparator;
 import pl.wd.kursy.data.constants.Rights;
 import pl.wd.kursy.data.constants.SystemConstants;
 import pl.wd.kursy.exception.BusinessLogicException;
@@ -41,7 +44,7 @@ public class DataService implements DataServiceInt, Serializable {
 	public boolean check_authorisation_read( User user, String authorisation ) throws Exception {
 		
 		if ( Rights.AUTH_COMMON_USER.equals(authorisation) ) {
-			if ( user.get_id() == 0 ) {
+			if ( user.getId() == 0 ) {
 				return false;
 			}
 		}
@@ -96,7 +99,7 @@ public class DataService implements DataServiceInt, Serializable {
 	public void changePass( User user, String oldPass, String newPass ) throws Exception, BusinessLogicException {
 		UserDao userDao = new UserDao(_db);
 		try {
-			User userDb = userDao.getUser(user.get_id());
+			User userDb = userDao.getUser(user.getId());
 			if ( userDb == null ) {
 				throw new BusinessLogicException(SystemConstants.RESPONSE_CHANGE_PASS_FAILED, "");
 			}
@@ -135,17 +138,17 @@ public class DataService implements DataServiceInt, Serializable {
 	@Override
 	public void saveOrUpdate(User user) throws Exception {
 		UserDao userDao = new UserDao(_db);
-		User userDB = userDao.getUser(user.get_id());
+		User userDB = userDao.getUser(user.getId());
 		
 		List<User> users = userDao .getUsers(user);
 		for (User user2 : users) {
-			if (user2.get_id() != user.get_id()) {
+			if (user2.getId() != user.getId()) {
 				String msg = Labels.getLabel("message_userExistsLogin");
 				throw new BusinessLogicException(msg + user2.getLogin());
 			}
 		}
-		if (user.get_id() > 0) {
-			userDB = userDao.getUser(user.get_id());
+		if (user.getId() > 0) {
+			userDB = userDao.getUser(user.getId());
 		} else {
 		}
 		if ((user.getPass() != null) && (user.getPass().length() > 0)) {
@@ -156,8 +159,8 @@ public class DataService implements DataServiceInt, Serializable {
 		userDB.setAdmin(user.isAdmin());
 		userDao.updateUser(userDB);
 		
-		if (user.get_id() == 0) {
-			user.set_id(userDB.get_id());
+		if (user.getId() == 0) {
+			user.setId(userDB.getId());
 		}
 	}
 	
@@ -199,17 +202,34 @@ public class DataService implements DataServiceInt, Serializable {
 	@Override
 	public List<Exercise> getExercises() throws Exception {
 		ExerciseDao exerciseDao = new ExerciseDao(_db);
+
+		List<Exercise> exercises =  exerciseDao.getExercises();
+		Collections.sort(exercises, new ExerciseComparator(true, ExerciseComparator.TYPE_NAME));
 		
-		return exerciseDao.getExercises();
+		return exercises;
 	}
+	
+	@Override
+	public void saveExercises(List<Exercise> exercises ) throws Exception {
+		ExerciseDao exerciseDao = new ExerciseDao(_db);
+		exerciseDao.saveExercises(exercises);
+	}
+	
 	
 	@Override
 	public List<Skill> getSkills() throws Exception {
 		SkillsDao skillDao = new SkillsDao(_db);
 		
-		return skillDao.getSkills();
+		List<Skill> skills = skillDao.getSkills(); 
+		Collections.sort(skills, new SkillComparator(true, ExerciseComparator.TYPE_NAME));
+
+		return skills;
 	}
 
+	public void saveSkills(List<Skill> skills ) throws Exception {
+		SkillsDao skillDao = new SkillsDao(_db);
+		skillDao.saveSkills(skills);
+	}
 
 	
 }

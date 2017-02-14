@@ -26,7 +26,7 @@ public class Student extends BasicType implements Serializable {
 	}
 	
 	public Student( Student student ) {
-		super( student.get_id() );
+		super( student.getId() );
 	}
 
 	@Id

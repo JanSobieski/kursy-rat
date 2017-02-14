@@ -27,7 +27,7 @@ public class CourseDao {
 	public void update( Course course ) throws Exception {
 		Session session = _db.getSession(true);
 		Transaction tx = session.beginTransaction();
-		if ( course.get_id() > 0 ) {
+		if ( course.getId() > 0 ) {
 			session.update(course);
 		}
 		else {

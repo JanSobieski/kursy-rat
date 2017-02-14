@@ -1,6 +1,5 @@
 package pl.wd.kursy.web.ui.tree;
 
-import org.zkoss.zk.ui.sys.ComponentsCtrl;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
@@ -62,8 +61,6 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 		}
 		
 		//ComponentsCtrl.applyForward(item, "onClick=onTreeItemClicked");
-		
-
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.DefaultTreeNode;
 import org.zkoss.zul.TreeNode;
+import org.zkoss.zul.Treeitem;
 
 import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
@@ -17,8 +18,10 @@ import pl.wd.kursy.web.UserWorkspace;
 public class ExerciseTreeModel {
 
 	private DefaultTreeModel<BasicType> _treeModel;
+	private ExtTreeNode<BasicType> _root;
 	private UserWorkspace _workspace;
 	private List<Exercise> _exercises = new ArrayList<>();
+	private int exFreeId = -1;
 
 	public ExerciseTreeModel(UserWorkspace workspace) throws Exception {
 		_workspace = workspace;
@@ -34,20 +37,20 @@ public class ExerciseTreeModel {
 //		Hashtable<Integer, List<SkillKeyWord>> category_id2key_words = SkillKeyWord.get_category_id2key_words_mapping(_skillKeyWords);
 
 		for (Exercise exercise : _exercises) {
-				LinkedList<DefaultTreeNode<BasicType>> items = new LinkedList<DefaultTreeNode<BasicType>>();
-				ExtTreeNode<BasicType> nodeCategory = new ExtTreeNode<BasicType>(exercise, items);
-				rootItems.add(nodeCategory);
-				if ( exercise.getSkills() != null ) {
-					for( Skill skill : exercise.getSkills() ) {
+			LinkedList<DefaultTreeNode<BasicType>> items = new LinkedList<DefaultTreeNode<BasicType>>();
+			ExtTreeNode<BasicType> nodeCategory = new ExtTreeNode<BasicType>(exercise, items);
+			rootItems.add(nodeCategory);
+			if (exercise.getSkills() != null) {
+				for (Skill skill : exercise.getSkills()) {
 					ExtTreeNode<BasicType> nodeSkill = new ExtTreeNode<BasicType>(skill);
 					nodeCategory.getChildren().add(nodeSkill);
 				}
-				}
-				
-		}
-		ExtTreeNode<BasicType> root = new ExtTreeNode<BasicType>(null, rootItems);
+			}
 
-		return root;
+		}
+		_root = new ExtTreeNode<BasicType>(null, rootItems);
+
+		return _root;
 	}
 	
 	public TreeNode<BasicType> getEmptyTreeRoot() throws Exception {
@@ -56,12 +59,36 @@ public class ExerciseTreeModel {
 
 		return root;
 	}
-	
 
 	public DefaultTreeModel<BasicType> getModel() {
 		return _treeModel;
 	}
 	
+	public DefaultTreeModel<BasicType> getEmptyModel() {
+		LinkedList<DefaultTreeNode<BasicType>> rootItems = new LinkedList<DefaultTreeNode<BasicType>>();
+		ExtTreeNode<BasicType> root = new ExtTreeNode<BasicType>(null, rootItems);
+		
+		return new DefaultTreeModel<BasicType>(root);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addSkill(Treeitem treeItem, Skill skill) {
+		ExtTreeNode<BasicType> nodeSkill = new ExtTreeNode<BasicType>(skill);
+		((ExtTreeNode<BasicType>) treeItem.getValue()).getChildren().add(nodeSkill);
+	}	
+	
+	public void addExercise() {
+		Exercise exercise = new Exercise();
+		exercise.setId(exFreeId);
+		exFreeId--;
+		LinkedList<DefaultTreeNode<BasicType>> items = new LinkedList<DefaultTreeNode<BasicType>>();
+		ExtTreeNode<BasicType> node = new ExtTreeNode<BasicType>(exercise, items);
+		_root.getChildren().add(node);
+	}
+	
+	public void removeItem( Treeitem treeItem ) {
+		
+	}
 	
 
 }
