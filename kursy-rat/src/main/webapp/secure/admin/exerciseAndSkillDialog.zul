@@ -26,6 +26,10 @@
 										style="padding: 0px" width="32px" height="32px"
 										image="/resources/img/icons/new.png"
 										tooltiptext="${c:l('btnNew.tooltiptext')}" />
+							<toolbarbutton id="btnDelete"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/delete.png"
+								tooltiptext="Usuń zaznaczone" />
 							<toolbarbutton id="btnEdit"
 										style="padding: 0px" width="32px" height="32px"
 										image="/resources/img/icons/edit.png"
@@ -89,7 +93,7 @@
 													</north>
 													<center border="none">
 
-														<textbox rows="10" hflex="1" vflex="1"/>
+														<textbox id="tbDescription" rows="10" hflex="1" vflex="1"/>
 													</center>
 												</borderlayout>
 											</center>
@@ -117,7 +121,11 @@
 																style="padding: 0px" width="32px" height="32px"
 																image="/resources/img/icons/new.png"
 																tooltiptext="${c:l('btnNew.tooltiptext')}" />
-												</toolbar>
+													<toolbarbutton id="btnDeleteSkill"
+														style="padding: 0px" width="32px" height="32px"
+														image="/resources/img/icons/delete.png"
+														tooltiptext="Usuń zaznaczone" />
+																		</toolbar>
 											</hbox>
 										</div>
 

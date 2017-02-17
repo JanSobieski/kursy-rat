@@ -12,6 +12,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
@@ -47,9 +48,12 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 
 	protected Button btnSave; // aurowired
 	protected Button btnEdit; // aurowired
+	protected Checkbox cbObligatory; // aurowired
+	protected Textbox tbDescription; // aurowired
 	
 	private ExerciseTreeModel _exerciseTreeModel;
 	private SkillListViewModel<Skill> _skillModel;
+	private Exercise _prevSelectedExercise; 
 
 	public void doAfterCompose(Window comp) {
 		try {
@@ -117,33 +121,6 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	
 	public void onClick$btnNew( Event event ) {
 		_exerciseTreeModel.addExercise();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void onClick$removeBtn( Event event ) {
-		Treeitem selTreeItem = trExercise.getSelectedItem();
-		
-		if  ( ( selTreeItem == null ) || ( selTreeItem.getValue() == null ) || ( ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData() instanceof Exercise ) ) {
-			return;
-		}
-		
-		getData(false);
-		Skill selSkill = (Skill) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
-		Treeitem parent = (Treeitem)selTreeItem.getParent().getParent();
-		int index = 0;
-
-		for (TreeNode<BasicType> childTreeItem : ((ExtTreeNode<BasicType>) parent.getValue()).getChildren() ) {
-			Skill skill = (Skill) ((ExtTreeNode<BasicType>)childTreeItem).getData();
-			if ( selSkill.equals(skill)) {
-				trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
-				((ExtTreeNode<BasicType>) parent.getValue()).getChildren().remove(index);
-				
-				break;
-			}
-			index++;
-		}
-		
-		trExercise.setModel( _exerciseTreeModel.getModel() );
 	}
 	
 	public void onClick$btnEdit( Event event ) {
@@ -281,5 +258,70 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 			skill.setName(infoSkill.getText());
 		}
 	}
+	
+	public void onSelect$trExercise( Event event ) throws Exception {
+		Treeitem selTreeItem = trExercise.getSelectedItem();
+		if  ( ( selTreeItem == null ) || ( selTreeItem.getValue() == null ) || ( ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData() instanceof Skill ) ) {
+			return;
+		}
+		Exercise exercise  = (Exercise)((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
+		boolean obl = cbObligatory.isChecked();
+		String descr = tbDescription.getText();
+		if (_prevSelectedExercise != null ) {
+			_prevSelectedExercise.setDescription(descr);
+			_prevSelectedExercise.setAll_skills_obligatory(obl);
+		}
+		
+		cbObligatory.setChecked(exercise.getAll_skills_obligatory());
+		tbDescription.setText(exercise.getDescription());
+		
+		_prevSelectedExercise = exercise;
+	}
 
+	@SuppressWarnings("unchecked")
+	public void onClick$btnDelete( Event event ) throws Exception {
+		Treeitem selTreeItem = trExercise.getSelectedItem();
+		if  ( ( selTreeItem == null ) || ( selTreeItem.getValue() == null ) ) {
+			return;
+		}
+		getData(false);
+		if  (  ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData() instanceof Skill ) {
+			Skill selSkill = (Skill) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
+			Treeitem parent = (Treeitem)selTreeItem.getParent().getParent();
+			int index = 0;
+
+			for (TreeNode<BasicType> childTreeItem : ((ExtTreeNode<BasicType>) parent.getValue()).getChildren() ) {
+				Skill skill = (Skill) ((ExtTreeNode<BasicType>)childTreeItem).getData();
+				if ( selSkill.equals(skill)) {
+					trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
+					((ExtTreeNode<BasicType>) parent.getValue()).getChildren().remove(index);
+					
+					break;
+				}
+				index++;
+			}
+			
+			trExercise.setModel( _exerciseTreeModel.getModel() );
+		}
+		//exercise
+		int index = 0;
+		Exercise selExercise = (Exercise) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
+
+		for (TreeNode<BasicType> childTreeItem : _exerciseTreeModel.getModel().getRoot().getChildren() ) {
+			Exercise exercise = (Exercise)  ((ExtTreeNode<BasicType>)childTreeItem).getData();
+			if ( selExercise.equals(exercise)) {
+				trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
+				_exerciseTreeModel.getModel().getRoot().getChildren().remove(index);
+				
+				break;
+			}
+			index++;
+		}
+		trExercise.setModel( _exerciseTreeModel.getModel() );
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void onClick$btnDeleteSkill( Event event ) throws Exception {
+	}
 }
