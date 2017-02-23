@@ -25,7 +25,7 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 				item.setSelected(false);
 			}
 
-			item.setStyle("height: 34px");
+			//item.setStyle("height: 34px");
 			Treerow tr;
 			if (item.getTreerow() == null) {
 				tr = new Treerow();
@@ -37,13 +37,15 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 
 			Textbox tb = new Textbox();
 			tb.setText(data.getData().getName());
-			tb.setHflex("1");
+			tb.setStyle("width: 90%");
+			//tb.setHflex("true");
 			tb.setRows(1);
 			// tb.setVflex("min");
 			// tb.setStyle("height: 30px");
 
 			Treecell tc = new Treecell();
 			tc.setStyle("height: 45px");
+			//tc.setVflex("1");
 			tc.appendChild(tb);
 			tr.appendChild(tc);
 		}

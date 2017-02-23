@@ -138,9 +138,6 @@
 											<button id="addBtn"
 												style="padding:0"
 												image="/resources/img/icons/leftarrow_g.png" />
-											<button id="removeBtn"
-												style="padding:0"
-												image="/resources/img/icons/rightarrow_g.png" />
 										</vbox>
 										
 										<listbox id="listBoxSkills"

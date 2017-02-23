@@ -89,6 +89,10 @@ public class ExerciseTreeModel {
 	public void removeItem( Treeitem treeItem ) {
 		
 	}
+
+	public ExtTreeNode<BasicType> getRoot() {
+		return _root;
+	}
 	
 
 }

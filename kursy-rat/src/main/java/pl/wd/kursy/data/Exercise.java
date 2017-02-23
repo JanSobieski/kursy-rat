@@ -24,9 +24,11 @@ import pl.wd.kursy.web.ui.util.WebUtil;
 @GenericGenerator(name = "hibernate-increment", strategy = "increment")
 public class Exercise extends BasicType implements Serializable {
 	private static final long serialVersionUID = 6168979257328569867L;
-	
-	  private Set<Skill> _skills = new HashSet<>();
 
+	private Set<Skill> _skills = new HashSet<>();
+
+	private boolean _all_skills_obligatory;
+	private String _description;
 
 	public Exercise() {
 	}
@@ -63,6 +65,22 @@ public class Exercise extends BasicType implements Serializable {
 
 	public void setSkills( Set<Skill> skills ) {
 		_skills = skills;
+	}
+
+	public boolean getAll_skills_obligatory() {
+		return _all_skills_obligatory;
+	}
+
+	public void setAll_skills_obligatory(boolean all_skills_obligatory) {
+		_all_skills_obligatory = all_skills_obligatory;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
 	}
 	
 }

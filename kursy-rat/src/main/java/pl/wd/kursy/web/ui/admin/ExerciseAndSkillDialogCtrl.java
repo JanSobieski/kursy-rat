@@ -23,6 +23,7 @@ import org.zkoss.zul.Treechildren;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.event.TreeDataEvent;
 
 import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
@@ -295,6 +296,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 				if ( selSkill.equals(skill)) {
 					trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
 					((ExtTreeNode<BasicType>) parent.getValue()).getChildren().remove(index);
+					//			fireEvent(TreeDataEvent.STRUCTURE_CHANGED, null, 0, 0);
 					
 					break;
 				}
@@ -302,20 +304,21 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 			}
 			
 			trExercise.setModel( _exerciseTreeModel.getModel() );
-		}
-		//exercise
-		int index = 0;
-		Exercise selExercise = (Exercise) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
+		} else {
+			//exercise
+			int index = 0;
+			Exercise selExercise = (Exercise) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
 
-		for (TreeNode<BasicType> childTreeItem : _exerciseTreeModel.getModel().getRoot().getChildren() ) {
-			Exercise exercise = (Exercise)  ((ExtTreeNode<BasicType>)childTreeItem).getData();
-			if ( selExercise.equals(exercise)) {
-				trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
-				_exerciseTreeModel.getModel().getRoot().getChildren().remove(index);
-				
-				break;
+			for (TreeNode<BasicType> childTreeItem : _exerciseTreeModel.getModel().getRoot().getChildren() ) {
+				Exercise exercise = (Exercise)  ((ExtTreeNode<BasicType>)childTreeItem).getData();
+				if ( selExercise.equals(exercise)) {
+					trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
+					_exerciseTreeModel.getModel().getRoot().getChildren().remove(index);
+					
+					break;
+				}
+				index++;
 			}
-			index++;
 		}
 		trExercise.setModel( _exerciseTreeModel.getModel() );
 		
@@ -323,5 +326,16 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	
 	@SuppressWarnings("unchecked")
 	public void onClick$btnDeleteSkill( Event event ) throws Exception {
+		Set<Skill> skillsToRemove = new HashSet<>();
+		Set<Listitem> selItems = listBoxSkills.getSelectedItems();
+		for( Listitem selectedItem : selItems ) {
+			Skill skill = (Skill) selectedItem.getValue();
+			skillsToRemove.add(skill);
+			
+			_skillModel.remove(skill);
+		}
 	}
 }
+
+// tree
+//  			fireEvent(TreeDataEvent.STRUCTURE_CHANGED, null, 0, 0);

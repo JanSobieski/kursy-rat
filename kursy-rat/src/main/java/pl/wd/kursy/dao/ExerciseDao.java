@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import pl.wd.kursy.data.Exercise;
 
@@ -43,11 +43,6 @@ public class ExerciseDao {
 		});
 		_db.closeSession();
 		
-//		if ( crit.get_ids().size() > 0 ) {
-//			query.setParameterList("ids", crit.get_ids());
-//		}
-
-		
 		session = _db.getSession();
 		
 		Transaction tx = session.beginTransaction();
@@ -59,6 +54,16 @@ public class ExerciseDao {
 			else {
 				session.update(exercise);
 			}
+		}
+		
+		if ( ids2Del.size() > 0 ) {
+			String hql = "delete from Exercise ";
+			String condCl = "(exs_id in (:ids))";
+			hql += " where " + condCl;
+			Query<Exercise> query = session.createQuery(hql);
+			query.setParameterList("ids", ids2Del );
+			
+			query.executeUpdate();
 		}
 
 		try {
