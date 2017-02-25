@@ -20,6 +20,11 @@ public class SkillsDao {
 	
 	public List<Skill> getSkills() throws Exception {
 		Session session = _db.getSession();
+		
+		return getSkills(session);
+	}
+	
+	public List<Skill> getSkills(Session session) throws Exception {
 		Query<Skill> query = session.createQuery("from Skill as skill");
 		List<Skill> skills = query.list();
 		
@@ -27,7 +32,7 @@ public class SkillsDao {
 	}
 	
 	public void saveSkills(List<Skill> skills ) throws Exception {
-		Session session = _db.getSession();
+		Session session = _db.getFreeSession();
 		Set<Integer> ids = new HashSet<>();
 		skills.stream().forEach( (skill) -> {
 			if ( skill.getId() > 0 ) {
@@ -36,16 +41,15 @@ public class SkillsDao {
 		} );
 		
 		Set<Integer> ids2Del = new HashSet<>();
-		List<Skill> skillsDb = getSkills();
+		List<Skill> skillsDb = getSkills(session);
 		skillsDb.stream().forEach(  (skill) -> {
 			if ( !ids.contains(skill.getId() )) {
 				ids2Del.add(skill.getId());
 			}
 		});
-		_db.closeSession();
+		session.close();
 
 		session = _db.getSession();
-		Transaction tx = session.beginTransaction();
 		for (Skill skill : skills) {
 			if ( skill.getId() < 0 ) {
 				skill.setId(0);
@@ -65,14 +69,7 @@ public class SkillsDao {
 			
 			query.executeUpdate();
 		}
-		
 
-		try {
-			tx.commit();
-		} catch (Exception err) {
-			tx.rollback();
-			throw err;
-		}
 	}
 		
 

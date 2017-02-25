@@ -29,7 +29,7 @@ public interface DataServiceInt {
 	public void saveOrUpdate(Course course) throws Exception;
 	
 	public List<Exercise> getExercises() throws Exception;
-	public void saveExercises(List<Exercise> exercises ) throws Exception;
+	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills ) throws Exception;
 
 	public List<Skill> getSkills() throws Exception;
 	public void saveSkills(List<Skill> skills ) throws Exception;

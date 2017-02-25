@@ -1,9 +1,14 @@
 package pl.wd.kursy.dao;
 
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import pl.wd.kursy.data.Exercise;
+import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.web.security.AppManagerBean;
 
 public class Database {
@@ -15,6 +20,10 @@ public class Database {
 		return getSession(false);
 	}
 
+	public Session getFreeSession() {
+		return AppManagerBean.getAppManagerBean().getSessionFactory().openSession();
+	}
+	
 	public Session getSession( boolean force_new_session ) {
 		if ( force_new_session ) {
 			closeSession();
@@ -34,4 +43,25 @@ public class Database {
 			_session = null;
 		}
 	}
+	
+	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills) throws Exception {
+		Session session = getSession(true);
+
+		Transaction tx = session.beginTransaction();
+
+		ExerciseDao exerciseDao = new ExerciseDao(this);
+		exerciseDao.saveExercises(exercises);
+
+		SkillsDao skillDao = new SkillsDao(this);
+		skillDao.saveSkills(skills);
+
+		try {
+			tx.commit();
+		} catch (Exception err) {
+			tx.rollback();
+			throw err;
+		}
+
+	}
+
 }

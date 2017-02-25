@@ -1,6 +1,7 @@
 package pl.wd.kursy.web.ui.tree;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.zkoss.zul.DefaultTreeNode;
 
@@ -9,12 +10,12 @@ public class ExtTreeNode<T> extends DefaultTreeNode<T> {
 	// Node Control the default open
 	private boolean open = true;
 
-	public ExtTreeNode( T data, LinkedList<DefaultTreeNode<T>> children, boolean open ) {
+	public ExtTreeNode( T data, List<DefaultTreeNode<T>> children, boolean open ) {
 		super(data, children);
 		this.setOpen(open);
 	}
 
-	public ExtTreeNode( T data, LinkedList<DefaultTreeNode<T>> children ) {
+	public ExtTreeNode( T data, List<DefaultTreeNode<T>> children ) {
 		super(data, children);
 	}
 

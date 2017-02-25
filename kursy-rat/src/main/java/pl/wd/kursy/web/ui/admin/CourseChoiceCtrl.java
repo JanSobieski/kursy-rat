@@ -105,6 +105,12 @@ public class CourseChoiceCtrl extends BaseCtrl implements Serializable {
 			return;
 		}
 		getUserWorkspace().setCourseId(courseId);
+		try {
+			getUserWorkspace().getIndexCtrl().setCourseName(courseId);
+		} catch (final Exception e) {
+			logger.error("Error", e);
+			Messagebox.show(e.toString());
+		}
 		
 		closeWindow();
 		

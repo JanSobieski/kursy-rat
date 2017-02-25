@@ -16,9 +16,14 @@ public class ExerciseDao {
 	public ExerciseDao(Database db) {
 		_db = db;
 	}
-	
+
 	public List<Exercise> getExercises() throws Exception {
 		Session session = _db.getSession();
+		
+		return getExercises(session);
+	}
+
+	public List<Exercise> getExercises(Session session) throws Exception {
 		Query<Exercise> query = session.createQuery("from Exercise as exercise");
 		List<Exercise> courses = query.list();
 		
@@ -26,7 +31,7 @@ public class ExerciseDao {
 	}
 	
 	public void saveExercises(List<Exercise> exercises ) throws Exception {
-		Session session = _db.getSession();
+		Session session = _db.getFreeSession();
 		Set<Integer> ids = new HashSet<>();
 		exercises.stream().forEach( (exercise) -> {
 			if ( exercise.getId() > 0 ) {
@@ -35,17 +40,16 @@ public class ExerciseDao {
 		} );
 		
 		Set<Integer> ids2Del = new HashSet<>();
-		List<Exercise> exercisesDb = getExercises();
+		List<Exercise> exercisesDb = getExercises(session);
 		exercisesDb.stream().forEach(  (exercise) -> {
 			if ( !ids.contains(exercise.getId() )) {
 				ids2Del.add(exercise.getId());
 			}
 		});
-		_db.closeSession();
+		session.close();
 		
 		session = _db.getSession();
 		
-		Transaction tx = session.beginTransaction();
 		for (Exercise exercise : exercises) {
 			if ( exercise.getId() < 0 ) {
 				exercise.setId(0);
@@ -66,12 +70,6 @@ public class ExerciseDao {
 			query.executeUpdate();
 		}
 
-		try {
-			tx.commit();
-		} catch (Exception err) {
-			tx.rollback();
-			throw err;
-		}
 	}
 
 

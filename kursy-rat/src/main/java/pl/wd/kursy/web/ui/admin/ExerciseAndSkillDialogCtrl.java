@@ -23,7 +23,6 @@ import org.zkoss.zul.Treechildren;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.event.TreeDataEvent;
 
 import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
@@ -216,8 +215,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 			return false;
 		}
 		try {
-			getUserWorkspace().getDataServiceProvider().saveSkills(skills);
-			getUserWorkspace().getDataServiceProvider().saveExercises(data);
+			getUserWorkspace().getDataServiceProvider().saveExercisesAndSkills(data, skills);
 		} catch (final Exception e) {
 			logger.error("Error", e);
 			Messagebox.show(e.toString());
@@ -296,18 +294,18 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 				if ( selSkill.equals(skill)) {
 					trExercise.setModel( _exerciseTreeModel.getEmptyModel() );
 					((ExtTreeNode<BasicType>) parent.getValue()).getChildren().remove(index);
-					//			fireEvent(TreeDataEvent.STRUCTURE_CHANGED, null, 0, 0);
+					//			_exerciseTreeModel.fireEvent(TreeDataEvent.STRUCTURE_CHANGED, null, 0, 0);
 					
 					break;
 				}
 				index++;
 			}
-			
-			trExercise.setModel( _exerciseTreeModel.getModel() );
 		} else {
 			//exercise
 			int index = 0;
 			Exercise selExercise = (Exercise) ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData();
+			
+			selTreeItem.getParent().getChildren().remove(selTreeItem);
 
 			for (TreeNode<BasicType> childTreeItem : _exerciseTreeModel.getModel().getRoot().getChildren() ) {
 				Exercise exercise = (Exercise)  ((ExtTreeNode<BasicType>)childTreeItem).getData();

@@ -210,9 +210,8 @@ public class DataService implements DataServiceInt, Serializable {
 	}
 	
 	@Override
-	public void saveExercises(List<Exercise> exercises ) throws Exception {
-		ExerciseDao exerciseDao = new ExerciseDao(_db);
-		exerciseDao.saveExercises(exercises);
+	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills ) throws Exception {
+		_db.saveExercisesAndSkills(exercises, skills);
 	}
 	
 	
@@ -227,8 +226,6 @@ public class DataService implements DataServiceInt, Serializable {
 	}
 
 	public void saveSkills(List<Skill> skills ) throws Exception {
-		SkillsDao skillDao = new SkillsDao(_db);
-		skillDao.saveSkills(skills);
 	}
 
 	

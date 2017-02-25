@@ -74,29 +74,30 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 	
 	public void doAfterCompose(Window comp) {
 		try {
-	    super.doAfterCompose(comp); //wire variables and event listners
+			super.doAfterCompose(comp); // wire variables and event listners
 			
+			_userWorkspace.setIndexCtrl(this);
+
 			this.mainMenuBar.setVisible(false);
 			comp.getWidth();
-			
+
 			Session ses = Sessions.getCurrent();
-			if ( ses != null ) {
-				String cl_id = (String)ses.getAttribute(UserAuthenticationFilter.CLIENT_ID);
-				_userWorkspace.setClientId( Long.parseLong(cl_id) );
-				String courseId = (String)ses.getAttribute(UserAuthenticationFilter.SPRING_SECURITY_FORM_COURSE_ID);
+			if (ses != null) {
+				String cl_id = (String) ses.getAttribute(UserAuthenticationFilter.CLIENT_ID);
+				_userWorkspace.setClientId(Long.parseLong(cl_id));
+				String courseId = (String) ses.getAttribute(UserAuthenticationFilter.SPRING_SECURITY_FORM_COURSE_ID);
 				int cId = Integer.parseInt(courseId);
-				_userWorkspace.setCourseId( cId );
+				_userWorkspace.setCourseId(cId);
 				_userWorkspace.loadUser();
-				setCourseName( cId );
-				
+				setCourseName(cId);
+
 			}
 
 			createMainTreeMenu();
 		} catch (Exception e) {
 			logger.error(e);
 			Messagebox.show(e.toString());
-		}
-		finally {
+		} finally {
 			try {
 				_userWorkspace.getDataServiceProvider().closeDbSession();
 			} catch (Exception e2) {
@@ -111,7 +112,6 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 		if ( course != null ) {
 			lbCourseName.setValue(course.getName());
 		}
-		
 	}
 
 	/**
@@ -413,11 +413,5 @@ public class IndexCtrl extends BaseCtrl implements Serializable {
 
 	public MainMenuCtrl getMainMenuCtrl() {
 		return mainMenuCtrl;
-	}
-  
-//	@Override
-//  @WireVariable("userWorkspace")
-	public void setUserWorkspace(UserWorkspace userWorkspace) {
-		_userWorkspace = userWorkspace;
 	}
 }

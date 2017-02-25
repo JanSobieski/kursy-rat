@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
+<?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+	
+	<window id="studentGroupWindow" sclass="cardSys" border="none"
+		apply="pl.wd.kursy.web.ui.admin.StudentGroupListCtrl" height="100%">
+
+		<borderlayout id="borderlayoutUser" >
+
+			<north border="none" margins="0,0,0,0">
+
+				<div sclass="z-toolbar" style="padding:0">
+					<hbox pack="stretch" sclass="hboxRemoveWhiteStrips"
+						width="100%">
+						<!-- CRUD BUTTONS -->
+						<toolbar align="end"
+							style="float:left; border-style: none; padding-left: 10px;">
+							<toolbarbutton id="btnNew"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/new.png"
+										tooltiptext="${c:l('btnNew.tooltiptext')}" />
+							<toolbarbutton id="btnDelete"
+								style="padding: 0px" width="32px" height="32px"
+								image="/resources/img/icons/delete.png"
+								tooltiptext="Usuń zaznaczone" />
+							<toolbarbutton id="btnEdit"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/edit.png"
+										tooltiptext="${c:l('btnEdit.tooltiptext')}" />
+							<toolbarbutton id="btnSave" disabled="true"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/save.png"
+										tooltiptext="${c:l('btnSave.tooltiptext')}" />
+							<toolbarbutton id="btnCancel"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/cancel.png"
+										tooltiptext="${c:l('btnCancel.tooltiptext')}" />
+							<toolbarbutton id="btnClose"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/exit.png"
+										tooltiptext="${c:l('btnClose.tooltiptext')}" />
+						</toolbar>
+					</hbox>
+				</div>
+
+			</north>
+			<center border="none" margins="0,0,0,0">
+				<borderlayout width="100%" height="100%">
+					<west size="30%" border="none"
+						splittable="true" collapsible="false" vflex="true">
+						<borderlayout  hflex="min" width="100%" height="100%">
+							<north border="none">
+								<label
+									value="Grupy" style="padding-top: 5px;" />
+							</north>
+							<center border="none"
+								vflex="true" hflex="1" autoscroll="true">
+								<extendedTree
+									id="trGroups" checkmark="true" autopaging="true">
+								</extendedTree>
+
+							</center>
+						</borderlayout>
+
+					</west>
+					<center border="none" >
+
+						<borderlayout >
+									<center border="none" autoscroll="true" margins="0,0,0,0">
+										<hlayout height="100%" style="overflow-y:auto; padding:3px" >
+
+										<vbox spacing="10px"
+											width="24px">
+											<button id="addBtn"
+												style="padding:0"
+												image="/resources/img/icons/leftarrow_g.png" />
+										</vbox>
+										
+										<listbox id="listBoxStudents"
+											style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+											width="100%" height="100%"
+											tooltiptext="${c:l('listbox.tooltiptext')}" multiple="true">
+											<auxhead sclass="category-left">
+												<auxheader colspan="1">
+													<image
+														src="/resources/widgets/grid/img/funnel.png" />
+													<textbox id="tbStudentID" instant="true" width="20px" />
+												</auxheader>
+												<auxheader colspan="1">
+													<image
+														src="/resources/widgets/grid/img/funnel.png" />
+													<textbox id="tbFirstName" instant="true" width="100px" />
+												</auxheader>
+												<auxheader colspan="1">
+													<image
+														src="/resources/widgets/grid/img/funnel.png" />
+													<textbox id="tbLastName" instant="true" width="100px" />
+												</auxheader>
+											</auxhead>
+							
+											<listhead sizable="true" id="listHeader">
+												<mylistheader id="listheader_StudentList_ID"
+													sort="auto(ID)" width="10%" label="${c:l('common.ID')}">
+												</mylistheader>
+												<mylistheader
+													id="listheader_StudentList_FirstName" sort="auto(name)"
+													width="20%" label="Imię">
+												</mylistheader>
+												<mylistheader
+													id="listheader_StudentList_LastName" sort="auto(name)"
+													width="20%" label="Nazwisko">
+												</mylistheader>
+											</listhead>
+										</listbox>
+										
+									</hlayout>
+
+									</center>
+								</borderlayout>
+
+
+					</center>
+				</borderlayout>
+			
+			</center>
+
+
+		</borderlayout>
+	</window>
+</zk>

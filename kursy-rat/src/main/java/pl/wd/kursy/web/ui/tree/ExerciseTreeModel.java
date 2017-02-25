@@ -29,7 +29,7 @@ public class ExerciseTreeModel {
 	}
 
 	private TreeNode<BasicType> getTreeRoot() throws Exception {
-		LinkedList<DefaultTreeNode<BasicType>> rootItems = new LinkedList<DefaultTreeNode<BasicType>>();
+		List<DefaultTreeNode<BasicType>> rootItems = new ArrayList<DefaultTreeNode<BasicType>>();
 		
 		_exercises = _workspace.getDataServiceProvider().getExercises();
 //		_skillKeyWords = _workspace.getDataServiceProvider().get_skill_key_words();
@@ -37,7 +37,7 @@ public class ExerciseTreeModel {
 //		Hashtable<Integer, List<SkillKeyWord>> category_id2key_words = SkillKeyWord.get_category_id2key_words_mapping(_skillKeyWords);
 
 		for (Exercise exercise : _exercises) {
-			LinkedList<DefaultTreeNode<BasicType>> items = new LinkedList<DefaultTreeNode<BasicType>>();
+			List<DefaultTreeNode<BasicType>> items = new ArrayList<DefaultTreeNode<BasicType>>();
 			ExtTreeNode<BasicType> nodeCategory = new ExtTreeNode<BasicType>(exercise, items);
 			rootItems.add(nodeCategory);
 			if (exercise.getSkills() != null) {
@@ -54,18 +54,19 @@ public class ExerciseTreeModel {
 	}
 	
 	public TreeNode<BasicType> getEmptyTreeRoot() throws Exception {
-		LinkedList<DefaultTreeNode<BasicType>> rootItems = new LinkedList<DefaultTreeNode<BasicType>>();
+		List<DefaultTreeNode<BasicType>> rootItems = new ArrayList<DefaultTreeNode<BasicType>>();
 		ExtTreeNode<BasicType> root = new ExtTreeNode<BasicType>(null, rootItems);
 
 		return root;
 	}
 
 	public DefaultTreeModel<BasicType> getModel() {
+		
 		return _treeModel;
 	}
 	
 	public DefaultTreeModel<BasicType> getEmptyModel() {
-		LinkedList<DefaultTreeNode<BasicType>> rootItems = new LinkedList<DefaultTreeNode<BasicType>>();
+		List<DefaultTreeNode<BasicType>> rootItems = new ArrayList<DefaultTreeNode<BasicType>>();
 		ExtTreeNode<BasicType> root = new ExtTreeNode<BasicType>(null, rootItems);
 		
 		return new DefaultTreeModel<BasicType>(root);
@@ -81,7 +82,7 @@ public class ExerciseTreeModel {
 		Exercise exercise = new Exercise();
 		exercise.setId(exFreeId);
 		exFreeId--;
-		LinkedList<DefaultTreeNode<BasicType>> items = new LinkedList<DefaultTreeNode<BasicType>>();
+		List<DefaultTreeNode<BasicType>> items = new ArrayList<DefaultTreeNode<BasicType>>();
 		ExtTreeNode<BasicType> node = new ExtTreeNode<BasicType>(exercise, items);
 		_root.getChildren().add(node);
 	}

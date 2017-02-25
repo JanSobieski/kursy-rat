@@ -1,8 +1,6 @@
 package  pl.wd.kursy.web;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -12,7 +10,6 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zkplus.spring.SpringUtil;
@@ -21,6 +18,7 @@ import org.zkoss.zul.Window;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.service.interf.DataServiceInt;
 import pl.wd.kursy.web.security.Context;
+import pl.wd.kursy.web.ui.index.IndexCtrl;
 
 /**
  * Workspace for the user. One workspace per userSession. <br>
@@ -40,6 +38,7 @@ public class UserWorkspace implements Serializable, DisposableBean {
 	private User _user = new User();
 	
 	private DataServiceInt _dataServiceProvider;
+	private IndexCtrl _indexCtrl;
 
 	private static final long serialVersionUID = -3936210543827830197L;
 	private final static Logger logger = Logger.getLogger(UserWorkspace.class);
@@ -240,6 +239,14 @@ public class UserWorkspace implements Serializable, DisposableBean {
 
 	public void setCourseId(int courseId) {
 		_courseId = courseId;
+	}
+
+	public IndexCtrl getIndexCtrl() {
+		return _indexCtrl;
+	}
+
+	public void setIndexCtrl(IndexCtrl indexCtrl) {
+		_indexCtrl = indexCtrl;
 	}
 	
 }
