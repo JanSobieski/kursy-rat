@@ -1,6 +1,7 @@
 package pl.wd.kursy.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
+import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.comp.ExerciseComparator;
 import pl.wd.kursy.data.comp.SkillComparator;
@@ -225,7 +227,13 @@ public class DataService implements DataServiceInt, Serializable {
 		return skills;
 	}
 
-	public void saveSkills(List<Skill> skills ) throws Exception {
+	public List<StudentGroup> getStudentGroups(int courseId) throws Exception {
+		SkillsDao skillDao = new SkillsDao(_db);
+		
+		List<Skill> skills = skillDao.getSkills(); 
+		Collections.sort(skills, new SkillComparator(true, ExerciseComparator.TYPE_NAME));
+
+		return new ArrayList<StudentGroup>();
 	}
 
 	

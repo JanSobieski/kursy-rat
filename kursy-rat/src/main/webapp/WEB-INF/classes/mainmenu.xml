@@ -29,12 +29,14 @@
 			zulNavigation="/secure/admin/userList.zul" rightName="show_MenuAdministration" />
 		<menuItem id="menu_Item_Courses" 
 			zulNavigation="/secure/admin/courseList.zul" rightName="show_MenuAdministration" />
+		<menuItem id="menu_Item_Exercise" 
+			zulNavigation="/secure/admin/exerciseAndSkillDialog.zul" rightName="show_MenuAdministration" />
+		<menuseparator/>
+		
 		<menuItem id="menu_Item_Students" 
 			zulNavigation="/secure/admin/studentList.zul" rightName="" />
 		<menuItem id="menu_Item_StudentGroups" 
 			zulNavigation="/secure/admin/studentGroupList.zul" rightName="" />
-		<menuItem id="menu_Item_Exercise" 
-			zulNavigation="/secure/admin/exerciseAndSkillDialog.zul" rightName="" />
 	</menu>
 	<menu id="menu_Category_Course" rightName="">
 		<menuItem id="menu_Item_PersonEditSimple" iconName="/images/icons/user_group_16x16.png"

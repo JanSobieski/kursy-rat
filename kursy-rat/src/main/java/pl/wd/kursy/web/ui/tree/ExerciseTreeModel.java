@@ -32,9 +32,6 @@ public class ExerciseTreeModel {
 		List<DefaultTreeNode<BasicType>> rootItems = new ArrayList<DefaultTreeNode<BasicType>>();
 		
 		_exercises = _workspace.getDataServiceProvider().getExercises();
-//		_skillKeyWords = _workspace.getDataServiceProvider().get_skill_key_words();
-//
-//		Hashtable<Integer, List<SkillKeyWord>> category_id2key_words = SkillKeyWord.get_category_id2key_words_mapping(_skillKeyWords);
 
 		for (Exercise exercise : _exercises) {
 			List<DefaultTreeNode<BasicType>> items = new ArrayList<DefaultTreeNode<BasicType>>();

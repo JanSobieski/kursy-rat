@@ -64,6 +64,7 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 		
 		//ComponentsCtrl.applyForward(item, "onClick=onTreeItemClicked");
 	}
+	
 
 }
 

@@ -6,6 +6,7 @@ import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
+import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.exception.BusinessLogicException;
 
@@ -32,7 +33,7 @@ public interface DataServiceInt {
 	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills ) throws Exception;
 
 	public List<Skill> getSkills() throws Exception;
-	public void saveSkills(List<Skill> skills ) throws Exception;
 
+	public List<StudentGroup> getStudentGroups(int courseId) throws Exception;
 
 }

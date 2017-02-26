@@ -1,5 +1,6 @@
 package pl.wd.kursy.data;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -65,6 +66,11 @@ public class Student extends BasicType implements Serializable {
 
 	public void setCourseId(int courseId) {
 		_courseId = courseId;
+	}
+
+	@javax.persistence.Transient
+	public String getLastFirstName() {
+		return getLastName() + " " + getFirstName();
 	}
 
 
