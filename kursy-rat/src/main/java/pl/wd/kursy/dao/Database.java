@@ -1,6 +1,7 @@
 package pl.wd.kursy.dao;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,7 +12,9 @@ import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.web.security.AppManagerBean;
 
-public class Database {
+public class Database implements Serializable {
+	private static final long serialVersionUID = 7019739230521208928L;
+
 	static Logger logger = Logger.getLogger("pl.wd.kursy.dao.Database");
 
 	private Session _session;

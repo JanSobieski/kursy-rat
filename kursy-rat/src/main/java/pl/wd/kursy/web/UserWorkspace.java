@@ -31,8 +31,13 @@ import pl.wd.kursy.web.ui.index.IndexCtrl;
  * 
  */
 
-@SessionScoped @Named("userWorkspace")
+@SessionScoped 
+@Named("userWorkspace")
 public class UserWorkspace implements Serializable, DisposableBean {
+	private static final long serialVersionUID = -8686823757914088366L;
+
+	private final static Logger logger = Logger.getLogger(UserWorkspace.class);
+
 	private long _client_id;
 	private int _courseId;
 	private User _user = new User();
@@ -40,8 +45,6 @@ public class UserWorkspace implements Serializable, DisposableBean {
 	private DataServiceInt _dataServiceProvider;
 	private IndexCtrl _indexCtrl;
 
-	private static final long serialVersionUID = -3936210543827830197L;
-	private final static Logger logger = Logger.getLogger(UserWorkspace.class);
 
 	static private Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();

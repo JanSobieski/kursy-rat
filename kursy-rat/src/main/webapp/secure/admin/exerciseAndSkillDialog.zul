@@ -135,7 +135,7 @@
 
 										<vbox spacing="10px"
 											width="24px">
-											<button id="addBtn"
+											<button id="btnAdd"
 												style="padding:0"
 												image="/resources/img/icons/leftarrow_g.png" />
 										</vbox>

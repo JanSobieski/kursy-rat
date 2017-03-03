@@ -28,7 +28,8 @@ public class StudentListModelItemRenderer implements ListitemRenderer<Student>, 
 		lc.setStyle("text-align:left");
 		lc.setParent(item);
 
-		item.setAttribute("data", student);
+		//item.setAttribute("data", student);
+		item.setValue(student);
 		
 		ComponentsCtrl.applyForward(item, "onDoubleClick=onStudentListItemDoubleClicked");
 	}

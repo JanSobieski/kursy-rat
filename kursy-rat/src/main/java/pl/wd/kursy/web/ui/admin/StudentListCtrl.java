@@ -126,7 +126,7 @@ public class StudentListCtrl extends BaseListCtrl<Student> implements Serializab
 		Listitem item = listBoxStudents.getSelectedItem();
 
 		if (item != null) {
-			Student student = (Student) item.getAttribute("data");
+			Student student = (Student) item.getValue();
 			showDetailView(student);
 		}
 	}

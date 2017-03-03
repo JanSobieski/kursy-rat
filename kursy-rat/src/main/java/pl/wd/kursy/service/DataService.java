@@ -1,7 +1,6 @@
 package pl.wd.kursy.service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import pl.wd.kursy.dao.Database;
 import pl.wd.kursy.dao.ExerciseDao;
 import pl.wd.kursy.dao.SkillsDao;
 import pl.wd.kursy.dao.StudentDao;
+import pl.wd.kursy.dao.StudentGroupDao;
 import pl.wd.kursy.dao.UserDao;
 import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Exercise;
@@ -23,6 +23,7 @@ import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.comp.ExerciseComparator;
 import pl.wd.kursy.data.comp.SkillComparator;
+import pl.wd.kursy.data.comp.StudentGroupComparator;
 import pl.wd.kursy.data.constants.Rights;
 import pl.wd.kursy.data.constants.SystemConstants;
 import pl.wd.kursy.exception.BusinessLogicException;
@@ -222,19 +223,28 @@ public class DataService implements DataServiceInt, Serializable {
 		SkillsDao skillDao = new SkillsDao(_db);
 		
 		List<Skill> skills = skillDao.getSkills(); 
-		Collections.sort(skills, new SkillComparator(true, ExerciseComparator.TYPE_NAME));
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_NAME));
 
 		return skills;
 	}
 
+	@Override
 	public List<StudentGroup> getStudentGroups(int courseId) throws Exception {
-		SkillsDao skillDao = new SkillsDao(_db);
+		StudentGroupDao studentGroupDao = new StudentGroupDao(_db);
 		
-		List<Skill> skills = skillDao.getSkills(); 
-		Collections.sort(skills, new SkillComparator(true, ExerciseComparator.TYPE_NAME));
+		List<StudentGroup> groups = studentGroupDao.getGroups(courseId);
+		Collections.sort(groups, new StudentGroupComparator(true, StudentGroupComparator.TYPE_NAME));
 
-		return new ArrayList<StudentGroup>();
+		return groups;
 	}
+	
+	@Override
+	public void saveStudentGroups(List<StudentGroup> studentGroups, int courseId ) throws Exception {
+		StudentGroupDao studentGroupDao = new StudentGroupDao(_db);
+		studentGroupDao.saveGroups(studentGroups, courseId);
+		
+	}
+
 
 	
 }

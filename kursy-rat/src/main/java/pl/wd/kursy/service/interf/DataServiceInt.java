@@ -35,5 +35,6 @@ public interface DataServiceInt {
 	public List<Skill> getSkills() throws Exception;
 
 	public List<StudentGroup> getStudentGroups(int courseId) throws Exception;
+	public void saveStudentGroups(List<StudentGroup> studentGroup, int courseId ) throws Exception;
 
 }

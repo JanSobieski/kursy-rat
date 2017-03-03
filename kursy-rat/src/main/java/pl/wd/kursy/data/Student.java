@@ -1,6 +1,5 @@
 package pl.wd.kursy.data;
 
-import java.beans.Transient;
 import java.io.Serializable;
 
 import javax.persistence.Column;

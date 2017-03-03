@@ -94,7 +94,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void onClick$addBtn( Event event ) {
+	public void onClick$btnAdd( Event event ) {
 		Treeitem selTreeItem = trExercise.getSelectedItem();
 		if  ( ( selTreeItem == null ) || ( selTreeItem.getValue() == null ) || ( ((ExtTreeNode<BasicType>)selTreeItem.getValue()).getData() instanceof Skill ) ) {
 			return;

@@ -25,7 +25,7 @@
 	<menu id="menu_Category_Administration" rightName="">
 		<menuItem id="menu_Item_ChangePass" createTab="false"
 			zulNavigation="/secure/admin/changePassPanel.zul" rightName="commonUser" />
-		<menuItem id="menu_Item_Users" iconName="/images/icons/user_group_16x16.png"
+		<menuItem id="menu_Item_Users" 
 			zulNavigation="/secure/admin/userList.zul" rightName="show_MenuAdministration" />
 		<menuItem id="menu_Item_Courses" 
 			zulNavigation="/secure/admin/courseList.zul" rightName="show_MenuAdministration" />
@@ -39,18 +39,8 @@
 			zulNavigation="/secure/admin/studentGroupList.zul" rightName="" />
 	</menu>
 	<menu id="menu_Category_Course" rightName="">
-		<menuItem id="menu_Item_PersonEditSimple" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/recruitment/personEditSimple.zul" rightName="show_MenuRecruitment" />
-		<menuItem id="menu_Item_PersonEdit" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/recruitment/personEdit.zul" rightName="show_MenuRecruitment" />
-		<menuItem id="menu_Item_PersonSearch" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/recruitment/personList.zul" rightName="show_MenuRecruitment" />
-	</menu>
-	<menu id="menu_Category_Sales" rightName="show_MenuContracts">
-		<menuItem id="menu_Item_ProjectEdit" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/recruitment/projectEdit.zul" rightName="show_MenuContracts" />
-		<menuItem id="menu_Item_ProjectSearch" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/recruitment/projectList.zul" rightName="show_MenuContracts" />
+		<menuItem id="menu_Item_SearchPerson" 
+			zulNavigation="/secure/course/personSearch.zul" rightName="" />
 	</menu>
 	<menu id="menu_Category_Reports">
 		<menuItem id="menu_Item_RepAddedPersons" iconName="/images/icons/user_group_16x16.png"

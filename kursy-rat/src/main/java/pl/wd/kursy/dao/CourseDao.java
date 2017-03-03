@@ -2,12 +2,11 @@ package pl.wd.kursy.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import pl.wd.kursy.data.Course;
-import pl.wd.kursy.data.Student;
 
 public class CourseDao {
 	private Database _db;

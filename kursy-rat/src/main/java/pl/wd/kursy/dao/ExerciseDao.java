@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import pl.wd.kursy.data.Exercise;

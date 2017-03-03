@@ -147,6 +147,7 @@ public class CourseChoiceCtrl extends BaseCtrl implements Serializable {
 		    	return false;
 	    	}
 	    	showDialog(choiceDialogInt);
+	    	return false;
 	    }
 		
 		return true;
