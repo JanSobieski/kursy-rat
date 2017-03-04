@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
+<?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+	
+	<window id="personSearchWindow" sclass="cardSys" border="none"
+		apply="pl.wd.kursy.web.ui.course.PersonSearchCtrl" height="100%">
+
+		<borderlayout id="borderlayoutUser" >
+
+			<north border="none" margins="0,0,0,0">
+				<grid id="gridPersons" mold="paging"
+					pageSize="20" vflex="min"
+					style="border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+					width="100%" tooltiptext="${c:l('listbox.tooltiptext')}">
+					<auxhead sclass="category-left">
+						<auxheader id="auxHeaderFirstName"
+							colspan="1">
+							<image
+								src="/resources/widgets/grid/img/funnel.png" />
+							<textbox id="tbFirstName"
+								instant="true" width="80%" />
+						</auxheader>
+						<auxheader id="auxHeaderLastName"
+							colspan="1">
+							<image
+								src="/resources/widgets/grid/img/funnel.png" />
+							<textbox id="tbLastName"
+								instant="true" width="80%" />
+						</auxheader>
+						<auxheader id="auxHeaderGruop"
+							colspan="1">
+							<image
+								src="/resources/widgets/grid/img/funnel.png" />
+							<combobox id="cmbGroup" readonly="true" width="80%">
+							</combobox>
+						</auxheader>
+					</auxhead>
+					<columns id="gridColumns" menupopup="auto"
+						sizable="true">
+						<customColumn
+							id="listheader_PersonList_FirstName" sort="auto(first_name)"
+							width="15%" label="${c:l('common.FirstName')}" />
+						<customColumn
+							id="listheader_PersonList_LastName" sort="auto(last_name)"
+							width="15%" label="${c:l('common.LastName')}" />
+						<customColumn
+							id="listheader_PersonList_Group" sort="auto(last_name)"
+							width="15%" label="Grupa" />
+						<customColumn
+							id="listheader_PersonList_Skills" sort="auto(last_name)"
+							width="15%" label="Zaliczone umiejętności" />
+					
+					</columns>
+					
+
+				</grid>
+			</north>
+
+		</borderlayout>
+	</window>
+</zk>
