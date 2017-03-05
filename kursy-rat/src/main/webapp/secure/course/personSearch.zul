@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 
+<?component name="customColumn" extends="column" class="pl.wd.kursy.web.ui.custom_controls.CustomGridColumn"?>
 <?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
 <?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
 
@@ -15,7 +16,7 @@
 		<borderlayout id="borderlayoutUser" >
 
 			<north border="none" margins="0,0,0,0">
-				<grid id="gridPersons" mold="paging"
+				<grid id="gridStudents" mold="paging"
 					pageSize="20" vflex="min"
 					style="border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
 					width="100%" tooltiptext="${c:l('listbox.tooltiptext')}">
