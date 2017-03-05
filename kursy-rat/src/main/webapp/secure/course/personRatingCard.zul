@@ -13,7 +13,7 @@
 	<window id="personRatingWindow" border="none"
 		apply="pl.wd.kursy.web.ui.course.PersonRatingCardCtrl" 
 		title="Karta oceny" 
-		closable="true" sizable="true" width="1000px" height="600px" sclass="pageWindowTitle">
+		closable="true" sizable="true" width="1200px" height="600px" sclass="pageWindowTitle">
 
 
 		<borderlayout id="borderlayoutRatingCard" >
@@ -52,18 +52,67 @@
 						<borderlayout width="100%" height="100%">
 							<west size="50%" border="none"
 								splittable="true" collapsible="false">
+									<borderlayout width="100%" height="100%">
+										<center border="none" margins="0,0,0,0">
+											<listbox id="listBoxSkills"
+												style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+												width="100%" height="100%" multiple="true">
+
+											<listhead id="listHeader">
+												<mylistheader id="listheader_SkillList"
+													width="100%" label="Umiejętności">
+												</mylistheader>
+											</listhead>
+
+											</listbox>
+										</center>
+
+										<south border="none" margins="0,0,0,0">
+											<button id="btnAddSkill"
+												style="padding:0"
+												image="/resources/img/icons/downarrow_g.png" />
+										</south>
+									</borderlayout>
+
 							</west>
 
 							<center border="none" margins="0,0,0,0">
+									<borderlayout width="100%" height="100%">
+										<center border="none" margins="0,0,0,0">
+											<listbox id="listBoxExercises"
+												style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+												width="100%" height="100%" multiple="false">
+												<listhead id="listHeaderE">
+													<mylistheader id="listheader_Exercise"
+														width="100%" label="Symulacje">
+													</mylistheader>
+												</listhead>
+											</listbox>
+										</center>
+
+										<south border="none" margins="0,0,0,0">
+											<button id="btnAddExercise"
+												style="padding:0"
+												image="/resources/img/icons/downarrow_g.png" />
+										</south>
+									</borderlayout>
 							</center>
 						</borderlayout>
 
 					</north>
 
-					<center border="none" margins="0,0,0,0">
-						<label
-							value="main table" style="padding-top: 5px;" />
+					<center border="none" margins="0,0,0,0" autoscroll="true">
+						<grid id="gridSkillsExercises" mold="paging"
+							pageSize="20" vflex="1"
+							style="border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+							width="100%" >
+							<columns id="gridColumns" 
+								sizable="true">
+								<column id="listheader_Head"
+									label="Umiejętności/Symulacje" width="30%" />
 
+						</columns>
+						</grid>
 
 					</center>
 			
