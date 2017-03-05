@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="customColumn" extends="column" class="pl.wd.kursy.web.ui.custom_controls.CustomGridColumn"?>
+<?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
+<?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+	
+	<window id="personRatingWindow" border="none"
+		apply="pl.wd.kursy.web.ui.course.PersonRatingCardCtrl" 
+		title="Karta oceny" 
+		closable="true" sizable="true" width="1000px" height="600px" sclass="pageWindowTitle">
+
+
+		<borderlayout id="borderlayoutRatingCard" >
+			<north border="none" margins="0,0,0,0">
+			</north>
+			<center border="none" margins="0,0,0,0">
+			
+			
+			</center>
+
+		</borderlayout>
+	</window>
+</zk>

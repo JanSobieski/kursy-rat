@@ -14,55 +14,49 @@
 		apply="pl.wd.kursy.web.ui.course.PersonSearchCtrl" height="100%">
 
 		<borderlayout id="borderlayoutUser" >
-
-			<north border="none" margins="0,0,0,0">
-				<grid id="gridStudents" mold="paging"
-					pageSize="20" vflex="min"
-					style="border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
-					width="100%" tooltiptext="${c:l('listbox.tooltiptext')}">
+			<center border="none" margins="0,0,0,0">
+			
+				<listbox id="listBoxStudents"
+					style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+					width="100%" height="100%"
+					tooltiptext="${c:l('listbox.tooltiptext')}" multiple="false">
 					<auxhead sclass="category-left">
-						<auxheader id="auxHeaderFirstName"
-							colspan="1">
+						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbFirstName"
-								instant="true" width="80%" />
+							<textbox id="tbFirstName" instant="true" width="80%" />
 						</auxheader>
-						<auxheader id="auxHeaderLastName"
-							colspan="1">
+						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
-							<textbox id="tbLastName"
-								instant="true" width="80%" />
+							<textbox id="tbLastName" instant="true" width="80%" />
 						</auxheader>
-						<auxheader id="auxHeaderGruop"
-							colspan="1">
+						<auxheader colspan="1">
 							<image
 								src="/resources/widgets/grid/img/funnel.png" />
 							<combobox id="cmbGroup" readonly="true" width="80%">
 							</combobox>
 						</auxheader>
 					</auxhead>
-					<columns id="gridColumns" menupopup="auto"
-						sizable="true">
-						<customColumn
-							id="listheader_PersonList_FirstName" sort="auto(first_name)"
-							width="15%" label="${c:l('common.FirstName')}" />
-						<customColumn
-							id="listheader_PersonList_LastName" sort="auto(last_name)"
-							width="15%" label="${c:l('common.LastName')}" />
-						<customColumn
-							id="listheader_PersonList_Group" sort="auto(last_name)"
-							width="15%" label="Grupa" />
-						<customColumn
-							id="listheader_PersonList_Skills" sort="auto(last_name)"
-							width="15%" label="Zaliczone umiejętności" />
-					
-					</columns>
-					
 
-				</grid>
-			</north>
+					<listhead sizable="true" id="listHeader">
+						<mylistheader
+							id="listheader_FirstName" sort="auto(name)"
+							width="20%" label="Imię">
+						</mylistheader>
+						<mylistheader id="listheader_LastName"
+							sort="auto(personName)" width="25%"
+							label="Nazwisko" />
+						<mylistheader id="listheader_Group"
+							sort="auto(active)" width="25%"
+							label="Grupa" />
+						<mylistheader id="listheader_Skills"
+							sort="auto(active)" width="25%"
+							label="Zaliczone umiejętności" />
+					</listhead>
+				</listbox>
+			
+			</center>
 
 		</borderlayout>
 	</window>
