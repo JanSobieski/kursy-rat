@@ -18,10 +18,57 @@
 
 		<borderlayout id="borderlayoutRatingCard" >
 			<north border="none" margins="0,0,0,0">
+				<div sclass="z-toolbar" style="padding:0">
+					<hbox pack="stretch" sclass="hboxRemoveWhiteStrips"
+						width="100%">
+						<!-- CRUD BUTTONS -->
+						<toolbar align="end"
+							style="float:left; border-style: none; padding-left: 10px;">
+							<toolbarbutton id="btnEdit"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/edit.png"
+										tooltiptext="${c:l('btnEdit.tooltiptext')}" />
+							<toolbarbutton id="btnSave" disabled="true"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/save.png"
+										tooltiptext="${c:l('btnSave.tooltiptext')}" />
+							<toolbarbutton id="btnCancel"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/cancel.png"
+										tooltiptext="${c:l('btnCancel.tooltiptext')}" />
+							<toolbarbutton id="btnClose"
+										style="padding: 0px" width="32px" height="32px"
+										image="/resources/img/icons/exit.png"
+										tooltiptext="${c:l('btnClose.tooltiptext')}" />
+						</toolbar>
+					</hbox>
+				</div>
+
 			</north>
 			<center border="none" margins="0,0,0,0">
+				<borderlayout width="100%" height="100%">
+					<north size="30%" border="none"
+						splittable="true" collapsible="true">
+						<borderlayout width="100%" height="100%">
+							<west size="50%" border="none"
+								splittable="true" collapsible="false">
+							</west>
+
+							<center border="none" margins="0,0,0,0">
+							</center>
+						</borderlayout>
+
+					</north>
+
+					<center border="none" margins="0,0,0,0">
+						<label
+							value="main table" style="padding-top: 5px;" />
+
+
+					</center>
 			
 			
+				</borderlayout>
 			</center>
 
 		</borderlayout>
