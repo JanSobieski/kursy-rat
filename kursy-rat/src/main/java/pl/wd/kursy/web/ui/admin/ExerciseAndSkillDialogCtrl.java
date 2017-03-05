@@ -52,7 +52,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	protected Textbox tbDescription; // aurowired
 	
 	private ExerciseTreeModel _exerciseTreeModel;
-	private SkillListViewModel<Skill> _skillModel;
+	private SkillListViewModel _skillModel;
 	private Exercise _prevSelectedExercise; 
 
 	public void doAfterCompose(Window comp) {
@@ -88,7 +88,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	}
 	
 	private void initData() throws Exception {
-		_skillModel = new SkillListViewModel<Skill>(getUserWorkspace()); 
+		_skillModel = new SkillListViewModel(getUserWorkspace()); 
 		_skillModel.setMultiple(true);
 		_skillModel.showData(listBoxSkills, null);
 	}

@@ -8,6 +8,7 @@ import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.data.User;
+import pl.wd.kursy.data.criteria.StudentCriteria;
 import pl.wd.kursy.exception.BusinessLogicException;
 
 public interface DataServiceInt {
@@ -23,6 +24,7 @@ public interface DataServiceInt {
 	public void saveOrUpdate(User user) throws Exception;
 	
 	public List<Student> getStudents(int courseId) throws Exception;
+	public List<Student> getStudents(StudentCriteria crit) throws Exception;
 	public void saveOrUpdate(Student student) throws Exception;
 	
 	public List<Course> getCourses() throws Exception;

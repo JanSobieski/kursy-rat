@@ -14,7 +14,7 @@ import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.web.UserWorkspace;
 import pl.wd.kursy.web.data.filter.StudentFilter;
 
-public class SkillListViewModel<E> extends ListModelList<Object> {
+public class SkillListViewModel extends ListModelList<Skill> {
 	private static final long serialVersionUID = -1893660395425845960L;
 	
 	private static final Logger logger = Logger.getLogger(SkillListViewModel.class);

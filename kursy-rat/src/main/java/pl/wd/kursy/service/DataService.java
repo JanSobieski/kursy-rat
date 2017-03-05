@@ -26,6 +26,7 @@ import pl.wd.kursy.data.comp.SkillComparator;
 import pl.wd.kursy.data.comp.StudentGroupComparator;
 import pl.wd.kursy.data.constants.Rights;
 import pl.wd.kursy.data.constants.SystemConstants;
+import pl.wd.kursy.data.criteria.StudentCriteria;
 import pl.wd.kursy.exception.BusinessLogicException;
 import pl.wd.kursy.service.interf.DataServiceInt;
 import pl.wd.kursy.web.security.AppManagerBean;
@@ -174,6 +175,15 @@ public class DataService implements DataServiceInt, Serializable {
 		
 		return studentDao.getStudents(courseId);
 	}
+	
+	@Override
+	public List<Student> getStudents(StudentCriteria crit) throws Exception {
+		StudentDao studentDao = new StudentDao(_db);
+		//Collections.sort(users, User.get_last_name_comparator());
+		
+		return studentDao.getStudents(crit);
+	}
+	
 	
 	@Override
 	public void saveOrUpdate(Student student) throws Exception {

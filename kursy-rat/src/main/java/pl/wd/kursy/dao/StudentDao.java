@@ -1,12 +1,16 @@
 package pl.wd.kursy.dao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import pl.wd.kursy.data.Student;
+import pl.wd.kursy.data.StudentGroup;
+import pl.wd.kursy.data.criteria.StudentCriteria;
 
 public class StudentDao {
 	private Database _db;
@@ -27,6 +31,31 @@ public class StudentDao {
 		return students;
 	}
 	
+	public List<Student> getStudents(StudentCriteria crit) throws Exception {
+		Set<Integer> ids = new HashSet<>();
+		Session session = _db.getSession();
+		String hql = "from Student as student";
+		String condCl = "(student.courseId=" + crit.getCourseId() + ")";
+		if ( crit.getGroupId() > 0 ) {
+			StudentGroup group = session.get(StudentGroup.class, Integer.valueOf(crit.getGroupId()));
+			group.getStudents().stream().forEach(  (student) -> {
+				ids.add(student.getId());
+			});
+			if ( !ids.isEmpty() ) {
+				condCl += " AND (student.id in (:ids))";
+			}
+		}
+		hql += " where " + condCl;
+		Query<Student> query = session.createQuery( hql );
+		if ( !ids.isEmpty() ) {
+			query.setParameterList("ids", ids );
+		}
+		
+		List<Student> students = query.list();
+		
+		return students;
+	}
+
 	public void updateStudent( Student student ) throws Exception {
 		Session session = _db.getSession(true);
 		Transaction tx = session.beginTransaction();
