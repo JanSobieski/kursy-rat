@@ -22,8 +22,6 @@ import org.zkoss.zul.Treerow;
 import org.zkoss.zul.Window;
 
 import pl.wd.kursy.data.BasicType;
-import pl.wd.kursy.data.Exercise;
-import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.web.ui.admin.model.StudentListViewModel;

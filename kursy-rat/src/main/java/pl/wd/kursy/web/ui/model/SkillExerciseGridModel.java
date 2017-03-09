@@ -16,5 +16,9 @@ public class SkillExerciseGridModel<E> extends ListModelList<Object> {
 		_workspace = workspace;
 	}
 
+	public void fireEventExt(int type, int index0, int index1) {
+		super.fireEvent(type, index0, index1);
+	}
+
 
 }

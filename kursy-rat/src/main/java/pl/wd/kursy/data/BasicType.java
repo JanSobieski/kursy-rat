@@ -1,6 +1,8 @@
 package pl.wd.kursy.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicType implements Serializable,Cloneable {
 	private static final long serialVersionUID = -3087968737693385232L;
@@ -85,5 +87,22 @@ public class BasicType implements Serializable,Cloneable {
 	public void setEditable(boolean editable) {
 		_editable = editable;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T extends BasicType> List<T> copyList( List<T> list ) throws Exception {
+		List<T> listOut = new ArrayList<T>(list.size());
+		Class<T>[] cArg = new Class[1];
+		
+		if ( list.size() > 0 ) {
+			cArg[0] = (Class<T>)(Class<?>)list.get(0).getClass();
+			for( T item : list ) {
+				T bt_item = (T)item.getClass().getDeclaredConstructor(cArg).newInstance( item );
+				listOut.add(bt_item);
+			}
+		}
+
+		return listOut;
+	}
+	
 	
 }
