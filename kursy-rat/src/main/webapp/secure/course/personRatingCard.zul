@@ -106,10 +106,13 @@
 							pageSize="20" vflex="1"
 							style="border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
 							width="100%" >
+							<auxhead>
+									<auxheader label="Symulacje" />
+							</auxhead>
 							<columns id="gridColumns" 
 								sizable="true">
 								<column id="listheader_Head"
-									label="Umiejętności/Symulacje" width="30%" />
+									label="Umiejętności" width="30%" />
 
 						</columns>
 						</grid>
