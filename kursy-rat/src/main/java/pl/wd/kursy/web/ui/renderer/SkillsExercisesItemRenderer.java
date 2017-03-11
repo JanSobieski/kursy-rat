@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ComboitemRenderer;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelArray;
@@ -35,15 +36,18 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
 		row.appendChild(lb);
 		
 		if ( _ctrl.getRateCardItem() != null ) {
-			if ( _ctrl.getRateCardItem().getSkills().contains(skill) ) {
+			if ( _ctrl.getRateCardItem().containsSkill(skill) ) {
 				addCbStatus( row, skill );
 			}
 			else {
+				Div div = new Div();
 				lb = new Label("");
-				row.appendChild(lb);
+				div.getChildren().add(lb);
+				row.appendChild(div);
 			}
-			
 		}
+		lb = new Label("Test");
+		row.appendChild(lb);
 		
 		
 		row.setValue(skill);
@@ -61,7 +65,7 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
     	}
 		});		
 		//cmbStatus.setHflex("1");
-		//cmbStatus.setWidth("80%");
+		cmbStatus.setWidth("80%");
 		ListModel<RateCardItemStatus> statusModel = new ListModelArray<>(RateCardItemStatus.getList());
 		cmbStatus.setModel(statusModel);
 		cmbStatus.setItemRenderer(new ComboitemRenderer<RateCardItemStatus>() {

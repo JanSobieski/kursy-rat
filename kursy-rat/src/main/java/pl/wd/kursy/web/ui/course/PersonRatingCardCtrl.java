@@ -2,18 +2,23 @@ package pl.wd.kursy.web.ui.course;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Auxheader;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Grid;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
@@ -25,7 +30,9 @@ import org.zkoss.zul.event.ListDataEvent;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.RateCardItem;
 import pl.wd.kursy.data.RateCardItemStatus;
+import pl.wd.kursy.data.RateCardSkillItem;
 import pl.wd.kursy.data.Skill;
+import pl.wd.kursy.data.wrapper.StudentWrapper;
 import pl.wd.kursy.web.ui.admin.CourseChoiceCtrl;
 import pl.wd.kursy.web.ui.admin.StudentGroupListCtrl;
 import pl.wd.kursy.web.ui.admin.model.SkillListViewModel;
@@ -50,13 +57,16 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	
 	protected Button btnSave; // aurowired
 	protected Button btnEdit; // aurowired
-
+	
+	StudentWrapper _studentW;
 	private RateCardItem 		_rateCardItem;
 	private List<RateCardItem> 		_rateCardItems = new ArrayList<>();
 	private SkillExerciseGridModel<Skill> _model;
 	private ExerciseListModel _exerciseListModel;
 	private SkillListViewModel _skillModel;
 	private Column _firstColumn = null; 
+	private Auxheader _firstHeadColumn = null; 
+	
 	private int colCount = 1;
 	private HashSet<Skill> _existingSkills = new HashSet<>();
 	                                        
@@ -72,6 +82,13 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			gridSkillsExercises.setRowRenderer(new SkillsExercisesItemRenderer(this));
 			listBoxExercises.setItemRenderer(new ExerciseListItemRenderer());
 			listBoxSkills.setItemRenderer(new SkillListItemSimpleRenderer());
+			
+		    @SuppressWarnings("unchecked")
+			Map<String, Object> args = (Map<String, Object>)Executions.getCurrent().getArg();
+
+			if ( args.containsKey("student") ) {
+				_studentW =  (StudentWrapper)args.get("student");
+			}
 
 		    ChoiceDialogInt choiceDialogInt = new ChoiceDialogInt() {
 				@Override
@@ -130,7 +147,14 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		}
 	}
 	
-	private void initData() {
+	private void initData() throws Exception {
+		
+		List<RateCardItem> data = getUserWorkspace().getDataServiceProvider().getRateCard(_studentW.getStudent().getId());
+		data.stream().forEach((item) -> {
+			item.getExerciseId();
+			item.getSkills();
+		});
+		// odczytanie 
 		_skillModel.setMultiple(true);
 		_skillModel.showData(listBoxSkills, null );
 		
@@ -138,7 +162,6 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		listBoxExercises.setModel(_exerciseListModel);
 		
 		sampleData();
-		
 	}
 
 	public void onClick$btnAddExercise( Event event ) {
@@ -151,6 +174,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		}
 		Exercise exercise  = (Exercise)selItem.getValue();
 		_rateCardItem = new RateCardItem();
+		_rateCardItem.setDate_created(new Date());
 		_rateCardItem.setExerciseId(exercise.getId());
 		//_rateCardItem.setStudentId(studentId);
 		
@@ -160,14 +184,21 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		column.setId(colId);
 		column.setLabel(exercise.getName());
 		
+		Label lb = new Label(exercise.getName());
+		Auxheader ah = new Auxheader();
+		ah.getChildren().add(lb);
 		if ( _firstColumn != null ) {
 			gridSkillsExercises.getColumns().insertBefore(column, _firstColumn);
+			gridSkillsExercises.getHeads().iterator().next().insertBefore(ah, _firstHeadColumn);
 		}
 		else {
 			gridSkillsExercises.getColumns().appendChild(column);
+			gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
 		}
+		HashSet<Skill> checkedSkills = new HashSet<>();
 		exercise.getSkills().stream().forEach((skill) -> {
-			_rateCardItem.getSkills().add(skill);
+			_rateCardItem.addSkill(skill);
+			checkedSkills.add(skill);
 			if ( !_existingSkills.contains(skill) ) {
 				_existingSkills.add(skill);
 				_model.add(skill);
@@ -179,8 +210,14 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 				}
 			}
 		});
-		
-		
+		for (Skill skill : _model) {
+			if ( !checkedSkills.contains(skill) ) {
+				int ind = _model.lastIndexOf(skill);
+				if ( ind > -1 ) {
+					_model.fireEventExt(ListDataEvent.CONTENTS_CHANGED, ind, ind);
+				}
+			}
+		}
 	}
 	
 	public void onClick$btnAddSkill( Event event ) {
@@ -193,7 +230,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			if ( !_existingSkills.contains(skill) ) {
 				_existingSkills.add(skill);
 				_model.add(skill);
-				_rateCardItem.getSkills().add(skill);
+				_rateCardItem.addSkill(skill);
 			}
 		});
 
@@ -220,8 +257,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	}
 	
 	private void closeWindow() {
-		String tabId = WebUtil.getTabId(personRatingWindow);
-		WebUtil.closeTab(tabId);
+		personRatingWindow.onClose();
 	}
 
 	public void onClick$btnEdit( Event event ) {
@@ -235,13 +271,12 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			}
 		} catch (Exception e) {
 			logger.error("Error", e);
+			Messagebox.show(e.toString());
 		}
 	}
 	
 	public List<RateCardItem> getData(boolean checkEmpty) {
 		List<RateCardItem> data = new ArrayList<>();
-		RateCardItem rateCardItem = new RateCardItem();
-		
 		
 		Rows rows = gridSkillsExercises.getRows();
 		for (Component compRow : rows.getChildren() ) {
@@ -261,12 +296,15 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 					}
 					else {
 						RateCardItemStatus status = (RateCardItemStatus)item.getValue();
+						RateCardSkillItem rcsi = new RateCardSkillItem();
+						rcsi.setStatusId(status.getId());
+						rcsi.setSkillId(skill.getId());
+						_rateCardItem.getSkills().add(rcsi);
 					}
-					
 				}
 			}
 		}
-		
+		data.add(_rateCardItem);
 
 		return data;
 	}
@@ -277,7 +315,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			return false;
 		}
 		try {
-			//getUserWorkspace().getDataServiceProvider().saveStudentGroups(data, getUserWorkspace().getCourseId());
+			getUserWorkspace().getDataServiceProvider().saveRateCard(data, _studentW.getStudent().getId() );
 		} catch (final Exception e) {
 			logger.error("Error", e);
 			Messagebox.show(e.toString());
@@ -308,14 +346,20 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			List<Exercise> exercises = getUserWorkspace().getDataServiceProvider().getExercises();
 			Exercise exercise  = exercises.get(0);
 
+			Label lb = new Label(exercise.getName());
+			Auxheader ah = new Auxheader();
+			ah.getChildren().add(lb);
+
 			Column column = new Column();
 			if ( _firstColumn == null ) {
 				_firstColumn = column;
+				_firstHeadColumn = ah;
 			}
 			String colId = "col" + colCount;
 			colCount++;
 			column.setId(colId);
 			column.setLabel(exercise.getName());
+			gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
 			gridSkillsExercises.getColumns().appendChild(column);
 			exercise.getSkills().stream().forEach((skill) -> {
 				if ( !_existingSkills.contains(skill) ) {

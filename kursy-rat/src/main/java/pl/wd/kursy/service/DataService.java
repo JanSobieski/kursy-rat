@@ -11,12 +11,14 @@ import org.zkoss.util.resource.Labels;
 import pl.wd.kursy.dao.CourseDao;
 import pl.wd.kursy.dao.Database;
 import pl.wd.kursy.dao.ExerciseDao;
+import pl.wd.kursy.dao.RateCardDao;
 import pl.wd.kursy.dao.SkillsDao;
 import pl.wd.kursy.dao.StudentDao;
 import pl.wd.kursy.dao.StudentGroupDao;
 import pl.wd.kursy.dao.UserDao;
 import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Exercise;
+import pl.wd.kursy.data.RateCardItem;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
@@ -255,6 +257,18 @@ public class DataService implements DataServiceInt, Serializable {
 		
 	}
 
+	@Override
+	public void saveRateCard(List<RateCardItem> rateCards, int studentId ) throws Exception {
+		RateCardDao rateCardDao = new RateCardDao(_db);
+		rateCardDao.save(rateCards, studentId);
+	}
+
+	public List<RateCardItem> getRateCard(int studentId) throws Exception {
+		RateCardDao rateCardDao = new RateCardDao(_db);
+		List<RateCardItem> data = rateCardDao.getData(studentId);
+		
+		return data;
+	}
 
 	
 }

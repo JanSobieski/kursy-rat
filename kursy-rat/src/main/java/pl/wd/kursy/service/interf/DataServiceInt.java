@@ -4,6 +4,7 @@ import java.util.List;
 
 import pl.wd.kursy.data.Course;
 import pl.wd.kursy.data.Exercise;
+import pl.wd.kursy.data.RateCardItem;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
@@ -38,5 +39,9 @@ public interface DataServiceInt {
 
 	public List<StudentGroup> getStudentGroups(int courseId) throws Exception;
 	public void saveStudentGroups(List<StudentGroup> studentGroup, int courseId ) throws Exception;
+	
+	public void saveRateCard(List<RateCardItem> studentGroup, int studentId ) throws Exception;
+	public List<RateCardItem> getRateCard(int studentId) throws Exception;
+	
 
 }
