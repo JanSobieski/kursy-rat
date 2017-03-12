@@ -1,5 +1,7 @@
 package pl.wd.kursy.data.constants;
 
+import java.text.SimpleDateFormat;
+
 public class SystemConstants {
 	public final static String UHOME_DIR = "eis";
 
@@ -37,6 +39,8 @@ public class SystemConstants {
 	public static final String ERROR_IN_TSQUERY = "syntax error in tsquery";
 	
 
+	public static final String SHOW_DATE_FORMAT_MMddHHmm_pattern = "MM-dd HH:mm";
+	public static final SimpleDateFormat SHOW_DATE_FORMAT_MMddHHmm = new SimpleDateFormat( SHOW_DATE_FORMAT_MMddHHmm_pattern );
 
 
 }

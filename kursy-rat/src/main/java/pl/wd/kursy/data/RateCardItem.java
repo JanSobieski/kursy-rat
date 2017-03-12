@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import pl.wd.kursy.data.BasicType;
-import pl.wd.kursy.data.Skill;
 
 @Entity
 @Table(name = "rate_card_items")
@@ -38,12 +38,12 @@ public class RateCardItem extends BasicType implements Serializable {
 		_id = id;
 	}
 	
-	@Transient
+    @OneToMany( fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true )
+    @JoinColumn(name = "rci_id", referencedColumnName = "rci_id", nullable=false, updatable=true, insertable=true )
 	public Set<RateCardSkillItem> getSkills() {
 		return _skills;
 	}
 
-	@Transient
 	public void setSkills( Set<RateCardSkillItem> skills ) {
 		_skills = skills;
 	}
@@ -79,6 +79,10 @@ public class RateCardItem extends BasicType implements Serializable {
 		RateCardSkillItem ski = new RateCardSkillItem();
 		ski.setSkillId(skill.getId());
 		_skills.add(ski);
+	}
+	
+	public RateCardSkillItem getSkill(Skill skill) {
+		return _skills.stream().filter( sk -> (sk.getSkillId() == skill.getId()) ).findFirst().orElse(null);
 	}
 	
 	public boolean containsSkill( Skill skill ) {

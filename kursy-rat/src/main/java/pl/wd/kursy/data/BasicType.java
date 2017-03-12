@@ -2,6 +2,7 @@ package pl.wd.kursy.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 public class BasicType implements Serializable,Cloneable {
@@ -103,6 +104,16 @@ public class BasicType implements Serializable,Cloneable {
 
 		return listOut;
 	}
+	
+	public static <T extends BasicType> Hashtable<Integer, T> getIdMapping( List<T> list ) {
+		Hashtable<Integer, T> mapping = new Hashtable<Integer, T>();
+		for( T item : list ) {
+			mapping.put( item.getId(), item );
+		}
+
+		return mapping;
+	}
+	
 	
 	
 }

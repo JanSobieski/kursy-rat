@@ -16,6 +16,7 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 
 import pl.wd.kursy.data.RateCardItemStatus;
+import pl.wd.kursy.data.RateCardSkillItem;
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.web.ui.course.PersonRatingCardCtrl;
 
@@ -40,17 +41,28 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
 				addCbStatus( row, skill );
 			}
 			else {
-				Div div = new Div();
-				lb = new Label("");
-				div.getChildren().add(lb);
-				row.appendChild(div);
+				addEmpty(row);
 			}
 		}
-		lb = new Label("Test");
-		row.appendChild(lb);
-		
+		_ctrl.getRateCardItems().stream().forEach((item) -> {
+			RateCardSkillItem skItem = item.getSkill(skill);
+			if ( skItem == null ) {
+				addEmpty(row);
+			}
+			else {
+				Label lb2 = new Label(RateCardItemStatus.getById(skItem.getStatusId()).getName());
+				row.appendChild(lb2);
+			}
+		});
 		
 		row.setValue(skill);
+	}
+	
+	private void addEmpty(Row row) {
+		Div div = new Div();
+		Label lb = new Label("");
+		div.getChildren().add(lb);
+		row.appendChild(div);
 	}
 	
 	private void addCbStatus( Row row, Skill skill ) throws Exception {

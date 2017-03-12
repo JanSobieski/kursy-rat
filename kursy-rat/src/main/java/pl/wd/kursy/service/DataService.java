@@ -24,6 +24,7 @@ import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
 import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.comp.ExerciseComparator;
+import pl.wd.kursy.data.comp.RateCardItemComparator;
 import pl.wd.kursy.data.comp.SkillComparator;
 import pl.wd.kursy.data.comp.StudentGroupComparator;
 import pl.wd.kursy.data.constants.Rights;
@@ -266,6 +267,7 @@ public class DataService implements DataServiceInt, Serializable {
 	public List<RateCardItem> getRateCard(int studentId) throws Exception {
 		RateCardDao rateCardDao = new RateCardDao(_db);
 		List<RateCardItem> data = rateCardDao.getData(studentId);
+		Collections.sort(data, new RateCardItemComparator(false, RateCardItemComparator.TYPE_DATE_CREATED));
 		
 		return data;
 	}

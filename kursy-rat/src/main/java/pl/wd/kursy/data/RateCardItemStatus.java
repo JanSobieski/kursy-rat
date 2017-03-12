@@ -37,4 +37,13 @@ public enum RateCardItemStatus {
 	public static List<RateCardItemStatus> getList() {
 		return new ArrayList<> (Arrays.asList(NIE_DOTYCZY, K, N));
 	}
+	
+	public static RateCardItemStatus getById( int id ) {
+		for(RateCardItemStatus e : values()) {
+	        if( e.getId() == id ) {
+	        	return e;
+	        }
+	    }
+	    return null;		
+	}
 }

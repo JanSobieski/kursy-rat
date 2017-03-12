@@ -2,8 +2,10 @@ package pl.wd.kursy.web.ui.course;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,11 +29,14 @@ import org.zkoss.zul.Rows;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.ListDataEvent;
 
+import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.RateCardItem;
 import pl.wd.kursy.data.RateCardItemStatus;
 import pl.wd.kursy.data.RateCardSkillItem;
 import pl.wd.kursy.data.Skill;
+import pl.wd.kursy.data.comp.SkillComparator;
+import pl.wd.kursy.data.constants.SystemConstants;
 import pl.wd.kursy.data.wrapper.StudentWrapper;
 import pl.wd.kursy.web.ui.admin.CourseChoiceCtrl;
 import pl.wd.kursy.web.ui.admin.StudentGroupListCtrl;
@@ -148,20 +153,34 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	}
 	
 	private void initData() throws Exception {
-		
+		List<Exercise> exercises = getUserWorkspace().getDataServiceProvider().getExercises();
+		Hashtable<Integer,Exercise> id2ex = BasicType.getIdMapping(exercises);
+		List<Skill> skillsDB = getUserWorkspace().getDataServiceProvider().getSkills();
+		Hashtable<Integer,Skill> id2skill = BasicType.getIdMapping(skillsDB);
+		List<Skill> skills = new ArrayList<>();
 		List<RateCardItem> data = getUserWorkspace().getDataServiceProvider().getRateCard(_studentW.getStudent().getId());
 		data.stream().forEach((item) -> {
-			item.getExerciseId();
-			item.getSkills();
+			Exercise exercise = id2ex.get(item.getExerciseId());
+			addExcerise(exercise, item);
+			
+			item.getSkills().stream().forEach((rcItem) -> {
+				Skill skill = id2skill.get(rcItem.getSkillId() );
+				if ( !_existingSkills.contains(skill) ) {
+					_existingSkills.add(skill);
+					skills.add(skill);
+				}
+			});
 		});
-		// odczytanie 
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_NAME));
+		skills.stream().forEach((skill) ->  _model.add(skill) );
+		
 		_skillModel.setMultiple(true);
 		_skillModel.showData(listBoxSkills, null );
 		
 		gridSkillsExercises.setModel(_model);
 		listBoxExercises.setModel(_exerciseListModel);
 		
-		sampleData();
+		//sampleData();
 	}
 
 	public void onClick$btnAddExercise( Event event ) {
@@ -182,8 +201,8 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		String colId = "col" + colCount;
 		colCount++;
 		column.setId(colId);
-		column.setLabel(exercise.getName());
 		
+		column.setLabel(SystemConstants.SHOW_DATE_FORMAT_MMddHHmm.format(new Date()));
 		Label lb = new Label(exercise.getName());
 		Auxheader ah = new Auxheader();
 		ah.getChildren().add(lb);
@@ -256,6 +275,10 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		return _rateCardItem;
 	}
 	
+	public List<RateCardItem> getRateCardItems() {
+		return _rateCardItems;
+	}
+
 	private void closeWindow() {
 		personRatingWindow.onClose();
 	}
@@ -277,6 +300,11 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	
 	public List<RateCardItem> getData(boolean checkEmpty) {
 		List<RateCardItem> data = new ArrayList<>();
+		if ( _rateCardItem == null ) {
+			return data;
+		}
+		
+		List<RateCardSkillItem> toAdd = new ArrayList<>();
 		
 		Rows rows = gridSkillsExercises.getRows();
 		for (Component compRow : rows.getChildren() ) {
@@ -299,11 +327,13 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 						RateCardSkillItem rcsi = new RateCardSkillItem();
 						rcsi.setStatusId(status.getId());
 						rcsi.setSkillId(skill.getId());
-						_rateCardItem.getSkills().add(rcsi);
+						toAdd.add(rcsi);
 					}
 				}
 			}
 		}
+		_rateCardItem.getSkills().clear();
+		_rateCardItem.getSkills().addAll(toAdd);
 		data.add(_rateCardItem);
 
 		return data;
@@ -343,37 +373,32 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 
 	private void sampleData() {
 		try {
-			List<Exercise> exercises = getUserWorkspace().getDataServiceProvider().getExercises();
-			Exercise exercise  = exercises.get(0);
-
-			Label lb = new Label(exercise.getName());
-			Auxheader ah = new Auxheader();
-			ah.getChildren().add(lb);
-
-			Column column = new Column();
-			if ( _firstColumn == null ) {
-				_firstColumn = column;
-				_firstHeadColumn = ah;
-			}
-			String colId = "col" + colCount;
-			colCount++;
-			column.setId(colId);
-			column.setLabel(exercise.getName());
-			gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
-			gridSkillsExercises.getColumns().appendChild(column);
-			exercise.getSkills().stream().forEach((skill) -> {
-				if ( !_existingSkills.contains(skill) ) {
-					_existingSkills.add(skill);
-					_model.add(skill);
-				}
-			});
-			
+		List<Exercise> exercises = getUserWorkspace().getDataServiceProvider().getExercises();
+		Exercise exercise  = exercises.get(0);
+		
 		} catch (final Exception e) {
 			logger.error("Error", e);
 			Messagebox.show(e.toString());
 		}
-		
 	}
 	
+	private void addExcerise(Exercise exercise, RateCardItem rateCardItem) {
+		_rateCardItems.add(rateCardItem);
+		Label lb = new Label(exercise.getName());
+		Auxheader ah = new Auxheader();
+		ah.getChildren().add(lb);
 
+		Column column = new Column();
+		if (_firstColumn == null) {
+			_firstColumn = column;
+			_firstHeadColumn = ah;
+		}
+		String colId = "col" + colCount;
+		colCount++;
+		column.setId(colId);
+		column.setLabel(SystemConstants.SHOW_DATE_FORMAT_MMddHHmm.format(rateCardItem.getDate_created()));
+
+		gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
+		gridSkillsExercises.getColumns().appendChild(column);
+	}
 }
