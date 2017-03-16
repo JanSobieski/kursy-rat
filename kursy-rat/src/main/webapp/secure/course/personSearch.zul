@@ -10,13 +10,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
 	
+	<menupopup id="mnuPopup" >
+        <menuitem id="menui_ex" label="Symulacje" />
+        <menuitem id="menui_rko" label="RKO" />
+  	</menupopup>
+
 	<window id="personSearchWindow" sclass="cardSys" border="none"
 		apply="pl.wd.kursy.web.ui.course.PersonSearchCtrl" height="100%">
 
 		<borderlayout id="borderlayoutUser" >
 			<center border="none" margins="0,0,0,0">
 			
-				<listbox id="listBoxStudents"
+				<listbox id="listBoxStudents" context="mnuPopup"
 					style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
 					width="100%" height="100%"
 					tooltiptext="${c:l('listbox.tooltiptext')}" multiple="false">

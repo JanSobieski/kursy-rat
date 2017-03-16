@@ -1,6 +1,8 @@
 package pl.wd.kursy.web.ui.renderer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -78,7 +80,15 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
 		});		
 		//cmbStatus.setHflex("1");
 		cmbStatus.setWidth("80%");
-		ListModel<RateCardItemStatus> statusModel = new ListModelArray<>(RateCardItemStatus.getList());
+		List<RateCardItemStatus> statList = null;
+		if  ( _ctrl.isRko() ) {
+			statList = RateCardItemStatus.getListKN();
+		}
+		else {
+			statList = RateCardItemStatus.getListAll();
+		}
+		
+		ListModel<RateCardItemStatus> statusModel = new ListModelArray<>(statList);
 		cmbStatus.setModel(statusModel);
 		cmbStatus.setItemRenderer(new ComboitemRenderer<RateCardItemStatus>() {
 			@Override

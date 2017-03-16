@@ -22,6 +22,7 @@ public class ExerciseDao {
 		return getExercises(session);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Exercise> getExercises(Session session) throws Exception {
 		Query<Exercise> query = session.createQuery("from Exercise as exercise");
 		List<Exercise> courses = query.list();
@@ -29,6 +30,16 @@ public class ExerciseDao {
 		return courses;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Exercise> getExercises(boolean rko) throws Exception {
+		Session session = _db.getSession();
+		
+		Query<Exercise> query = session.createQuery("from Exercise as exercise where (exercise.all_skills_obligatory =:rko)").setParameter("rko", rko);
+		List<Exercise> courses = query.list();
+		
+		return courses;
+	}
+
 	public void saveExercises(List<Exercise> exercises ) throws Exception {
 		Session session = _db.getFreeSession();
 		Set<Integer> ids = new HashSet<>();

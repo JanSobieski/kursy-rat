@@ -215,6 +215,15 @@ public class DataService implements DataServiceInt, Serializable {
 		return courseDao.getCourse( courseId );
 	}
 	
+	public List<Exercise> getExercises(boolean rko) throws Exception {
+		ExerciseDao exerciseDao = new ExerciseDao(_db);
+
+		List<Exercise> exercises =  exerciseDao.getExercises(rko);
+		Collections.sort(exercises, new ExerciseComparator(true, ExerciseComparator.TYPE_NAME));
+		
+		return exercises;
+	}
+
 	@Override
 	public List<Exercise> getExercises() throws Exception {
 		ExerciseDao exerciseDao = new ExerciseDao(_db);

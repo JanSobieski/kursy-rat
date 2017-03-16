@@ -33,6 +33,7 @@ public interface DataServiceInt {
 	public void saveOrUpdate(Course course) throws Exception;
 	
 	public List<Exercise> getExercises() throws Exception;
+	public List<Exercise> getExercises(boolean rko) throws Exception;
 	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills ) throws Exception;
 
 	public List<Skill> getSkills() throws Exception;

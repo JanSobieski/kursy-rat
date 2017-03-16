@@ -2,6 +2,7 @@ package pl.wd.kursy.web.ui.renderer;
 
 import java.io.Serializable;
 
+import org.zkoss.zk.ui.sys.ComponentsCtrl;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
@@ -18,6 +19,8 @@ public class ExerciseListItemRenderer implements ListitemRenderer<Exercise>, Ser
 		lc.setParent(item);
 		
 		item.setValue(data);
+		
+		ComponentsCtrl.applyForward(item, "onDoubleClick=onExerciseListItemDoubleClicked");
 	}
 
 }

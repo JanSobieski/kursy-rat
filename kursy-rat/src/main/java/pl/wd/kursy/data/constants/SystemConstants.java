@@ -3,7 +3,10 @@ package pl.wd.kursy.data.constants;
 import java.text.SimpleDateFormat;
 
 public class SystemConstants {
-	public final static String UHOME_DIR = "eis";
+	public final static String STATUS_PASSED = "zaliczony";
+	public final static String STATUS_NOT_PASSED = "niezaliczony";
+
+	public final static String UHOME_DIR = "kursy";
 
 	public static final String TABLE_ID = "table_id";
 	public static final String RECORD_ID = "record_id";

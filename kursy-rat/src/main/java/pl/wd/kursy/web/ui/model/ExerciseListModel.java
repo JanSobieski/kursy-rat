@@ -15,9 +15,10 @@ public class ExerciseListModel extends ListModelList<Exercise> {
 
 	private final UserWorkspace _workspace;
 
-	public ExerciseListModel(UserWorkspace workspace) throws Exception {
+	public ExerciseListModel(UserWorkspace workspace, boolean rko) throws Exception {
 		_workspace = workspace;
-		List<Exercise> exercises = _workspace.getDataServiceProvider().getExercises();
+		
+		List<Exercise> exercises = _workspace.getDataServiceProvider().getExercises(rko);
 		exercises.stream().forEach((exercise) -> {
 			exercise.getSkills().stream().forEach((skill) -> {
 				// init lazy data

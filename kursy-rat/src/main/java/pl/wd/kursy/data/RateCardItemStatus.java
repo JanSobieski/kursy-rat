@@ -33,9 +33,13 @@ public enum RateCardItemStatus {
 	public void setSelected(boolean selected) {
 		_selected = selected;
 	}
-	
-	public static List<RateCardItemStatus> getList() {
+
+	public static List<RateCardItemStatus> getListAll() {
 		return new ArrayList<> (Arrays.asList(NIE_DOTYCZY, K, N));
+	}
+	
+	public static List<RateCardItemStatus> getListKN() {
+		return new ArrayList<> (Arrays.asList(K, N));
 	}
 	
 	public static RateCardItemStatus getById( int id ) {

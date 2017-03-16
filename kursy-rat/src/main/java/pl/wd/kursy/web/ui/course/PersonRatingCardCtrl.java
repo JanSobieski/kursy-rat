@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +29,6 @@ import org.zkoss.zul.Rows;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.ListDataEvent;
 
-import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.RateCardItem;
 import pl.wd.kursy.data.RateCardItemStatus;
@@ -63,14 +62,16 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	protected Button btnSave; // aurowired
 	protected Button btnEdit; // aurowired
 	
-	StudentWrapper _studentW;
+	private StudentWrapper _studentW;
 	private RateCardItem 		_rateCardItem;
 	private List<RateCardItem> 		_rateCardItems = new ArrayList<>();
 	private SkillExerciseGridModel<Skill> _model;
 	private ExerciseListModel _exerciseListModel;
 	private SkillListViewModel _skillModel;
 	private Column _firstColumn = null; 
-	private Auxheader _firstHeadColumn = null; 
+	private Auxheader _firstHeadColumn = null;
+	private Auxheader _firstHeadColumn2r = null;
+	private boolean _rko = false;
 	
 	private int colCount = 1;
 	private HashSet<Skill> _existingSkills = new HashSet<>();
@@ -81,12 +82,13 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			super.doAfterCompose(comp); // wire variables and event listners
 			
 			_model = new SkillExerciseGridModel<Skill>(_userWorkspace);
-			_exerciseListModel = new ExerciseListModel(_userWorkspace);
 			_skillModel = new SkillListViewModel(_userWorkspace);
 
 			gridSkillsExercises.setRowRenderer(new SkillsExercisesItemRenderer(this));
 			listBoxExercises.setItemRenderer(new ExerciseListItemRenderer());
-			listBoxSkills.setItemRenderer(new SkillListItemSimpleRenderer());
+			if ( listBoxSkills!=null ) {
+				listBoxSkills.setItemRenderer(new SkillListItemSimpleRenderer());
+			}
 			
 		    @SuppressWarnings("unchecked")
 			Map<String, Object> args = (Map<String, Object>)Executions.getCurrent().getArg();
@@ -94,6 +96,12 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			if ( args.containsKey("student") ) {
 				_studentW =  (StudentWrapper)args.get("student");
 			}
+
+			if ( args.containsKey("rko") ) {
+				Boolean rko = (Boolean)args.get("rko");
+				_rko = rko.booleanValue();
+			}
+			_exerciseListModel = new ExerciseListModel(_userWorkspace, _rko);
 
 		    ChoiceDialogInt choiceDialogInt = new ChoiceDialogInt() {
 				@Override
@@ -153,34 +161,46 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	}
 	
 	private void initData() throws Exception {
-		List<Exercise> exercises = getUserWorkspace().getDataServiceProvider().getExercises();
-		Hashtable<Integer,Exercise> id2ex = BasicType.getIdMapping(exercises);
-		List<Skill> skillsDB = getUserWorkspace().getDataServiceProvider().getSkills();
-		Hashtable<Integer,Skill> id2skill = BasicType.getIdMapping(skillsDB);
-		List<Skill> skills = new ArrayList<>();
+		//String title = Labels.getLabel("personEditWindow.title") + " - " + pw.getPerson().get_first_last_name()
+		String title =  personRatingWindow.getTitle();
+		title += " - " +  _studentW.getStudent().getLastFirstName();
+		personRatingWindow.setTitle(title);
+
+		List<Skill> skills = new ArrayList<>(); 
+		_model.initData(_rko);
+		
 		List<RateCardItem> data = getUserWorkspace().getDataServiceProvider().getRateCard(_studentW.getStudent().getId());
 		data.stream().forEach((item) -> {
-			Exercise exercise = id2ex.get(item.getExerciseId());
-			addExcerise(exercise, item);
-			
-			item.getSkills().stream().forEach((rcItem) -> {
-				Skill skill = id2skill.get(rcItem.getSkillId() );
-				if ( !_existingSkills.contains(skill) ) {
-					_existingSkills.add(skill);
-					skills.add(skill);
-				}
-			});
+			Exercise exercise = _model.getId2ex().get(item.getExerciseId());
+			if ( exercise != null ) {
+				addExcerise(exercise, item);
+				item.getSkills().stream().forEach((rcItem) -> {
+					Skill skill = _model.getId2skill().get(rcItem.getSkillId() );
+					if ( !_existingSkills.contains(skill) ) {
+						_existingSkills.add(skill);
+						skills.add(skill);
+					}
+				});
+			}
 		});
 		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_NAME));
 		skills.stream().forEach((skill) ->  _model.add(skill) );
-		
-		_skillModel.setMultiple(true);
-		_skillModel.showData(listBoxSkills, null );
+
+		if ( listBoxSkills!=null ) {
+			_skillModel.setMultiple(true);
+			_skillModel.clear();
+			_skillModel.addAll(_model.getSkills());
+			listBoxSkills.setModel(_skillModel);
+		}
 		
 		gridSkillsExercises.setModel(_model);
 		listBoxExercises.setModel(_exerciseListModel);
 		
 		//sampleData();
+	}
+
+	public void onExerciseListItemDoubleClicked(Event event) throws Exception {
+		onClick$btnAddExercise( event );
 	}
 
 	public void onClick$btnAddExercise( Event event ) {
@@ -195,7 +215,6 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		_rateCardItem = new RateCardItem();
 		_rateCardItem.setDate_created(new Date());
 		_rateCardItem.setExerciseId(exercise.getId());
-		//_rateCardItem.setStudentId(studentId);
 		
 		Column column = new Column();
 		String colId = "col" + colCount;
@@ -206,13 +225,23 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		Label lb = new Label(exercise.getName());
 		Auxheader ah = new Auxheader();
 		ah.getChildren().add(lb);
+		lb = new Label("");
+		Auxheader ah2 = new Auxheader();
+		ah2.getChildren().add(lb);
+		Iterator<Component> itr = gridSkillsExercises.getHeads().iterator();
 		if ( _firstColumn != null ) {
 			gridSkillsExercises.getColumns().insertBefore(column, _firstColumn);
-			gridSkillsExercises.getHeads().iterator().next().insertBefore(ah, _firstHeadColumn);
+			itr.next().insertBefore(ah, _firstHeadColumn);
+			if ( _rko && itr.hasNext() ) {
+				itr.next().insertBefore(ah2, _firstHeadColumn2r);
+			}
 		}
 		else {
 			gridSkillsExercises.getColumns().appendChild(column);
-			gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
+			itr.next().appendChild(ah);
+			if ( _rko && itr.hasNext() ) {
+				itr.next().appendChild(ah2);
+			}
 		}
 		HashSet<Skill> checkedSkills = new HashSet<>();
 		exercise.getSkills().stream().forEach((skill) -> {
@@ -285,6 +314,15 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 
 	public void onClick$btnEdit( Event event ) {
 		doEdit();
+	}
+	
+	public void onClick$btnAddRKO( Event event ) {
+		List<Listitem> items = listBoxExercises.getItems();
+		if ( items.size() == 1 ) {
+			listBoxExercises.setSelectedIndex(0);
+			onClick$btnAddExercise( event );
+			return;
+		}
 	}
 
 	public void onClick$btnSave( Event event ) {
@@ -383,6 +421,17 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 	}
 	
 	private void addExcerise(Exercise exercise, RateCardItem rateCardItem) {
+		String status = SystemConstants.STATUS_PASSED;
+		String style = "";
+		if ( _rko ) {
+			for (RateCardSkillItem item : rateCardItem.getSkills() ) {
+				if ( item.getStatusId() != RateCardItemStatus.K.getId() ) {
+					status = SystemConstants.STATUS_NOT_PASSED;
+					style = "color:red";
+					break;
+				}
+			}
+		}
 		_rateCardItems.add(rateCardItem);
 		Label lb = new Label(exercise.getName());
 		Auxheader ah = new Auxheader();
@@ -398,7 +447,27 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		column.setId(colId);
 		column.setLabel(SystemConstants.SHOW_DATE_FORMAT_MMddHHmm.format(rateCardItem.getDate_created()));
 
-		gridSkillsExercises.getHeads().iterator().next().appendChild(ah);
+		Iterator<Component> itr = gridSkillsExercises.getHeads().iterator();
+		itr.next().appendChild(ah);
+		
+		if ( _rko && itr.hasNext() ) {
+			ah = new Auxheader();
+			if ( _firstHeadColumn2r == null ) {
+				_firstHeadColumn2r = ah;
+			}
+			
+			lb = new Label(status);
+			lb.setStyle(style);
+			
+			ah.getChildren().add(lb);
+			itr.next().appendChild(ah);
+		}
+		
+		
 		gridSkillsExercises.getColumns().appendChild(column);
+	}
+
+	public boolean isRko() {
+		return _rko;
 	}
 }

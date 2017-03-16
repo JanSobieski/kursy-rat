@@ -142,18 +142,24 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 
 		if (item != null) {
 			StudentWrapper student = (StudentWrapper) item.getValue();
-			showRateCardView(student);
+			showRateCardView(student, false );
 		}
 	}
 	
-	private void showRateCardView(StudentWrapper student) throws Exception {
+	private void showRateCardView(StudentWrapper student, boolean rko ) throws Exception {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("student", student);
 		map.put("listBoxStudents", listBoxStudents);
+		map.put("rko", Boolean.valueOf(rko) );
 
 		// call the zul-file with the parameters packed in a map
 		try {
-			Executions.createComponents("/secure/course/personRatingCard.zul", null, map);
+			if ( rko ) {
+				Executions.createComponents("/secure/course/personRatingCardRKO.zul", null, map);
+			}
+			else {
+				Executions.createComponents("/secure/course/personRatingCard.zul", null, map);
+			}
 		} catch (final Exception e) {
 			logger.error("onOpenWindow:: error opening window / " + e.getMessage());
 
@@ -166,5 +172,26 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 		}
 	}
 	
+	public void onClick$menui_rko(Event event) {
+		try {
+			Listitem item = listBoxStudents.getSelectedItem();
+
+			if (item != null) {
+				StudentWrapper student = (StudentWrapper) item.getValue();
+				showRateCardView(student, true);
+			}
+		} catch (final Exception e) {
+			logger.error("Error", e);
+			Messagebox.show(e.toString());
+		}
+	}
 	
+	public void onClick$menui_ex(Event event) {
+		try {
+			onStudentListItemDoubleClicked(event);
+		} catch (final Exception e) {
+			logger.error("Error", e);
+			Messagebox.show(e.toString());
+		}
+	}
 }
