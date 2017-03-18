@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.util.Assert;
 
 import pl.wd.kursy.web.ui.util.WebUtil;
 
@@ -21,6 +22,7 @@ public class Student extends BasicType implements Serializable {
 	private String _firstName;
 	private String _lastName;
 	private int _courseId;
+	private StudentStatus _status;
 	
 	public Student() {
 	}
@@ -67,11 +69,30 @@ public class Student extends BasicType implements Serializable {
 		_courseId = courseId;
 	}
 
+	@Column(name = "status_id")
+	public int getStatusId() {
+		return _status.getId();
+	}
+
+	public void setStatusId(int statusId) {
+		_status = StudentStatus.getById(statusId);
+		Assert.notNull(_status, "nieznany id StudentStatus: " + statusId );
+	}
+
 	@javax.persistence.Transient
 	public String getLastFirstName() {
 		return getLastName() + " " + getFirstName();
 	}
 
+	@javax.persistence.Transient
+	public StudentStatus getStatus() {
+		return _status;
+	}
+
+	@javax.persistence.Transient
+	public void setStatus(StudentStatus status) {
+		_status = status;
+	}
 
 	
 

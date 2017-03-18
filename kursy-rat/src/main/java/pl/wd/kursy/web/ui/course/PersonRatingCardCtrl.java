@@ -183,7 +183,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 				});
 			}
 		});
-		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_NAME));
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_ORDER));
 		skills.stream().forEach((skill) ->  _model.add(skill) );
 
 		if ( listBoxSkills!=null ) {
@@ -207,6 +207,8 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		if ( _rateCardItem != null ) {
 			return;
 		}
+		List<Skill> skills = new ArrayList<>(); 
+		
 		Listitem selItem = listBoxExercises.getSelectedItem();
 		if ( selItem == null ) {
 			return;
@@ -249,7 +251,7 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 			checkedSkills.add(skill);
 			if ( !_existingSkills.contains(skill) ) {
 				_existingSkills.add(skill);
-				_model.add(skill);
+				skills.add(skill);
 			}
 			else {
 				int ind = _model.lastIndexOf(skill);
@@ -258,6 +260,9 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 				}
 			}
 		});
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_ORDER));
+		skills.stream().forEach((skill) ->  _model.add(skill) );
+		
 		for (Skill skill : _model) {
 			if ( !checkedSkills.contains(skill) ) {
 				int ind = _model.lastIndexOf(skill);
@@ -283,20 +288,6 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		});
 
 		
-//		Listitem selItem = listBoxExercises.getSelectedItem();
-//		if ( selItem == null ) {
-//			return;
-//		}
-//		Exercise exercise  = (Exercise)selItem.getValue();
-//		Column column = new Column();
-//		if ( _firstColumn == null ) {
-//			_firstColumn = column;
-//		}
-//		String colId = "col" + colCount;
-//		colCount++;
-//		column.setId(colId);
-//		column.setLabel(exercise.getName());
-//		gridSkillsExercises.getColumns().appendChild(column);
 		
 	}
 
@@ -325,6 +316,10 @@ public class PersonRatingCardCtrl extends BaseCtrl implements Serializable {
 		}
 	}
 
+	public void onClick$btnClose( Event event ) {
+		closeWindow();
+	}
+	
 	public void onClick$btnSave( Event event ) {
 		try {
 			if ( doSave() ) {

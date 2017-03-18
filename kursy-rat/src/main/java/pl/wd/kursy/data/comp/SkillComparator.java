@@ -9,6 +9,7 @@ import pl.wd.kursy.misc.Util;
 public class SkillComparator extends BaseComparator implements Comparator<Skill>, Serializable {
 	private static final long serialVersionUID = -3918930561188312038L;
 
+
 	public SkillComparator(boolean asc, int type) {
 		super(asc, type);
 	}
@@ -23,6 +24,10 @@ public class SkillComparator extends BaseComparator implements Comparator<Skill>
 
 		case TYPE_NAME:
 			result = Util.getCollator().compare(o1.getName(), o2.getName());
+			break;
+
+		case TYPE_ORDER:
+			result = o1.getOrder() - o2.getOrder();
 			break;
 		}
 		if (_asc)

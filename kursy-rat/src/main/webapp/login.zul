@@ -27,8 +27,8 @@
         }
     </style>
     <groupbox>
-    	<image src="/resources/img/mboska-kp.jpg" width="350px"
-    		height="160px" />
+    	<image src="/resources/img/LogoHSR.jpg" width="200px"
+    		height="190px" />
     	<h:form id="f" name="f" action="j_spring_security_check"
     		method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
     		<grid width="350px">

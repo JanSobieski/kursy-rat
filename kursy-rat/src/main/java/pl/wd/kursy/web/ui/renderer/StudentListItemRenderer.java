@@ -8,6 +8,7 @@ import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 
+import pl.wd.kursy.data.StudentStatus;
 import pl.wd.kursy.data.wrapper.StudentWrapper;
 
 public class StudentListItemRenderer implements ListitemRenderer<StudentWrapper>, Serializable {
@@ -32,6 +33,17 @@ public class StudentListItemRenderer implements ListitemRenderer<StudentWrapper>
 
 		lc = new Listcell(sw.getGroups() );
 		lc.setStyle("text-align:left");
+		lc.setParent(item);
+
+		lc = new Listcell(sw.getStudent().getStatus().getName() );
+		String style = "text-align:left";
+		if ( StudentStatus.EXAM.equals(sw.getStudent().getStatus())) {
+			style = "; font-weight:bold; color:red";
+		}
+		if ( StudentStatus.PASSED.equals(sw.getStudent().getStatus())) {
+			style = "; font-weight:bold; color:green";
+		}
+		lc.setStyle(style);
 		lc.setParent(item);
 
 		item.setValue(sw);

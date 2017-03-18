@@ -262,5 +262,9 @@ public class StudentGroupListCtrl extends BaseCtrl implements Serializable {
 			WebUtil.closeTab(tabId);
 		}
 
+		public void onClick$btnClose( Event event ) {
+			closeWindow();
+		}
+		
 		
 }

@@ -117,6 +117,10 @@
 													id="listheader_StudentList_LastName" sort="auto(name)"
 													width="20%" label="Nazwisko">
 												</mylistheader>
+												<mylistheader
+													id="listheader_StudentList_Status" sort="auto(name)"
+													width="20%" label="Status">
+												</mylistheader>
 											</listhead>
 										</listbox>
 										

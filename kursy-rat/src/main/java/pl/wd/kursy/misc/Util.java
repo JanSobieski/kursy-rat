@@ -358,5 +358,17 @@ public class Util {
 		return _collator;
 	}
 	
+	public static boolean toBoolean( Object value ) {
+		if ( value == null ) {
+			return false;
+		}
+		if ( value instanceof Boolean ) {
+			return ((Boolean)value).booleanValue();
+		}
+		
+		return false;
+	}
+
+	
 
 }

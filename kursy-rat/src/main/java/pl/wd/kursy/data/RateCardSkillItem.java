@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.util.Assert;
 
 @Entity
 @Table(name = "rate_card_skill_items")
@@ -17,7 +18,7 @@ public class RateCardSkillItem extends BasicType implements Serializable {
 	private static final long serialVersionUID = -4761161562011411625L;
 
 	private int _skillId;
-	private int _statusId;
+	private RateCardItemStatus _status;
 
 	@Id
 	@GeneratedValue(generator = "hibernate-increment")
@@ -41,11 +42,21 @@ public class RateCardSkillItem extends BasicType implements Serializable {
 
 	@Column(name = "status_id")
 	public int getStatusId() {
-		return _statusId;
+		return _status.getId();
 	}
 
 	public void setStatusId(int statusId) {
-		_statusId = statusId;
+		_status = RateCardItemStatus.getById(statusId);
+		Assert.notNull(_status, "nieznany id RateCardItemStatus: " + statusId );
 	}
 
+	@javax.persistence.Transient
+	public RateCardItemStatus getStatus() {
+		return _status;
+	}
+
+	@javax.persistence.Transient
+	public void setStatus(RateCardItemStatus status) {
+		_status = status;
+	}
 }

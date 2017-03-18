@@ -28,6 +28,10 @@ public class SkillListViewModel extends ListModelList<Skill> {
 		_workspace = workspace;
 	}
 
+	public void fireEventExt(int type, int index0, int index1) {
+		super.fireEvent(type, index0, index1);
+	}
+
 	public List<Skill> getSkillList(StudentFilter filter) throws Exception {
 		List<Skill> skills = new ArrayList<>();
 		List<Skill> skillsDB = null;

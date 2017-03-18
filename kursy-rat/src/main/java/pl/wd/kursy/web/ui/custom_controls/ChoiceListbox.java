@@ -62,13 +62,13 @@ public class ChoiceListbox extends Listbox {
 		for (int i = 0; i < modelCL.size(); i++) {
 			BasicType item = modelCL.get(i); 
 			if ( hsSelIds.contains( item.getId() ) ) {
-				item.set_selected( true );
+				item.setSelected( true );
 				if ( getItemCount() > 0 ) {
 					selItems.add(getItemAtIndex(i));
 				}
 			}
 			else {
-				item.set_selected( false );
+				item.setSelected( false );
 			}
 		}
 		if ( selItems.size() > 0 ) {
@@ -89,7 +89,7 @@ public class ChoiceListbox extends Listbox {
 				if ( selectEvent.getReference() instanceof Listitem ) {
 					Listitem item = (Listitem)selectEvent.getReference();
 					BasicType bt = (BasicType)item.getValue();
-					item.setSelected(bt.is_selected());
+					item.setSelected(bt.isSelected());
 				}
 			}
 	}

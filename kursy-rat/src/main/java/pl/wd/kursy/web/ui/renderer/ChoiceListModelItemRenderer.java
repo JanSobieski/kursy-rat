@@ -18,7 +18,7 @@ public class ChoiceListModelItemRenderer implements ListitemRenderer<BasicType>,
 		lc = new Listcell(data.getName() );
 		lc.setStyle("text-align:left");
 		lc.setParent(item);
-		if ( data.is_selected() ) {
+		if ( data.isSelected() ) {
 			item.setSelected(true);
 		} else {
 			item.setSelected(false);

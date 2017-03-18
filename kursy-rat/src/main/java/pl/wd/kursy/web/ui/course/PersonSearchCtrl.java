@@ -17,13 +17,12 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
-import pl.wd.kursy.data.User;
 import pl.wd.kursy.data.criteria.StudentCriteria;
 import pl.wd.kursy.data.wrapper.StudentWrapper;
 import pl.wd.kursy.web.ui.admin.CourseChoiceCtrl;
 import pl.wd.kursy.web.ui.admin.StudentGroupListCtrl;
+import pl.wd.kursy.web.ui.custom_controls.ChoiceListBandbox;
 import pl.wd.kursy.web.ui.interf.ChoiceDialogInt;
 import pl.wd.kursy.web.ui.model.PersonListViewModel;
 import pl.wd.kursy.web.ui.renderer.StudentListItemRenderer;
@@ -38,6 +37,7 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 	protected Window 			personSearchWindow; // autowired
 	protected Combobox 		cmbGroup; // aurowired
 	protected Listbox 			listBoxStudents; // aurowired
+	protected ChoiceListBandbox bdStatus; // aurowired
 	
 	
 	private PersonListViewModel<StudentWrapper> _model;
@@ -91,6 +91,7 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 	
 	private void setupComponents() throws Exception {
 		WebUtil.addCbItemRenderer(cmbGroup);
+		setupChoiceColumns();
 	}
 	
 	private void initData() throws Exception {
@@ -128,6 +129,7 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 		if ( group != null ) {
 			filter.setGroupId(group.getId());
 		}
+		filter.getStatusIds().addAll(_model.getStatusListModel().getSelectedIds());
 
 		return filter;
 	}
@@ -194,4 +196,16 @@ public class PersonSearchCtrl extends BaseCtrl implements Serializable {
 			Messagebox.show(e.toString());
 		}
 	}
+	
+	private void setupChoiceColumns() throws Exception {
+		
+		ChoiceDialogInt choiceDialogInt = new ChoiceDialogInt() {
+			@Override
+			public void onOkClose() {
+				filterData();
+			}
+		};
+		bdStatus.init(_model.getStatusListModel(), choiceDialogInt, this);
+	}
+	
 }

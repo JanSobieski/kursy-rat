@@ -45,10 +45,17 @@ public class StudentDao {
 				condCl += " AND (student.id in (:ids))";
 			}
 		}
+		if ( !crit.getStatusIds().isEmpty() ) {
+			condCl += " AND (student.statusId in (:statusIds))";
+			
+		}
 		hql += " where " + condCl;
 		Query<Student> query = session.createQuery( hql );
 		if ( !ids.isEmpty() ) {
 			query.setParameterList("ids", ids );
+		}
+		if ( !crit.getStatusIds().isEmpty() ) {
+			query.setParameterList("statusIds", crit.getStatusIds() );
 		}
 		
 		List<Student> students = query.list();

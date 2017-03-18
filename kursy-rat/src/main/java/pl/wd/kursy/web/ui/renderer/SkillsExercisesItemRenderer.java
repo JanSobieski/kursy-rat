@@ -34,6 +34,7 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
 
 	@Override
 	public void render(Row row, Skill skill, int index) throws Exception {
+		
 		Label lb = new Label(skill.getName());
 		lb.setStyle("text-align:left");
 		row.appendChild(lb);
@@ -52,7 +53,13 @@ public class SkillsExercisesItemRenderer implements RowRenderer<Skill>, Serializ
 				addEmpty(row);
 			}
 			else {
-				Label lb2 = new Label(RateCardItemStatus.getById(skItem.getStatusId()).getName());
+				Label lb2 = new Label(skItem.getStatus().getName());
+				String style = "";
+				if ( RateCardItemStatus.N.equals(skItem.getStatus() ) ) {
+					style = "font-weight:bold; color:red";
+				}
+
+				lb2.setStyle(style);
 				row.appendChild(lb2);
 			}
 		});

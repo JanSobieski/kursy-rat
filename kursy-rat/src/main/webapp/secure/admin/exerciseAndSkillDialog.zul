@@ -117,6 +117,10 @@
 												<!-- CRUD BUTTONS -->
 												<toolbar align="end"
 													style="float:left; border-style: none; padding-left: 10px;">
+													<toolbarbutton id="btnAdd"
+																style="padding: 0px" width="32px" height="32px"
+																image="/resources/img/icons/leftarrow_g.png"
+																tooltiptext="${c:l('btnNew.tooltiptext')}" />
 													<toolbarbutton id="btnNewSkill"
 																style="padding: 0px" width="32px" height="32px"
 																image="/resources/img/icons/new.png"
@@ -132,42 +136,26 @@
 									</north>
 									<center border="none" autoscroll="true" margins="0,0,0,0">
 										<hlayout height="100%" style="overflow-y:auto; padding:3px" >
-
-										<vbox spacing="10px"
-											width="24px">
-											<button id="btnAdd"
-												style="padding:0"
-												image="/resources/img/icons/leftarrow_g.png" />
-										</vbox>
-										
 										<listbox id="listBoxSkills"
 											style="overflow-y:auto; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
 											width="100%" height="100%"
 											tooltiptext="${c:l('listbox.tooltiptext')}" multiple="true">
-											<auxhead sclass="category-left">
-												<auxheader colspan="1">
-													<image
-														src="/resources/widgets/grid/img/funnel.png" />
-													<textbox id="tbSkillID" instant="true" width="20px" />
-												</auxheader>
-												<auxheader colspan="1">
-													<image
-														src="/resources/widgets/grid/img/funnel.png" />
-													<textbox id="tbName" instant="true" width="100px" />
-												</auxheader>
-											</auxhead>
 							
 											<listhead sizable="true" id="listHeader">
 												<mylistheader id="listheader_SkillList_ID"
-													sort="auto(ID)" width="10%" label="${c:l('common.ID')}">
+													sort="auto(order)" width="5%" label="Numer">
 												</mylistheader>
 												<mylistheader
 													id="listheader_SkillList_Name" sort="auto(name)"
-													width="20%" label="Nazwa">
+													width="40%" label="Nazwa">
+												</mylistheader>
+												<mylistheader
+													id="listheader_SkillList_Typ"
+													width="20%" label="Typ">
 												</mylistheader>
 												<mylistheader
 													id="listheader_SkillList_Edit"
-													width="20%" label="Edycja">
+													width="10%" label="Edycja">
 												</mylistheader>
 											</listhead>
 										</listbox>

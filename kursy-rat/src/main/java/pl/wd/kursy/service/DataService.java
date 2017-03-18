@@ -174,7 +174,6 @@ public class DataService implements DataServiceInt, Serializable {
 	@Override
 	public List<Student> getStudents(int courseId) throws Exception {
 		StudentDao studentDao = new StudentDao(_db);
-		//Collections.sort(users, User.get_last_name_comparator());
 		
 		return studentDao.getStudents(courseId);
 	}
@@ -182,7 +181,6 @@ public class DataService implements DataServiceInt, Serializable {
 	@Override
 	public List<Student> getStudents(StudentCriteria crit) throws Exception {
 		StudentDao studentDao = new StudentDao(_db);
-		//Collections.sort(users, User.get_last_name_comparator());
 		
 		return studentDao.getStudents(crit);
 	}
@@ -245,7 +243,7 @@ public class DataService implements DataServiceInt, Serializable {
 		SkillsDao skillDao = new SkillsDao(_db);
 		
 		List<Skill> skills = skillDao.getSkills(); 
-		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_NAME));
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_ORDER));
 
 		return skills;
 	}

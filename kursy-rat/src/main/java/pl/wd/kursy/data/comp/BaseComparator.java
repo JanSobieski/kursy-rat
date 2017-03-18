@@ -6,7 +6,8 @@ public class BaseComparator {
 
 	public final static int TYPE_ID = 1;
 	public final static int TYPE_NAME = 2;
-	
+	public final static int TYPE_ORDER = 3;
+
 	
 	//protected DataReloadIndicator _reloadIndicator = null;
 

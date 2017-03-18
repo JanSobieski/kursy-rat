@@ -9,6 +9,7 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 
 import pl.wd.kursy.data.Student;
+import pl.wd.kursy.data.StudentStatus;
 
 public class StudentListModelItemRenderer implements ListitemRenderer<Student>, Serializable {
 
@@ -28,7 +29,17 @@ public class StudentListModelItemRenderer implements ListitemRenderer<Student>, 
 		lc.setStyle("text-align:left");
 		lc.setParent(item);
 
-		//item.setAttribute("data", student);
+		lc = new Listcell(student.getStatus().getName());
+		String style = "text-align:left";
+		if ( StudentStatus.EXAM.equals(student.getStatus())) {
+			style = "; font-weight:bold; color:red";
+		}
+		if ( StudentStatus.PASSED.equals(student.getStatus())) {
+			style = "; font-weight:bold; color:green";
+		}
+		lc.setStyle(style);
+		lc.setParent(item);
+
 		item.setValue(student);
 		
 		ComponentsCtrl.applyForward(item, "onDoubleClick=onStudentListItemDoubleClicked");

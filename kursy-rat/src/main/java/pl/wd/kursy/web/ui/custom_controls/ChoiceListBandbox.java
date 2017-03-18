@@ -12,7 +12,7 @@ import org.zkoss.zul.Bandpopup;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Grid;
 
-import pl.wd.kursy.data.BasicType;
+import pl.wd.kursy.data.interf.BasicTypeIntf;
 import pl.wd.kursy.web.ui.interf.ChoiceDialogInt;
 import pl.wd.kursy.web.ui.model.ChoicePopupListViewModel;
 import pl.wd.kursy.web.ui.renderer.ChoiceGridModelItemRenderer;
@@ -31,7 +31,7 @@ public class ChoiceListBandbox extends Bandbox {
 	public final static String BUTTON_OK_PREFIX = "btnOk";
 	
 	protected Grid _grid;
-	protected ChoicePopupListViewModel<BasicType> _model;
+	protected ChoicePopupListViewModel _model;
 	protected Button _btnCancelPopup;
 	protected Button _btnOkPopup;
 	protected ChoiceDialogInt _dialogInt;
@@ -44,7 +44,7 @@ public class ChoiceListBandbox extends Bandbox {
 		Bandpopup bp = findBandpopup( this );
 		_grid = findGrid( bp );
 		if ( _grid != null ) {
-			_grid.setRowRenderer(new ChoiceGridModelItemRenderer<BasicType>( _controller ));
+			_grid.setRowRenderer(new ChoiceGridModelItemRenderer<BasicTypeIntf>( _controller ));
 			_grid.setModel(_model);
 		}
 		_btnCancelPopup = findCancel( this, BUTTON_CANCEL_PREFIX );
@@ -129,7 +129,7 @@ public class ChoiceListBandbox extends Bandbox {
 	
 	public void renewSelection() {
 		try {
-			_grid.setModel(new ChoicePopupListViewModel<BasicType>());
+			_grid.setModel(new ChoicePopupListViewModel());
 		} catch (Exception e) {
 		}
 		_grid.setModel(_model);

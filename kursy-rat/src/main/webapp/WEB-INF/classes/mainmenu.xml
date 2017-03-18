@@ -42,9 +42,9 @@
 		<menuItem id="menu_Item_SearchPerson" 
 			zulNavigation="/secure/course/personSearch.zul" rightName="" />
 	</menu>
-	<menu id="menu_Category_Reports">
-		<menuItem id="menu_Item_RepAddedPersons" iconName="/images/icons/user_group_16x16.png"
-			zulNavigation="/secure/reports/addedCVs.zul" />
+	<menu id="menu_Category_Reports" rightName="">
+		<menuItem id="menu_Item_RepMissingSkills" rightName=""
+			zulNavigation="/secure/reports/missingSkills.zul" />
 		<menuItem id="menu_Item_EffectivenessStatistics" iconName="/images/icons/user_group_16x16.png"
 			zulNavigation="/secure/reports/effectivnessStatistics.zul" />
 	</menu>

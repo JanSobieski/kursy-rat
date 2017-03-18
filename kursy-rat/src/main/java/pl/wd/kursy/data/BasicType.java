@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class BasicType implements Serializable,Cloneable {
+import pl.wd.kursy.data.interf.BasicTypeIntf;
+
+public class BasicType implements Serializable,Cloneable, BasicTypeIntf {
 	private static final long serialVersionUID = -3087968737693385232L;
 
 	protected int _id;
 	private boolean _editable;
 	private boolean _selected;
 	private boolean _selected_neg;
+	private boolean _newItem = true;
 	protected String _name;
 	
 	public BasicType() {
@@ -20,7 +23,8 @@ public class BasicType implements Serializable,Cloneable {
 	public BasicType( int id ) {
 		_id = id;
 	}
-
+	
+	@Override
 	public int getId() {
 		return _id;
 	}
@@ -67,11 +71,11 @@ public class BasicType implements Serializable,Cloneable {
 		return false;
 	}
 
-	public boolean is_selected() {
+	public boolean isSelected() {
 		return _selected;
 	}
 
-	public void set_selected( Object selected ) {
+	public void setSelected( Object selected ) {
 		if ( selected == null ) {
 			_selected = false;
 			return;
@@ -112,6 +116,14 @@ public class BasicType implements Serializable,Cloneable {
 		}
 
 		return mapping;
+	}
+
+	public boolean isNewItem() {
+		return _newItem;
+	}
+
+	public void setNewItem(boolean newItem) {
+		_newItem = newItem;
 	}
 	
 	

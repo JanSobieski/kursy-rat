@@ -4,6 +4,7 @@
 <?component name="customColumn" extends="column" class="pl.wd.kursy.web.ui.custom_controls.CustomGridColumn"?>
 <?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
 <?component name="extendedTree" extends="tree" class="pl.wd.kursy.web.ui.custom_controls.ExtendedTree"?>
+<?component name="customBandbox" extends="bandbox" class="pl.wd.kursy.web.ui.custom_controls.ChoiceListBandbox"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul"
 	xmlns:h="http://www.w3.org/1999/xhtml"
@@ -42,6 +43,47 @@
 							<combobox id="cmbGroup" readonly="true" width="80%">
 							</combobox>
 						</auxheader>
+								<auxheader id="auxHeaderStatus"
+									colspan="1">
+									<customBandbox id="bdStatus"
+										mold="rounded" readonly="true" width="100%" autodrop="true">
+										<bandpopup height="250px">
+											<panel border="none"
+												height="100%">
+												<panelchildren>
+													<borderlayout
+														width="300px">
+														<center
+															border="none">
+															<grid
+																id="gridStatus" mold="paging" pageSize="20"
+																style="overflow: scroll; border-top-width: 0px; border-left-width: 0px; border-right-width: 0px; border-bottom-width: 1px;"
+																width="100%" height="100%">
+																<columns
+																	id="gridColumnsStatus" sizable="false">
+																	<column
+																		id="columnStatus" label="${c:l('common.ChooseValue')}"
+																		width="100%" />
+																</columns>
+															</grid>
+														</center>
+														<south>
+															<toolbar
+																align="center" width="100%"
+																style="float:center; border-style: none; padding-left: 10px;">
+																<button
+																	id="btnOkStatusPopup" label="${c:l('btnOk.label')}" />
+																<button
+																	id="btnCancelStatusPopup" label="${c:l('btnCancel.label')}" />
+															</toolbar>
+														</south>
+													</borderlayout>
+												</panelchildren>
+											</panel>
+										</bandpopup>
+									</customBandbox>
+								</auxheader>
+						
 					</auxhead>
 
 					<listhead sizable="true" id="listHeader">
@@ -55,6 +97,9 @@
 						<mylistheader id="listheader_Group"
 							sort="auto(active)" width="25%"
 							label="Grupa" />
+						<mylistheader id="listheader_Status"
+							sort="auto(active)" width="25%"
+							label="Status" />
 						<mylistheader id="listheader_Skills"
 							sort="auto(active)" width="25%"
 							label="Zaliczone umiejętności" />

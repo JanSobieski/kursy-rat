@@ -13,6 +13,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
@@ -23,6 +24,7 @@ import org.zkoss.zul.Treechildren;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.event.ListDataEvent;
 
 import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
@@ -119,6 +121,10 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 		}
 	}
 	
+	public void onClick$btnClose( Event event ) {
+		closeWindow();
+	}
+	
 	public void onClick$btnNew( Event event ) {
 		_exerciseTreeModel.addExercise();
 	}
@@ -155,10 +161,31 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 	
 	public List<Skill> getSkills(boolean checkEmpty) {
 		List<Skill> skills = new ArrayList<>();
+		Set<Integer> orders = new HashSet<>();
+		int ind = 0;
 		
 		for (Listitem listitem : listBoxSkills.getItems() ) {
 			Skill skill = listitem.getValue();
+			if ( checkEmpty   && orders.contains(skill.getOrder() )) {
+				Messagebox.show("Numer " +skill.getOrder() + " już istnieje");
+				skill.setEditable(true);
+				_skillModel.fireEventExt(ListDataEvent.CONTENTS_CHANGED, ind, ind);
+				
+				Intbox ib = (Intbox)listitem.getChildren().get(0).getChildren().get(0);
+				ib.setFocus(true);
+				return null;
+			}
+			orders.add(skill.getOrder() );
 			if ( skill.isEditable() ) {
+				Intbox ib = (Intbox)listitem.getChildren().get(0).getChildren().get(0);
+				if ( checkEmpty  ) {
+					if ( ib.getText().trim().length() == 0 ) {
+						Messagebox.show("Numer nie może być pusty");
+						return null;
+					}
+					//todo sprawdzanie wartosci
+				}
+				
 				Textbox tb = (Textbox)listitem.getChildren().get(1).getChildren().get(0);
 				if ( checkEmpty && ( tb.getText().trim().length() == 0 ) ) {
 					Messagebox.show("Nazwa umiejętności nie może być pusta");
@@ -167,6 +194,7 @@ public class ExerciseAndSkillDialogCtrl extends BaseCtrl implements Serializable
 				skill.setName(tb.getText());
 			}
 			skills.add(skill);
+			ind++;
 		}
 		
 		return skills;

@@ -1,6 +1,7 @@
 package pl.wd.kursy.web.ui.admin; 
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -11,17 +12,25 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
+import org.zkoss.zul.ComboitemRenderer;
+import org.zkoss.zul.ListModel;
+import org.zkoss.zul.ListModelArray;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import pl.wd.kursy.data.RateCardItemStatus;
 import pl.wd.kursy.data.Student;
+import pl.wd.kursy.data.StudentStatus;
 import pl.wd.kursy.exception.BusinessLogicException;
 import pl.wd.kursy.web.ui.WebConstants;
 import pl.wd.kursy.web.ui.admin.model.StudentDialogViewModel;
 import pl.wd.kursy.web.ui.util.BaseCtrl;
+import pl.wd.kursy.web.ui.util.WebUtil;
 
 public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 	private static final long serialVersionUID = -7287101962808717615L;
@@ -44,6 +53,7 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 	// panel account details
 	protected Textbox tbFirstName; // autowired
 	protected Textbox tbLastName; // autowired
+	protected Combobox cmbStatus; // autowired
 
 	// Button controller for the CRUD buttons
 	protected Button btnNew; // autowired
@@ -83,6 +93,10 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 				} else {
 					_listBoxStudent = null;
 				}
+				setupComponents();
+				initData();
+
+				
 			} catch (Throwable e) {
 				logger.error("Error", e);
 			} finally {
@@ -94,6 +108,27 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 			logger.error(e);
 			Messagebox.show(e.toString());
 		}
+	}
+	
+	private void setupComponents() {
+		cmbStatus.setItemRenderer(new ComboitemRenderer<StudentStatus>() {
+			@Override
+			public void render(Comboitem item, StudentStatus data, int index) throws Exception {
+				item.setLabel(data.getName());
+				if (data.isSelected()) {
+					cmbStatus.setSelectedItem(item);
+				}
+				item.setValue(data);
+			}
+		});
+	}
+	
+	private void initData() {
+		List<StudentStatus> statList = StudentStatus.getListAll();
+		
+		ListModel<StudentStatus> statusModel = new ListModelArray<>(statList);
+		cmbStatus.setModel(statusModel);
+		
 	}
 	
 
@@ -149,11 +184,17 @@ public class StudentDialogCtrl extends BaseCtrl implements Serializable {
 	public void doWriteBeanToComponents( Student student ) {
 		tbFirstName.setValue(student.getFirstName());
 		tbLastName.setValue(student.getLastName());
+		WebUtil.selectCombo(cmbStatus, student.getStatus());
+
 	}
 	
 	public void doWriteComponentsToBean(Student student) throws Exception {
 		student.setFirstName(tbFirstName.getValue());
 		student.setLastName(tbLastName.getValue());
+		
+		StudentStatus status = (StudentStatus)WebUtil.getCmbValue(cmbStatus);
+		
+		student.setStatus(status);
 	}
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -54,7 +54,7 @@ public class ExtendedTree extends Tree {
 					Treeitem item = (Treeitem)selectEvent.getReference();
 					ExtTreeNode val = (ExtTreeNode)item.getValue();
 					BasicType bt = (BasicType)val.getData();
-					item.setSelected(bt.is_selected());
+					item.setSelected(bt.isSelected());
 				}
 			}
 	}

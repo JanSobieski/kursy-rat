@@ -14,9 +14,10 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 
 import pl.wd.kursy.data.BasicType;
+import pl.wd.kursy.data.interf.BasicTypeIntf;
 import pl.wd.kursy.web.ui.util.BaseCtrl;
 
-public class ChoiceGridModelItemRenderer<T> implements RowRenderer<BasicType>, Serializable {
+public class ChoiceGridModelItemRenderer<T> implements RowRenderer<BasicTypeIntf>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ChoiceGridModelItemRenderer.class);
 	private BaseCtrl _controller;
@@ -26,18 +27,18 @@ public class ChoiceGridModelItemRenderer<T> implements RowRenderer<BasicType>, S
 	}
 
 	@Override
-	public void render( Row row, BasicType data, int index ) throws Exception {
+	public void render(Row row, BasicTypeIntf data, int index) throws Exception {
 		Hlayout hl = new Hlayout();
 		hl.setStyle("text-align:left");
 		row.appendChild(hl);
 		Checkbox cb = new Checkbox();
 		cb.addEventListener(Events.ON_CHECK, new EventListener<Event>() {
-      public void onEvent( Event event ) throws Exception {
-      	_controller.onChoiceItemClicked(event);
-      }
-    });
-		
-		cb.setChecked(data.is_selected());
+			public void onEvent(Event event) throws Exception {
+				_controller.onChoiceItemClicked(event);
+			}
+		});
+
+		cb.setChecked(data.isSelected());
 		hl.appendChild(cb);
 		Label lb = new Label(" " + data.getName());
 		lb.setStyle("text-align:left");

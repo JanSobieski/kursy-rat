@@ -62,6 +62,9 @@
 						<mylistheader id="listheader_StudentList_LastName"
 							sort="auto(personName)" width="25%"
 							label="Nazwisko" />
+						<mylistheader id="listheader_StudentList_Status"
+							sort="auto(personName)" width="25%"
+							label="Status" />
 					</listhead>
 				</listbox>
 

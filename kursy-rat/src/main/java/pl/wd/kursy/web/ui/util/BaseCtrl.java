@@ -15,7 +15,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Row;
 
-import pl.wd.kursy.data.BasicType;
+import pl.wd.kursy.data.interf.BasicTypeIntf;
 import pl.wd.kursy.web.UserWorkspace;
 
 /**
@@ -109,18 +109,18 @@ abstract public class BaseCtrl extends CommonBaseCtrl implements Serializable {
 			origin = Events.getRealOrigin((ForwardEvent) event);
 			Component target = origin.getTarget();
 			Row row = (Row) target;
-			BasicType item = row.getValue();
+			BasicTypeIntf item = row.getValue();
 			Hlayout hl = (Hlayout) row.getChildren().get(0);
 			Checkbox cbSelected = (Checkbox) hl.getChildren().get(0);
-			item.set_selected(cbSelected.isChecked());
+			item.setSelected(cbSelected.isChecked());
 		}
 		if (event instanceof CheckEvent) {
 			
 			
 			Checkbox cbSelected = (Checkbox) event.getTarget();
 			Row row = (Row) cbSelected.getParent().getParent();
-			BasicType item = row.getValue();
-			item.set_selected(cbSelected.isChecked());
+			BasicTypeIntf item = row.getValue();
+			item.setSelected(cbSelected.isChecked());
 		}
 	}
 

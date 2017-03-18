@@ -1,6 +1,7 @@
 package pl.wd.kursy.web.ui.tree;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.zkoss.zul.Treeitem;
 import pl.wd.kursy.data.BasicType;
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
+import pl.wd.kursy.data.comp.SkillComparator;
 import pl.wd.kursy.web.UserWorkspace;
 
 
@@ -38,7 +40,11 @@ public class ExerciseTreeModel {
 			ExtTreeNode<BasicType> nodeCategory = new ExtTreeNode<BasicType>(exercise, items);
 			rootItems.add(nodeCategory);
 			if (exercise.getSkills() != null) {
-				for (Skill skill : exercise.getSkills()) {
+				List<Skill> skillsSorted =new ArrayList<>();
+				skillsSorted.addAll(exercise.getSkills());
+				Collections.sort(skillsSorted, new SkillComparator(true, SkillComparator.TYPE_ORDER));
+				
+				for (Skill skill : skillsSorted ) {
 					ExtTreeNode<BasicType> nodeSkill = new ExtTreeNode<BasicType>(skill);
 					nodeCategory.getChildren().add(nodeSkill);
 				}

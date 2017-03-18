@@ -9,6 +9,7 @@ import org.zkoss.zul.ListModelList;
 
 import pl.wd.kursy.data.Student;
 import pl.wd.kursy.data.StudentGroup;
+import pl.wd.kursy.data.StudentStatus;
 import pl.wd.kursy.data.criteria.StudentCriteria;
 import pl.wd.kursy.data.wrapper.StudentWrapper;
 import pl.wd.kursy.web.UserWorkspace;
@@ -56,6 +57,16 @@ public class PersonListViewModel<E> extends ListModelList<Object> {
 		
 		
 	}
+	
+	public ChoicePopupListViewModel<StudentStatus> getStatusListModel() {
+		ChoicePopupListViewModel<StudentStatus> _statusListModel = new ChoicePopupListViewModel<> ();
+
+		_statusListModel.addAll(StudentStatus.getListAll());
+
+		
+		return _statusListModel;
+	}
+	
 	
 
 }

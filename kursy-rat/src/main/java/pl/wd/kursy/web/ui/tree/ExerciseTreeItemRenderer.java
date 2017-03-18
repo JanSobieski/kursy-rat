@@ -19,7 +19,7 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 			item.setOpen(data.isOpen());
 
 			item.setValue(data);
-			if (data.getData().is_selected()) {
+			if (data.getData().isSelected()) {
 				item.setSelected(true);
 			} else {
 				item.setSelected(false);
@@ -55,7 +55,7 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 			item.setOpen(data.isOpen());
 
 			item.setValue(data);
-			if (data.getData().is_selected()) {
+			if (data.getData().isSelected()) {
 				item.setSelected(true);
 			} else {
 				item.setSelected(false);
