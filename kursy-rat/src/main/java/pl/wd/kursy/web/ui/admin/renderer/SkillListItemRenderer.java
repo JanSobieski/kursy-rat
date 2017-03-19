@@ -27,6 +27,7 @@ import org.zkoss.zul.Textbox;
 
 import pl.wd.kursy.data.Skill;
 import pl.wd.kursy.data.SkillType;
+import pl.wd.kursy.data.StudentStatus;
 import pl.wd.kursy.web.ui.data.InfoSkill;
 import pl.wd.kursy.web.ui.util.WebUtil;
 
@@ -122,7 +123,12 @@ public class SkillListItemRenderer implements ListitemRenderer<Skill>, Serializa
 			lc.setParent(item);
 
 			lc = new Listcell(skill.getType().getName());
-			lc.setStyle("text-align:left");
+			String style = "text-align:left";
+			if ( SkillType.MAIN.equals(skill.getType())) {
+				style = "; font-weight:bold; ";
+			}
+			lc.setStyle(style);
+
 			lc.setParent(item);
 
 			lc = new Listcell();

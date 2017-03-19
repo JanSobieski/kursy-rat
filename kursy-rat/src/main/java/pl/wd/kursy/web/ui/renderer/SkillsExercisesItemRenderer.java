@@ -1,7 +1,6 @@
 package pl.wd.kursy.web.ui.renderer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.zk.ui.event.Event;
