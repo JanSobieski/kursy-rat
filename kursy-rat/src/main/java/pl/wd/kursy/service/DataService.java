@@ -249,6 +249,16 @@ public class DataService implements DataServiceInt, Serializable {
 	}
 
 	@Override
+	public List<Skill> getMainSkills() throws Exception {
+		SkillsDao skillDao = new SkillsDao(_db);
+		
+		List<Skill> skills = skillDao.getMainSkills(); 
+		Collections.sort(skills, new SkillComparator(true, SkillComparator.TYPE_ORDER));
+
+		return skills;
+	}
+
+	@Override
 	public List<StudentGroup> getStudentGroups(int courseId) throws Exception {
 		StudentGroupDao studentGroupDao = new StudentGroupDao(_db);
 		
@@ -271,6 +281,7 @@ public class DataService implements DataServiceInt, Serializable {
 		rateCardDao.save(rateCards, studentId);
 	}
 
+	@Override
 	public List<RateCardItem> getRateCard(int studentId) throws Exception {
 		RateCardDao rateCardDao = new RateCardDao(_db);
 		List<RateCardItem> data = rateCardDao.getData(studentId);
@@ -279,5 +290,13 @@ public class DataService implements DataServiceInt, Serializable {
 		return data;
 	}
 
+	@Override
+	public List<RateCardItem> getRateCardNotRKO(int studentId) throws Exception {
+		RateCardDao rateCardDao = new RateCardDao(_db);
+		List<RateCardItem> data = rateCardDao.getDataNoRKO(studentId);
+		Collections.sort(data, new RateCardItemComparator(false, RateCardItemComparator.TYPE_DATE_CREATED));
+		
+		return data;
+	}
 	
 }

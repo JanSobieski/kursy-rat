@@ -37,12 +37,14 @@ public interface DataServiceInt {
 	public void saveExercisesAndSkills(List<Exercise> exercises, List<Skill> skills ) throws Exception;
 
 	public List<Skill> getSkills() throws Exception;
+	public List<Skill> getMainSkills() throws Exception;
 
 	public List<StudentGroup> getStudentGroups(int courseId) throws Exception;
 	public void saveStudentGroups(List<StudentGroup> studentGroup, int courseId ) throws Exception;
 	
 	public void saveRateCard(List<RateCardItem> studentGroup, int studentId ) throws Exception;
 	public List<RateCardItem> getRateCard(int studentId) throws Exception;
+	public List<RateCardItem> getRateCardNotRKO(int studentId) throws Exception;
 	
 
 }

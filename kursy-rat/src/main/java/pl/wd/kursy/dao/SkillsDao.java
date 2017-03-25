@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 
 import pl.wd.kursy.data.Exercise;
 import pl.wd.kursy.data.Skill;
+import pl.wd.kursy.data.SkillType;
 
 public class SkillsDao {
 	private Database _db;
@@ -31,6 +32,17 @@ public class SkillsDao {
 		return skills;
 	}
 	
+	public List<Skill> getMainSkills() throws Exception {
+		Session session = _db.getSession();
+
+		String hql = "from Skill as skill";
+		hql += " where skill.typeId=" + SkillType.MAIN.getId(); 
+		Query<Skill> query = session.createQuery(hql);
+		List<Skill> skills = query.list();
+		
+		return skills;
+	}
+
 	public void saveSkills(List<Skill> skills ) throws Exception {
 		Session session = _db.getFreeSession();
 		Set<Integer> ids = new HashSet<>();

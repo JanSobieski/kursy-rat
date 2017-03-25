@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="customColumn" extends="column" class="pl.wd.kursy.web.ui.custom_controls.CustomGridColumn"?>
+<?component name="mylistheader" extends="listheader" class="pl.wd.kursy.web.ui.custom_controls.MyListheader"?>
+<?component name="customBandbox" extends="bandbox" class="pl.wd.kursy.web.ui.custom_controls.ChoiceListBandbox"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+	
+	<window id="missingSkillsWindow" sclass="cardSys" border="none"
+		apply="pl.wd.kursy.web.ui.report.MissingSkillsReportCtrl" height="100%">
+
+		<borderlayout id="borderlayout1" >
+			<center border="none" margins="0,0,0,0">
+				<hlayout height="100%" style="overflow-y:auto; padding:3px" >
+			
+				<grid id="gridMissingSkills" >
+					<columns sizable="true">
+						  <column label="Imię" width="5%"  />
+						  <column label="Nazwisko" width="8%" />
+						  <column label="Proponowane symulacje"  width="40%" />
+					</columns>
+					    <rows>
+					    </rows>
+				</grid>			
+				</hlayout>
+			</center>
+			<south size="50%" splittable="true"  border="none" margins="0,0,0,0">
+				<borderlayout id="borderlayout2" >
+					<north border="none" margins="0,5,0,0">
+						<label value="Proponowane symulacje i grupy kursantów" style="padding: 3px;" />
+					</north>
+					<center border="none" margins="0,0,0,0">
+
+				<hlayout height="100%" style="overflow-y:auto; padding:3px" >
+				<grid id="gridExcercises" >
+					<columns sizable="true">
+						  <column label="Imię" width="5%"  />
+						  <column label="Nazwisko" width="8%" />
+						  <column label="Proponowane symulacje"  width="40%" />
+					</columns>
+					    <rows>
+					        <row > 
+									<cell colspan="3" style="background-color: powderblue;" >
+					                    <label value="Grupa 1: 1.Prawidłowo ocenia bezpieczeństwo i zabezpiecza miejsce zdarzenia, 2.Prawidłowo sprawdza przytomność, 8.Prawidłowo układa poszkodowanego w pozycji bezpiecznej"  />
+					                </cell>        
+							</row>
+					        <row>
+					            <label value="Jan" />
+					            <label value="Nowak" />
+					            <label value="Symulacja 01" />
+					        </row>
+					    </rows>
+				</grid>			
+				</hlayout>
+			</center>
+			</borderlayout>
+			</south>
+
+		</borderlayout>
+	</window>
+</zk>
