@@ -102,6 +102,8 @@ public class MissingSkillsGridModel extends ListModelList<MissingSkillGridRow> {
 			for (Exercise exercise : exercises) {
 				foundSkills = 0;
 				if ( !excerciseIds.contains(exercise.getId()) && !exercise.getAll_skills_obligatory() ) {
+					
+					// zliczanie ilosci zaliczonych umiejetnosci dla cwiczenia
 					for (Skill skill : exercise.getSkills() ) {
 						if ( skills.contains(skill) ) {
 							foundSkills++;
@@ -116,13 +118,18 @@ public class MissingSkillsGridModel extends ListModelList<MissingSkillGridRow> {
 				}
 			}
 			String exercisesTxt = "";
-			List<Exercise> list = count2ExcerciseList.get(skills.size());
-			if ( list != null ) {
-				for (Exercise exercise : list) {
-					if ( exercisesTxt.length() > 0 ) {
-						exercisesTxt  += ", ";
+			for (int i = skills.size(); i > 0; i--) {
+				List<Exercise> list = count2ExcerciseList.get(i);
+				if ( list != null ) {
+					for (Exercise exercise : list) {
+						if ( exercisesTxt.length() > 0 ) {
+							exercisesTxt  += ", ";
+						}
+						exercisesTxt  += exercise.getName();
+						if ( i < skills.size() ) {
+							exercisesTxt  += " (" + Integer.toString(i - skills.size()) + ")";
+						}
 					}
-					exercisesTxt  += exercise.getName();
 				}
 				
 			}

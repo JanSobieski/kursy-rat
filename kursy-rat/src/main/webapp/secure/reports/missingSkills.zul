@@ -40,18 +40,29 @@
 					<columns sizable="true">
 						  <column label="Imię" width="5%"  />
 						  <column label="Nazwisko" width="8%" />
-						  <column label="Proponowane symulacje"  width="40%" />
 					</columns>
 					    <rows>
 					        <row > 
-									<cell colspan="3" style="background-color: powderblue;" >
-					                    <label value="Grupa 1: 1.Prawidłowo ocenia bezpieczeństwo i zabezpiecza miejsce zdarzenia, 2.Prawidłowo sprawdza przytomność, 8.Prawidłowo układa poszkodowanego w pozycji bezpiecznej"  />
-					                </cell>        
-							</row>
+									<cell colspan="2" style="background-color: powderblue;" >
+					              <label value="Symulacja 04"  />
+					        </cell>        
+									</row>
 					        <row>
 					            <label value="Jan" />
 					            <label value="Nowak" />
-					            <label value="Symulacja 01" />
+					        </row>
+					        <row>
+					            <label value="Marek" />
+					            <label value="Kowalski" />
+					        </row>
+					        <row > 
+									<cell colspan="2" style="background-color: powderblue;" >
+					              <label value="Symulacja 05"  />
+					        </cell>        
+									</row>
+					        <row>
+					            <label value="Daman" />
+					            <label value="Górny" />
 					        </row>
 					    </rows>
 				</grid>			

@@ -51,7 +51,9 @@ public class ExerciseTreeItemRenderer implements TreeitemRenderer<ExtTreeNode<Ba
 		}
 
 		if (data.getData() instanceof Skill) {
-			item.setLabel(data.getData().getName());
+			Skill skill = ((Skill)data.getData());
+			String name = skill.getOrder() + "." + skill.getName(); 
+			item.setLabel(name);
 			item.setOpen(data.isOpen());
 
 			item.setValue(data);
